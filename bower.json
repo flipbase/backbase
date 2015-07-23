@@ -9,9 +9,7 @@
     "type": "git",
     "url": "git://github.com/flipbase/backbase.git"
   },
-  "main": [
-    "src/lib/Model.js"
-  ],
+  "main": "index.js",
   "moduleType": "es6",
   "private": true,
   "dependencies": {
