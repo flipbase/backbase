@@ -1,8 +1,8 @@
-import events from './../../bower_components/events';
-import * as pubsub from './../../bower_components/pubsub';
-import utils from './../../bower_components/bind';
+import events from './../../bower_components/utilbase/index';
+import * as pubsub from './../../bower_components/utilbase/index';
+import utils from './../../bower_components/utilbase/index';
 // import log from './../../bower_components/logger';
-import * as DOM from './../../bower_components/DOM';
+import * as DOM from './../../bower_components/utilbase/index';
 // import Flipbase from './../../bower_components/global';
 
 /**
