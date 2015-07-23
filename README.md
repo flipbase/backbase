@@ -11,20 +11,22 @@ directory.
 
 ### Usage
 
-Download the package using bower
+Download the package using bower:
 
     bower install backbase git@github.com:flipbase/backbase.git --save-dev
 
-Import the modules you need
+And then import the modules you need using ES6 ```import``` syntax:
 
     import Model from 'backbase/src/Model';
     import Component from 'backbase/src/Component';
     import {createEl} from 'backbase/src/utils/DOM';
 
 
-## To do
+### To do
 
-[ ] How to determine which options properties should be attached to the 
-    Component instance?!
-[ ] Not every elements needs to have JS logic or events attached to it; so we 
-    need to somehow implement a workaround for this.
+- [ ] Create a new repo with generic Flipbase documentation: style guide,
+      preferences, how to contribute, etc
+- [ ] How to determine which options properties should be attached to the 
+      Component instance?!
+- [ ] Not every elements needs to have JS logic or events attached to it; so we 
+      need to somehow implement a workaround for this.
