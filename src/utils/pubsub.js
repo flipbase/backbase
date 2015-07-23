@@ -7,8 +7,8 @@ var pubsub = {};
 pubsub.topics = {};
 
 pubsub.subscribe = function(topic, listener, context, store) {
-  store = store || topics;
-  topic = topic.split(', ');
+  store = store || pubsub.topics;
+  // topic = topic.split(', ');
 
   // Create topic entry if non exists
   if (!store.hasOwnProperty(topic)) store[topic] = [];
@@ -21,7 +21,7 @@ pubsub.subscribe = function(topic, listener, context, store) {
 };
 
 pubsub.publish = function (topic, store) {
-  store = store || topics;
+  store = store || pubsub.topics;
   var evnts = store[topic] || [];
   var args = Array.prototype.slice.call(arguments, 2);
 
@@ -32,7 +32,7 @@ pubsub.publish = function (topic, store) {
 };
 
 pubsub.unsubscribe = function (topic, index, store) {
-  store = store || topics;
+  store = store || pubsub.topics;
   var events = store[topic] || [];
   delete events[index];
 };
