@@ -1,3 +1,4 @@
 import Model from 'src/lib/Model';
+import Component from 'src/lib/Component';
 
-export default Model;
+export {Model, Component};
