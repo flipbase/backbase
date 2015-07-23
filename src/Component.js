@@ -1,9 +1,9 @@
-import events from './../bower_components/utilbase/src/events';
-import * as pubsub from './../bower_components/utilbase/src/pubsub';
-import {bind} from './../bower_components/utilbase/src/bind';
+import events from './utils/events';
+import pubsub from './utils/pubsub';
+import {bind} from './utils/bind';
 // import log from './../bower_components/logger';
-import {createEl} from './../bower_components/utilbase/src/DOM';
-import Flipbase from './../bower_components/utilbase/src/namespace';
+import {createEl} from './utils/DOM';
+import Flipbase from './utils/namespace';
 
 /**
  * @example
