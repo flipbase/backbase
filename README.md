@@ -11,12 +11,11 @@ directory.
 
 ### Usage
 
-1. Download the package using bower
+Download the package using bower
 
   bower install backbase git@github.com:flipbase/backbase.git --save-dev
 
-
-2. Import the modules you need
+Import the modules you need
 
   import Model from 'backbase/src/Model';
   import Component from 'backbase/src/Component';
