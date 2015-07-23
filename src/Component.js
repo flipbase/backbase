@@ -92,7 +92,7 @@ class Component {
   }
 
   on(evt, fn, el) {
-    fn = utils.bind(this, fn);
+    fn = bind(this, fn);
     this._events[evt] = fn;
     el = el || this.$el;
     events.on(el, evt, fn);
