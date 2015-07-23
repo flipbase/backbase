@@ -1,9 +1,9 @@
-import events from './../helpers/events';
-import * as pubsub from './../helpers/pubsub';
-import utils from './../helpers/utils';
-import log from './../helpers/logger';
-import * as DOM from './../helpers/DOM';
-import Flipbase from './../helpers/global';
+import events from './../../bower_components/events';
+import * as pubsub from './../../bower_components/pubsub';
+import utils from './../../bower_components/bind';
+// import log from './../../bower_components/logger';
+import * as DOM from './../../bower_components/DOM';
+// import Flipbase from './../../bower_components/global';
 
 /**
  * @example
@@ -183,7 +183,7 @@ class Component {
     if (Flipbase._components[name])
       return Flipbase._components[name];
 
-    log.error('Component"' + name + '"not registered');
+    // log.error('Component"' + name + '"not registered');
   }
 
   static registerComponent(name, Component) {
