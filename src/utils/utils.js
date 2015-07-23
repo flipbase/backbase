@@ -3,31 +3,28 @@
  * @module
  */
 
-
-var utils = {};
-
-utils.validUUID = function(id) {
+export function validUUID(id) {
   return ((id.length > 31) && id.search(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/));
-};
+}
 
-utils.isNumber = function(n) {
+export function isNumber(n) {
   return n === parseFloat(n);
-};
+}
 
-utils.isEven = function(n) {
-  return utils.isNumber(n) && (n % 2 === 0);
-};
+export function isEven(n) {
+  return isNumber(n) && (n % 2 === 0);
+}
 
-utils.bind = function(context, fn) {
+export function bind(context, fn) {
   fn = fn;
   context = context;
   return function () {
     var args = [].slice.call(arguments) || [];
     fn.apply(context, args);
-  }
+  };
 }
 
-utils.querystring = function (obj) {
+export function querystring (obj) {
   var keys = Object.keys(obj);
   var querystring = '';
 
@@ -43,10 +40,10 @@ utils.querystring = function (obj) {
 }
 
 
-utils.hasXHR2 = function() {
+export function hasXHR2() {
   return (window.FormData !== undefined && window.FileReader &&
     window.FileList && window.Blob) ? true : false;
-};
+}
 
 /**
  * Chrome ships with their own Flash Player embedded, named 'Pepper Flash'
@@ -55,7 +52,7 @@ utils.hasXHR2 = function() {
  * Pepper Flash.
  * @return {boolean} true if Pepper Flash is present and actived
  */
-utils.checkForPepper = function() {
+export function checkForPepper() {
   if (navigator.mimeTypes &&
     navigator.mimeTypes['application/x-shockwave-flash'] &&
     'chrome' in window) {
@@ -68,7 +65,4 @@ utils.checkForPepper = function() {
     }
   }
   return false;
-};
-
-
-export default utils.bind;
+}
