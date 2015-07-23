@@ -1,4 +1,4 @@
-import * as pubsub from './../../bower_components/pubsub';
+import * as pubsub from './../../bower_components/utilbase';
 import jsonp from 'expose?jsonp!./../../bower_components/browser-jsonp';
 
 /**
