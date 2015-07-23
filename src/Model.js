@@ -147,7 +147,6 @@ class Model {
     return (this.get(attr) === value);
   }
 
-
   /**
    * @param  {Boolean} parse If true, then the instance needs have 
    * parse method.

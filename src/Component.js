@@ -1,6 +1,6 @@
 import events from './utils/events';
 import pubsub from './utils/pubsub';
-import {bind} from './utils/bind';
+import {bind} from './utils/utils';
 // import log from './../bower_components/logger';
 import {createEl} from './utils/DOM';
 import Flipbase from './utils/namespace';

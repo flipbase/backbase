@@ -12,8 +12,7 @@
   "moduleType": "es6",
   "private": true,
   "dependencies": {
-    "browser-jsonp": "~1.0.8",
-    "utilbase": "git@github.com:flipbase/utilbase.git"
+    "browser-jsonp": "~1.0.8"
   },
   "ignore": [
     "node_modules",
