@@ -1,0 +1,26 @@
+{
+  "name": "backbase",
+  "version": "0.0.1",
+  "homepage": "https://github.com/flipbase/backbase",
+  "authors": [
+    "Ron Jansen <ron@flipbase.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flipbase/backbase.git"
+  },
+  "main": [
+    "src/lib/Model.js",
+  ],
+  "moduleType": "es6",
+  "private": true,
+  "dependencies": {
+    "browser-jsonp": "~1.0.8"
+  },
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
