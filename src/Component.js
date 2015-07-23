@@ -3,7 +3,7 @@ import pubsub from './../bower_components/utilbase/src/pubsub';
 import utils from './../bower_components/utilbase/src/bind';
 // import log from './../bower_components/logger';
 import createEl from './../bower_components/utilbase/src/DOM';
-// import Flipbase from './../bower_components/global';
+import Flipbase from './../bower_components/utilbase/src/namespace';
 
 /**
  * @example
