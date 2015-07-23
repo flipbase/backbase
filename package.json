@@ -1,0 +1,21 @@
+{
+  "name": "backbase",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "make test",
+    "docs": "jsdoc2md 'src/app.js' > docs/README.md && jsdoc2md 'src/helpers/*.js' > docs/helpers.md && jsdoc2md 'src/lib/*.js' > docs/framework.md && jsdoc2md 'src/providers/*.js' > docs/providers.md && jsdoc2md 'src/components/**/*.js' > docs/userinterface.md",
+    "setup": "bower install && npm install"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.2",
+    "grunt-cli": "~0.1.13",
+    "grunt-jsdoc-to-markdown": "^1.1.1",
+    "grunt-shell": "^1.1.2",
+    "load-grunt-tasks": "^0.5.0"
+  },
+  "jshintConfig": {
+    "laxcomma": true,
+    "laxbreak": true
+  }
+}

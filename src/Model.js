@@ -1,5 +1,5 @@
 import pubsub from './utils/pubsub';
-import jsonp from 'expose?jsonp!./../bower_components/browser-jsonp';
+import jsonp from 'expose?jsonp!./components/browser-jsonp';
 
 /**
  * The Model class is inspired on the Backbone.Model class, with setters, 
