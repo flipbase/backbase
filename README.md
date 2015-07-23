@@ -13,13 +13,13 @@ directory.
 
 Download the package using bower
 
-  bower install backbase git@github.com:flipbase/backbase.git --save-dev
+    bower install backbase git@github.com:flipbase/backbase.git --save-dev
 
 Import the modules you need
 
-  import Model from 'backbase/src/Model';
-  import Component from 'backbase/src/Component';
-  import {createEl} from 'backbase/src/utils/DOM';
+    import Model from 'backbase/src/Model';
+    import Component from 'backbase/src/Component';
+    import {createEl} from 'backbase/src/utils/DOM';
 
 
 ## To do
