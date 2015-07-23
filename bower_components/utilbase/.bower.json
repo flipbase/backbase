@@ -17,11 +17,11 @@
     "test",
     "tests"
   ],
-  "_release": "ac1e5a5e13",
+  "_release": "fec16cb610",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "ac1e5a5e13706380cfce9712800fd9fc60f2c4ce"
+    "commit": "fec16cb61012b9f8015aa2eb2919a0f42fb7b610"
   },
   "_source": "git@github.com:flipbase/utilbase.git",
   "_target": "*",
