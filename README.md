@@ -1,22 +1,27 @@
-# backbase
+# Backbase
 
 This project serves as a lightweight framework were the Flipbase recorder and
 the Flipbase player can be build upon. It contains a global store, a model 
 and a component class. 
 
-Additionaly, we have also incorporated some utility functions in the src/utils/
+Additionaly, we have also incorporated some utility functions in the ```src/utils/```
 directory. 
 
-## Usage
+### Why composition?
+
+### Usage
 
 1. Download the package using bower
-```bower install backbase git@github.com:flipbase/backbase.git --save-dev```
+
+  bower install backbase git@github.com:flipbase/backbase.git --save-dev
+
 
 2. Import the modules you need
-```import Model from 'backbase/src/Model';
-import Component from 'backbase/src/Component';
-import {createEl} from 'backbase/src/utils/DOM';
-```
+
+  import Model from 'backbase/src/Model';
+  import Component from 'backbase/src/Component';
+  import {createEl} from 'backbase/src/utils/DOM';
+
 
 ## To do
 
