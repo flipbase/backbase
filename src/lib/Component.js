@@ -1,5 +1,5 @@
 import events from './../../bower_components/utilbase';
-import * as pubsub from './../../bower_components/utilbase';
+import pubsub from './../../bower_components/utilbase';
 import utils from './../../bower_components/utilbase';
 // import log from './../../bower_components/logger';
 import createEl from './../../bower_components/utilbase/src/DOM';
@@ -7,6 +7,7 @@ import createEl from './../../bower_components/utilbase/src/DOM';
 
 /**
  * @example
+ * 
  * var el = new Component('flipbase-recorder-intro', {
  *   tag: 'button',
  *   attrs: {
