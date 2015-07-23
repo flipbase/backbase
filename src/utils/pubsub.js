@@ -3,9 +3,10 @@
  * @module
  */
 
-var topics = {};
+var pubsub = {};
+pubsub.topics = {};
 
-export function subscribe(topic, listener, context, store) {
+pubsub.subscribe = function(topic, listener, context, store) {
   store = store || topics;
   topic = topic.split(', ');
 
@@ -19,7 +20,7 @@ export function subscribe(topic, listener, context, store) {
   return index;
 };
 
-export function publish(topic, store) {
+pubsub.publish = function (topic, store) {
   store = store || topics;
   var evnts = store[topic] || [];
   var args = Array.prototype.slice.call(arguments, 2);
@@ -28,10 +29,12 @@ export function publish(topic, store) {
     if (evnt.listener)
       evnt.listener.apply((evnt.context || this), args);
   });
-}
+};
 
-export function unsubscribe(topic, index, store) {
+pubsub.unsubscribe = function (topic, index, store) {
   store = store || topics;
   var events = store[topic] || [];
   delete events[index];
-}
+};
+
+export default pubsub;
