@@ -91,7 +91,8 @@ export function removeClass(el, className) {
 }
 
 export function getStyle(el, prop) {
-  if (getComputedStyle !== 'undefined') {
+  var getComputedStyl = (!!window.getComputedStyle) ? window.getComputedStyle : undefined;
+  if (getComputedStyl) {
     return window.getComputedStyle(el, null).getPropertyValue(prop);
   } else {
     return el.currentStyle[prop];
