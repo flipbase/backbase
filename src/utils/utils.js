@@ -66,3 +66,12 @@ export function checkForPepper() {
   }
   return false;
 }
+
+export function preventDefault(evt) {
+  if (evt.preventDefault) {
+    evt.preventDefault();
+  } else if (evt.returnValue) {
+    // IE8<
+    evt.returnValue = false;
+  }
+}

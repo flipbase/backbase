@@ -39,7 +39,7 @@ events.on = function (el, evnt, fn) {
  */
 events.off = function (el, evnt, fn) {
   if (el.detachEvent) {
-    el.detachEvent('on' + type, el[evnt + fn]);
+    el.detachEvent('on' + evnt, el[evnt + fn]);
     el[evnt + fn] = null;
   } else {
     el.removeEventListener(evnt, fn, false);

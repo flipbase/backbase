@@ -26,6 +26,10 @@ class Model {
 
     this.attributes = this.defaults;
 
+    this.host = 'http://app.flipbase.com';
+    this.path = '/log/play';
+
+
     // Only assign whitelisted properties to the attributes
     var whitelistedKeys = Object.keys(this.defaults);
     var optionsKeys = Object.keys(options);
@@ -164,7 +168,7 @@ class Model {
       // model.set(attrs);
     };
     options.data = this.attributes;
-    options.url = 'http://flipbase.dev/log/play';
+    options.url = this.host + this.path;
     jsonp(options);
   }
 
