@@ -25,10 +25,10 @@ export function bind(context, fn) {
 }
 
 export function querystring (obj) {
-  var keys = Object.keys(obj);
+  var keys = keys(obj);
   var querystring = '';
 
-  keys.forEach(function (key) {
+  each(keys, function (key) {
     var val = obj[key];
   
     if (querystring.length > 0) querystring += '&amp;';
@@ -74,4 +74,22 @@ export function preventDefault(evt) {
     // IE8<
     evt.returnValue = false;
   }
+}
+
+export function keys(obj) {
+  var props = [];
+  for(var key in obj) props.push(key);
+
+  return props;
+}
+
+export function each(arr, cb) {
+  for (var i = 0; arr.length > i; i++) cb(arr[i], i, arr);
+}
+
+export function getIndex(arr, val, start) {
+  for (var i = (start || 0), j = arr.length; i < j; i++) {
+    if (arr[i] === val) { return i; }
+  }
+  return -1;
 }

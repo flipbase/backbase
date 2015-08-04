@@ -1,7 +1,9 @@
+import {each} from './utils';
+
 var transports = [];
 
 export function log(level, msg, meta) {
-  transports.forEach(function(transport) {
+  each(transports, function(transport) {
     transport(level, msg, meta);
   });
 }
@@ -28,7 +30,9 @@ export function info(msg, meta) {
  * @param {number} transport index
  */
 export function add(transport) {
-  if (typeof transport !== 'function') return new Error('transport should be function');
+  if (typeof transport !== 'function') 
+    return new Error('transport should be function');
+  
   return transports.push(transport) -1;
 }
 

@@ -1,3 +1,5 @@
+import {each} from './utils';
+
 /**
  * 
  * @module
@@ -25,9 +27,9 @@ pubsub.publish = function (topic, store) {
   var evnts = store[topic] || [];
   var args = Array.prototype.slice.call(arguments, 2);
 
-  evnts.forEach(function (evnt) {
+  each(evnts, function (evnt) {
     if (evnt.listener)
-      evnt.listener.apply((evnt.context || this), args);
+      evnt.listener.apply(evnt.context, args);
   });
 };
 

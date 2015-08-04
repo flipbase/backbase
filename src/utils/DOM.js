@@ -1,3 +1,5 @@
+import {each, keys} from './utils';
+
 /**
  * Lightweight DOM selector utilty methods
  * 
@@ -13,6 +15,7 @@
  * @return {object}    selected document node
  */
 export function getEl(id) {
+  // indexOf stirng is supported in IE7
   if (id.indexOf('#') === 0)
     id = id.slice(1);
 
@@ -47,9 +50,10 @@ export function createEl(tag = 'div', attrs = {}) {
 }
 
 export function setElAttributes(el, attrs) {
+  var props = keys(attrs);
   // Iterareve over attrs object and assing attributes to element
-  Object.getOwnPropertyNames(attrs).forEach(function (attrName) {
-    let val = attrs[attrName];
+  each(props, function (attrName) {
+    var val = attrs[attrName];
     el.setAttribute(attrName, (val || ''));
   });
 
