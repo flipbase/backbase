@@ -88,8 +88,8 @@ export function each(arr, cb) {
 }
 
 export function getIndex(arr, val, start) {
-  for (var i = (start || 0), j = arr.length; i < j; i++) {
-    if (arr[i] === val) { return i; }
+  for (var i = (start || 0); i < arr.length; i++) {
+    if (arr[i] === val) return i;
   }
   return -1;
 }
