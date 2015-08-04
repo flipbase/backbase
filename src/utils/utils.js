@@ -93,3 +93,10 @@ export function getIndex(arr, val, start) {
   }
   return -1;
 }
+
+// http://javascript.crockford.com/prototypal.html
+export function inherits(proto) {
+  function F() {}
+  F.prototype = proto;
+  return new F();
+}
