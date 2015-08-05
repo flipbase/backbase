@@ -25,15 +25,12 @@ export function bind(context, fn) {
 }
 
 export function querystring (obj) {
-  var keys = keys(obj);
+  var _keys = keys(obj);
   var querystring = '';
 
-  each(keys, function (key) {
+  each(_keys, function (key) {
     var val = obj[key];
-  
-    if (querystring.length > 0) querystring += '&amp;';
-  
-     querystring += key + '=' + val; 
+    querystring += key.toString() + '=' + val.toString() + '&';
   });
 
   return querystring;
