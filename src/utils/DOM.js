@@ -104,13 +104,15 @@ export function getStyle(el, prop) {
 }
 
 export function height(el) {
-  var pxs = getStyle(el, 'height');
+  var pxs = el.offsetHeight;
+  // var pxs = getStyle(el, 'height');
   // Remove 'px' from the string;
   return parseInt(pxs, 10);
 }
 
 export function width(el) {
-  var pxs = getStyle(el, 'width');
+    var pxs = el.offsetWidth;
+  // var pxs = getStyle(el, 'width');
   // Remove 'px' from the sring;
   return parseInt(pxs, 10);
 }
