@@ -73,7 +73,7 @@ Model.prototype.isNew = function() {
    * @return {object}
    */
 Model.prototype.get = function(attr) {
-  return (this.attributes[attr] || undefined);
+  return this.attributes[attr];
 };
 
   /**
