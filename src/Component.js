@@ -190,13 +190,4 @@ Component.prototype.getComponent = function(name) {
   // log.error('Component"' + name + '"not registered');
 };
 
-  // static registerComponent(name, Component) {
-  //   if (!Flipbase._components)
-  //     Flipbase._components = {};
-
-  //   Flipbase._components[name] = Component;
-  //   return Component;
-  // }
-
-
 module.exports = Component;
