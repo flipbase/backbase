@@ -1,10 +1,10 @@
-import events from './utils/events';
-import pubsub from './utils/pubsub';
-import {bind} from './utils/utils';
-// import log from './../bower_components/logger';
-import {createEl} from './utils/DOM';
-import Flipbase from './utils/namespace';
-import {each, keys} from './utils/utils';
+var Flipbase = require('./utils/namespace');
+var pubsub = require('./utils/pubsub');
+var events = require('./utils/events');
+var each = require('./utils/utils').each;
+var bind = require('./utils/utils').bind;
+var keys = require('./utils/utils').keys;
+var createEl = require('./utils/DOM').createEl;
 
 /**
  * @example
@@ -196,5 +196,4 @@ Component.prototype.getComponent = function(name) {
   // }
 
 
-
-export default Component;
+module.exports = Component;

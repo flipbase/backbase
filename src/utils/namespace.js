@@ -8,4 +8,4 @@
  */
 var Flipbase = window.Flipbase = window.Flipbase || {};
 
-export default Flipbase;
+module.exports = Flipbase;

@@ -1,4 +1,4 @@
-import {each} from './utils';
+var each = require('./utils').each;
 
 /**
  * 
@@ -39,4 +39,4 @@ pubsub.unsubscribe = function (topic, index, store) {
   delete events[index];
 };
 
-export default pubsub;
+module.exports = pubsub;

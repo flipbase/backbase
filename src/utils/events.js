@@ -46,4 +46,4 @@ events.off = function (el, evnt, fn) {
   }
 };
 
-export default events;
+module.exports = events;
