@@ -30,6 +30,9 @@ function Component(options) {
   this._events = {};
   this._pubsubs = {};
 
+  if (!options || (!options.parent && !options.$el && !this.createEl)) 
+    throw new Error('The top level component should receive an reference to an DOM element');
+
   this.options = options || {};
   this.parent = options ? options.parent : null;
 
