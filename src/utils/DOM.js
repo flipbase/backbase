@@ -1,4 +1,5 @@
-import {each, keys} from './utils';
+var each = require('./utils').each;
+var keys = require('./utils').keys;
 
 /**
  * Lightweight DOM selector utilty methods
@@ -6,6 +7,7 @@ import {each, keys} from './utils';
  * @category helpers
  * @module
  */
+var DOM = {};
 
 /**
  * Select element by id; only supports '#elementId' or 'elementId' as input;
@@ -14,13 +16,13 @@ import {each, keys} from './utils';
  * @param  {string} id element id
  * @return {object}    selected document node
  */
-export function getEl(id) {
+DOM.getEl = function(id) {
   // indexOf stirng is supported in IE7
   if (id.indexOf('#') === 0)
     id = id.slice(1);
 
   return document.getElementById(id);
-}
+};
 
 /**
  *
@@ -29,11 +31,11 @@ export function getEl(id) {
  * @param  {string} attr 
  * @return {object} attribute value or undefined
  */
-export function elHasAttr(el, attr) {
+DOM.elHasAttr = function(el, attr) {
   return el.getAttribute(attr) || undefined;
-}
+};
 
-export function getElsByTagAndAttr(tag, attr, val) {
+DOM.getElsByTagAndAttr = function(tag, attr, val) {
   var nodes = document.getElementsByTagName(tag);
   var elems = [];
 
@@ -41,15 +43,17 @@ export function getElsByTagAndAttr(tag, attr, val) {
     if (nodes[i].getAttribute(attr) === val) elems.push(nodes[i]);
   }
   return elems;
-}
+};
 
-export function createEl(tag = 'div', attrs = {}) {
+DOM.createEl = function(tag, attrs) {
+  if (!tag) tag = 'div';
+  if (!attrs) attrs = {};
   var el = document.createElement(tag);
-  el = setElAttributes(el, attrs);
+  el = DOM.setElAttributes(el, attrs);
   return el;
-}
+};
 
-export function setElAttributes(el, attrs) {
+DOM.setElAttributes = function(el, attrs) {
   var props = keys(attrs);
   // Iterareve over attrs object and assing attributes to element
   each(props, function (attrName) {
@@ -58,9 +62,9 @@ export function setElAttributes(el, attrs) {
   });
 
   return el;
-}
+};
 
-export function insertAsFirstEl(el, parent) {
+DOM.insertAsFirstEl = function(el, parent) {
   if (parent.firstChild) {
     parent.insertBefore(el, parent.firstChild);
   } else {
@@ -68,49 +72,51 @@ export function insertAsFirstEl(el, parent) {
   }
 
   return el;
-}
+};
 
-export function insertBeforeEl(el, parent) {
+DOM.insertBeforeEl = function(el, parent) {
   if (parent && parent.parentNode)
     parent.parentNode.insertBefore(el, parent);
   return el;
-}
+};
 
-export function hasClass(el, className) {
+DOM.hasClass = function(el, className) {
   return ((' ' + el.className + ' ').indexOf(className) > -1);
-}
+};
 
-export function addClass(el, className) {
+DOM.addClass = function(el, className) {
   if (!hasClass(el, className))
     el.className = el.className === '' ? className : el.className += ' ' + className;
 
   return el;
-}
+};
 
-export function removeClass(el, className) {
+DOM.removeClass = function(el, className) {
   if (hasClass(el, className))
     el.className.replace(' ' + className, '');
 
   return el;
-}
+};
 
-export function getStyle(el, prop) {
+DOM.getStyle = function(el, prop) {
   var getComputedStyl = (!!window.getComputedStyle) ? window.getComputedStyle : undefined;
   if (getComputedStyl) {
     return window.getComputedStyle(el, null).getPropertyValue(prop);
   } else {
     return el.currentStyle[prop];
   }
-}
+};
 
-export function height(el) {
+DOM.height = function(el) {
   var pxs = getStyle(el, 'height');
   // Remove 'px' from the string;
   return parseInt(pxs, 10);
-}
+};
 
-export function width(el) {
+DOM.width = function(el) {
   var pxs = getStyle(el, 'width');
   // Remove 'px' from the sring;
   return parseInt(pxs, 10);
-}
+};
+
+module.exports = DOM;

@@ -6,6 +6,14 @@
     "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md"
   },
   "devDependencies": {
-    "chai": "^3.3.0"
+    "chai": "^3.3.0",
+    "karma-chai": "*",
+    "karma-html2js-preprocessor": "^0.1.0",
+    "karma-mocha": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-sinon": "*",
+    "karma-spec-reporter": "0.0.20",
+    "karma-webpack": "^1.7.0",
+    "webpack": "^1.12.2"
   }
 }

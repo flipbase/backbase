@@ -30,16 +30,16 @@ function Component(options) {
   this._events = {};
   this._pubsubs = {};
 
-  this.options = options;
-  this.parent = options.parent || null;
+  this.options = options || {};
+  this.parent = options ? options.parent : null;
 
   // Create new DOM element if there is non provided.
   // If a similar named method has been provided to the parent component's
   // class then this precedes the method as defined in this prototype.
   if (this.createEl) {
     this.$el = this.createEl();
-  } else if (options.$el) {
-    this.$el = options.$el;
+  } else if (this.options.$el) {
+    this.$el = this.options.$el;
   }
      
   if (!this.$el)
