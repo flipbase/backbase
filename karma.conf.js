@@ -72,14 +72,14 @@ module.exports = function(config) {
     singleRun: false,
 
     plugins: [
-      'karma-webpack', 
-      'karma-chai', 
-      'karma-spec-reporter',
-      'karma-sinon',
-      'karma-phantomjs-launcher',
-      'karma-spec-reporter',
-      'karma-html2js-preprocessor',
-      'karma-mocha'
+      require('karma-webpack'), 
+      require('karma-chai'), 
+      require('karma-spec-reporter'),
+      require('karma-sinon'),
+      require('karma-phantomjs-launcher'),
+      require('karma-spec-reporter'),
+      require('karma-html2js-preprocessor'),
+      require('karma-mocha')
     ]
   });
 };

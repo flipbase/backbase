@@ -95,4 +95,27 @@ utils.getIndex = function(arr, val, start) {
   return -1;
 };
 
+utils.extend = function (target, source) {
+  var keys = utils.keys(source);
+
+  utils.each(keys, function (val, i, list) {
+    target[val] = source[val];
+  });
+
+  return target;
+
+};
+
+
+// http://javascript.crockford.com/prototypal.html
+// ES3 Object.create alternative
+utils.inherits = function(proto) {
+  function F() {}
+  F.prototype = proto;
+  return new F();
+};
+
+
+
+
 module.exports = utils;

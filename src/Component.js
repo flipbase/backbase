@@ -5,6 +5,7 @@ var each = require('./utils/utils').each;
 var bind = require('./utils/utils').bind;
 var keys = require('./utils/utils').keys;
 var createEl = require('./utils/DOM').createEl;
+var extend = require('./utils/utils').extend;
 
 /**
  * @example
@@ -50,8 +51,8 @@ function Component(options) {
 
   // If instance does not have a render method provided, render element 
   // directly into the DOM
-  if (!this.render)
-    this.addToDOM();
+  // if (!this.render)
+    // this.addToDOM();
 
   // Add child elements to the Component and Render into the DOM
   if (this.children)
@@ -60,6 +61,28 @@ function Component(options) {
   if (this.init)
     this.init.call(this, options);
 }
+
+// Component.prototype.create = function (props) {
+//   var parent = this;
+//   var child;
+
+
+//   if (props && props.hasOwnProperty('constructor')) {
+//     child = props.constructor;
+//   } else {
+//     child = function(){ 
+//       return parent.apply(this, arguments); 
+//     };
+//   }
+  
+//   extend(child, parent);
+//   // child = new child(props);
+
+//   child.prototype = parent.prototype;
+//   child.prototype.constructor = child;
+
+//   return child;
+// };
 
 Component.prototype.addToDOM = function() {
   if (this.parent && !document.body.contains(this.$el))
@@ -114,6 +137,9 @@ Component.prototype.hide = function() {
   this.$el.style.display = 'none';
 };
 
+Component.prototype.renderChild = function(child, data) {
+  return this._children[child].render(data);
+};
 
 Component.prototype.getChild = function(compName) {
   return this._children[compName];
@@ -161,7 +187,7 @@ Component.prototype.remove = function() {
   // If the current component has a parentNode use it
   if (this.$el.parentNode) {
     return this.$el.parentNode.removeChild(this.$el);
-  }    
+  }
 };
 
 Component.prototype.destroy = function() {
