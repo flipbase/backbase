@@ -6,11 +6,12 @@ var bind = require('./utils/utils').bind;
 var keys = require('./utils/utils').keys;
 var createEl = require('./utils/DOM').createEl;
 var extend = require('./utils/utils').extend;
+var inherits = require('./utils/extend');
 
 /**
  * @example
  * 
- * var el = new Component('flipbase-recorder-intro', {
+ * var $el = new Component('flipbase-recorder-intro', {
  *   tag: 'button',
  *   attrs: {
  *     'style': 'color: #FFF000; text-align: center;'
@@ -26,7 +27,7 @@ var extend = require('./utils/utils').extend;
  * 
  */
 
-function Component(options) {  
+function Component(options) {
   this._children = {};
   this._events = {};
   this._pubsubs = {};
@@ -201,5 +202,7 @@ Component.registerComponent = function(name, comp) {
   Component._components[name] = comp;
   return comp;
 };
+
+Component.extend = inherits;
 
 module.exports = Component;

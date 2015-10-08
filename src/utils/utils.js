@@ -77,6 +77,12 @@ utils.preventDefault = function(evt) {
   }
 };
 
+/**
+ * This code does not work in IE9 and lower!
+ * 
+ * @param  {[type]} obj [description]
+ * @return {[type]}     [description]
+ */
 utils.keys = function(obj) {
   var props = [];
   for(var key in obj) props.push(key);

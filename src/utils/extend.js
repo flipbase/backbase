@@ -1,30 +1,21 @@
-var utils = require('./utils');
+var extend = require('./utils').extend;
+var inherits = require('./utils').inherits;
 
 // Helper function to correctly set up the prototype chain for subclasses.
 // Similar to `goog.inherits`, but uses a hash of prototype properties and
 // class properties to be extended.
 var extend = function(protoProps) {
   var parent = this;
-  var child;
 
-  // The constructor function for the new subclass is either defined by you
-  // (the "constructor" property in your `extend` definition), or defaulted
-  // by us to simply call the parent constructor.
-  if (protoProps && protoProps.hasOwnProperty('constructor')) {
-  // if (protoProps && _.has(protoProps, 'constructor')) {
-    child = protoProps.constructor;
-  } else {
-    child = function(){ 
-      return parent.apply(this, arguments); 
-    };
-  }
-
-  // Add static properties to the constructor function, if supplied.
-  utils.extend(child, parent);
+  // Create constructor method that automatically calls parent when initiated
+  var child = function(){ 
+    return parent.apply(this, arguments); 
+  };
 
   // Set the prototype chain to inherit from `parent`, without calling
   // `parent`'s constructor function and add the prototype properties.
-  child.prototype = _.create(parent.prototype, protoProps);
+  var proto = inherits(parent.prototype);
+  child.prototype = assign(proto, protoProps);
   child.prototype.constructor = child;
 
   // Set a convenience property in case the parent's prototype is needed
@@ -33,5 +24,12 @@ var extend = function(protoProps) {
 
   return child;
 };
+
+function assign(proto, protoProps) {
+  for(var key in protoProps) {
+    proto[key] = protoProps[key];
+  }
+  return proto;
+}
 
 module.exports = extend;
