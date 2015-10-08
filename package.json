@@ -1,6 +1,6 @@
 {
   "name": "backbase",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md"
