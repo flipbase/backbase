@@ -3,7 +3,12 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md"
+    "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md",
+    "dist": "webpack -p",
+    "test": "karma run karma.config.js",
+    "release-patch": "git checkout master && npm version patch && git push origin master",
+    "release-minor": "git checkout master && npm version minor && git push origin master",
+    "release-major": "git checkout master && npm version major && git push origin master"
   },
   "devDependencies": {
     "chai": "^3.3.0",

@@ -31,7 +31,7 @@ function Component(options) {
   this._events = {};
   this._pubsubs = {};
 
-  if (!options || (!options.parent && !options.$el && !this.createEl)) 
+  if (options && (!options.parent && !options.$el && !this.createEl)) 
     throw new Error('The top level component should receive an reference to an DOM element');
 
   this.options = options || {};
@@ -61,28 +61,6 @@ function Component(options) {
   if (this.init)
     this.init.call(this, options);
 }
-
-// Component.prototype.create = function (props) {
-//   var parent = this;
-//   var child;
-
-
-//   if (props && props.hasOwnProperty('constructor')) {
-//     child = props.constructor;
-//   } else {
-//     child = function(){ 
-//       return parent.apply(this, arguments); 
-//     };
-//   }
-  
-//   extend(child, parent);
-//   // child = new child(props);
-
-//   child.prototype = parent.prototype;
-//   child.prototype.constructor = child;
-
-//   return child;
-// };
 
 Component.prototype.addToDOM = function() {
   if (this.parent && !document.body.contains(this.$el))
@@ -209,11 +187,19 @@ Component.prototype.destroy = function() {
 };
 
 
-Component.prototype.getComponent = function(name) {
-  if (Flipbase._components[name])
-    return Flipbase._components[name];
+Component.getComponent = function(name) {
+  if (Component._components[name])
+    return Component._components[name];
 
   // log.error('Component"' + name + '"not registered');
+};
+
+Component.registerComponent = function(name, comp) {
+  if (!Component._components)
+    Component._components = {};
+
+  Component._components[name] = comp;
+  return comp;
 };
 
 module.exports = Component;

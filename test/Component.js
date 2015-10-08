@@ -1,5 +1,5 @@
-// var Component = require('../src/Component');
-var Component = require('../src/Component2');
+var Component = require('../src/Component');
+// var Component = require('../src/Component2');
 var inherits = require('../src/utils/utils').inherits;
 
 function Child(options) {
