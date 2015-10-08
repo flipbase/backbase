@@ -19,7 +19,6 @@ function App (options) {
 
 App.prototype = inherits(Component.prototype);
 
-
 describe('Component', function () {
 
   before(function() {
@@ -67,8 +66,11 @@ describe('Component', function () {
   });
 
 
-  it('should render Child\'s template in App\'s template', function () {
-    App.prototype.children = ['Child'];
+  it('should render Child\'s template in App\'s template', function () {   
+    App.prototype.registerChildren = {
+      'Child': Child
+    };
+
     App.prototype.didRender = function () {
       this.initChildren();
     };
@@ -80,6 +82,15 @@ describe('Component', function () {
     app.render();
 
     expect(app.html()).to.contain(Child.prototype.template());
+  });
+
+
+
+  it('should trigger render method automatically when initiated', function () {
+    App.prototype.render = function () {
+      return ''
+    };
+
   });
 
 });

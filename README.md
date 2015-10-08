@@ -19,14 +19,17 @@ zo met templates.
 Template
 + Minder classes
 - Maar moet je template language adopteren
-- Plus je ontkomt niet aan een virtual DOM
+- Event handling wordt iets moeilijker
+- Iets van een router oid is handig om tussen templates te navigeren
+- opnieuw redenderen van images en tekst is langzaam. dat gaat dan vaak gebeuren. 
+- kans op flikkeren.
 
 Everything is a component
 - Lots of classes
 - Children are initialized during parent init
 + No virutal DOM
 - Hierachie can not be determined using a template
-
++ easy event handling
 
 Why? This abstracts away 
 
