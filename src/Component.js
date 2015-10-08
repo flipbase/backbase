@@ -32,6 +32,7 @@ function Component(options) {
   this._events = {};
   this._pubsubs = {};
 
+  /**
   if (options && (!options.parent && !options.$el && !this.createEl)) 
     throw new Error('The top level component should receive an reference to an DOM element');
 
@@ -58,11 +59,37 @@ function Component(options) {
   // Add child elements to the Component and Render into the DOM
   if (this.children)
     this.addChildren();
+  **/
 
-  if (this.init)
-    this.init.call(this, options);
+  this.init.call(this, options);
+  this._render.apply(this, options);
+
+  return this;
 }
 
+Component.prototype = {
+
+  // Needs to be overwritten by instance
+  init: function () {},
+
+  /**
+   * Internal method that triggers `willRender`, `render` and `didRender` methods
+   * synchronously.
+   */
+  _render: function () {
+    this.willRender.apply(this, arguments);
+    this.render.apply(this, arguments);
+    this.didRender.apply(this, arguments);
+  },
+
+  // Methods needs to be overwritten by the instance
+  willRender: function () {},
+  render: function () {},
+  didRender: function () {}
+
+};
+
+/**
 Component.prototype.addToDOM = function() {
   if (this.parent && !document.body.contains(this.$el))
     this.parent.$el.appendChild(this.$el);
@@ -202,6 +229,7 @@ Component.registerComponent = function(name, comp) {
   Component._components[name] = comp;
   return comp;
 };
+**/
 
 Component.extend = inherits;
 
