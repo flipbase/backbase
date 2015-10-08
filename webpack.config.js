@@ -13,10 +13,7 @@ module.exports = {
 
   // Let Webpack use bower components
   resolve: {
-    root: [
-      path.join(__dirname, '/components'),
-    ],
-    modulesDirectories: ['node_modules']
+    modulesDirectories: ['node_modules', 'bower_components']
   },
 
   plugins: [
