@@ -6,7 +6,7 @@ var logger = {
 
   log: function (level, msg, meta) {
     each(logger.transports, function(transport) {
-      transport(level, msg, meta);
+      transport.fn.apply(transport.ctx, [level, msg, meta]);
     });
   },
 
@@ -31,11 +31,11 @@ var logger = {
    * 
    * @param {number} transport index
    */
-  add: function (transport) {
+  add: function (transport, ctx) {
     if (typeof transport !== 'function') 
       return new Error('transport should be function');
     
-    return logger.transports.push(transport) -1;
+    return logger.transports.push({fn: transport, ctx: (ctx || this) }) -1;
   },
 
   remove: function (index) {
