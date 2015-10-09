@@ -15,13 +15,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // include recorder dependencies
-      'dist/utils/*.js',
-      'dist/Component.js',
+      'dist/test.bundle.js',
 
       // HTML files only needs to be included for unit tests!
       'test/*.html',
 
       // Include test files
+      'test/**/*.js',
       'test/*.js'
     ],
 
@@ -33,6 +33,7 @@ module.exports = function(config) {
 
     // HTML only needs to be integrated for integration tests
     preprocessors: {
+        'test/**/*.js': ['webpack'],
         'test/*.js': ['webpack'],
         // 'public/recorder/scripts/**/*.js': ['coverage'],
         'test/*.html': ['html2js']
@@ -44,6 +45,12 @@ module.exports = function(config) {
     reporters: ['spec'], //'coverage'
 
     webpack: require('./webpack.config.js'),
+
+    webpackMiddleware: {
+      // webpack-dev-middleware configuration
+      // i. e.
+      noInfo: true
+    },
 
     // web server port
     port: 9876,

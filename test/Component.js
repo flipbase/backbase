@@ -31,7 +31,7 @@ var App = Component.extend({
 
 });
 
-describe('Component', function () {
+describe.skip('Component', function () {
 
   before(function() {
     document.body.innerHTML = window.__html__['test/template.html'];
@@ -46,7 +46,6 @@ describe('Component', function () {
     // expect()
   });
 
-  it('should pass options object to `init` method during initialization');
   it('should pass options object to `init` method during initialization');
 
 

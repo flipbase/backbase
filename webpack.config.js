@@ -6,9 +6,11 @@ module.exports = {
 
   // entry: appDir + '/Component.js',
 
+
+  // bundle.js is used
   output: {
     path: __dirname + '/dist',
-    filename: 'Component.js',
+    filename: 'test.bundle.js',
   },
 
   // Let Webpack use bower components

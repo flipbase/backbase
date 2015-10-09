@@ -16,6 +16,11 @@ var config = {
 /**
  * What is the difference between logs and recordings?!
  *
+ * Logs hebben als doel om te debuggen; recordings zijn vooral voor statistieken
+ *
+ * - hoeveel takes mobiel/webcam / per video
+ * - hoevaak is video afgespeeld in recorder
+ *
  * Logs are not stored longer then 7 days in Loggly!
  */
 
@@ -52,6 +57,9 @@ var state = {
 
   // We seperate the recordings and the uploads so the amount of data will be
   // too much to send over the wire using JSONP
+
+  // saved after every recording has finished when the data has been received from
+  // flash
   recordings: {
     videoId: null,
     clientUUID: null, // so we can query how often people retry-after page refresh
@@ -59,11 +67,11 @@ var state = {
     browser: {
       user_agent: null,
       xhr2_support: true,
-      pepper_flash: true,
-      activex_filtering: true,
+      pepper_flash: true, // naar log verplaatsen?
+      activex_filtering: true, // naar log?
       device_orientation: 0,
       flash_player: null,
-      external_interface: undefined,
+      external_interface: undefined, // naar log?
       flash_embedded: true
     },
 
@@ -94,6 +102,7 @@ var state = {
       upload_duration: 0
     },
 
+    // dit is toch eigenlijk vooral om te debuggen en in te schatten hoe de implementatie is gedaan?
     settings: {
       width: null,
       height: null,
@@ -109,7 +118,5 @@ var state = {
   }
 
 };
-
-// scheidt transactionele gebruikers data van statische instellingen.
 
 module.exports = state;
