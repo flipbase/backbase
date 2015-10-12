@@ -1,6 +1,6 @@
 import pubsub from './utils/pubsub';
 import jsonp from 'expose?jsonp!./components/browser-jsonp';
-import {each, keys, getIndex} from './utils/utils';
+import {each, keys, getIndex, is} from './utils/utils';
 
 /**
  * The Model class is inspired on the Backbone.Model class, with setters, 
@@ -111,10 +111,6 @@ Model.prototype.set = function(attr, val, options) {
   this.trigger('change', this);
 };
 
-Model.prototype.is = function(attr, val) {
-  return (this.get(attr) === val);
-};
-
   /**
    * Get previous value from a certain attribute.
    * 
@@ -141,11 +137,6 @@ Model.prototype.save = function(options) {
   options = options || {};
   options.method = 'POST';
   this.request(options);
-};
-
-  // FIMXE: move to utility
-Model.prototype.is = function(attr, value) {
-  return (this.get(attr) === value);
 };
 
   /**

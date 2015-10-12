@@ -112,6 +112,10 @@ utils.extend = function (target, source) {
 
 };
 
+utils.is = function(attr, val) {
+  return (attr === val);
+};
+
 
 // http://javascript.crockford.com/prototypal.html
 // ES3 Object.create alternative

@@ -11,7 +11,15 @@ describe('Logger', function () {
   });
 
   describe('JSONP transport', function () {
-  
+    
+    before(function () {
+      this.JSONP_send_spy = sinon.spy(trans, 'send');
+    });
+
+    after(function() {
+      this.JSONP_send_spy.restore();
+    });
+
     it('should store each log file in an object', function() {
       logger.info('Hello world!');
       expect(trans.store.logs[0]).to.be.a('object');
@@ -20,17 +28,20 @@ describe('Logger', function () {
     it('should log error message', function() {
       logger.error(new Error('Hello bad error world!'));
       var i = trans.store.logs.length;
-      expect(trans.store.logs[i - 1].message).to.contain('bad error world');
+      expect(trans.store.logs[i - 1].m).to.contain('bad error world');
+    });
+    
+    it('should send the logs to the server if the URI gets too long + reset the querystring', function () {
+      for (var i = 0; i < 10; i++) {
+        logger.info('Hello bad error world long sentences stuff! This is a very long sentence');
+      }
+      expect(trans.querystring.length).to.lt(2083-200);
+      expect(this.JSONP_send_spy.callCount).to.equal(1);      
     });
 
-    it('should log error message', function() {
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
-      logger.info('Hello bad error world!');
+    it('should send logs to the server if the message is an Error instance', function () {
+      logger.error(new Error('Hello bad error world long sentences stuff!'));
+      expect(this.JSONP_send_spy.callCount).to.equal(2);      
     });
 
   });

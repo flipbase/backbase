@@ -3,6 +3,7 @@ var each = require('./utils').each;
 // 2083 is the max URI length for IE; to be on the safe side we already
 // send URI's that are about 1900 characters long.
 var maxQueryStringLength = (2083 - 200);
+var jsonp = require('browser-jsonp');
 
 /**
  * The JSONP transport is responsible for storing and sending logs to a server-side API endpoint. It's mainly for the recorder usage, since that's were debugging is most probably necessary.
@@ -43,18 +44,18 @@ Transport.prototype = {
   /**
    * 
    * @param  {string}         level   can be set to info/error/warn/debug
-   * @param  {string|object}  msg     ususally a string, only object if new Error is used
+   * @param  {string|object}  msg     a string, if new Error it's an object
    * @param  {object}         meta
-   * @return {[type]}       [description]
    */
   transport: function (level, msg, meta) {
     var message = (msg instanceof Error && msg.message)? msg.message : msg;
 
+    // We use very short key names so the URI doesn't get too long too fast
     var log = {
       // Store time since the library has been loaded or initialized?
-      timestamp: (new Date().getTime() - this.startTime), 
-      level: level,
-      message: message, 
+      t: (new Date().getTime() - this.startTime), // timestamp
+      l: level, // level
+      m: message // message
     };
 
     // Only include the 'stack' property if there is stacktrace included
@@ -65,6 +66,9 @@ Transport.prototype = {
 
     this.appendMessageToQuerystring(log);
     this.store.logs.push(log);
+
+    // Send logs to server when an error occurred
+    if (msg instanceof Error) this.send();
   },
 
 
@@ -78,31 +82,31 @@ Transport.prototype = {
     var props = keys(log);
     var self = this;
 
-    // Use shorter querystring parameters so we can minimize the number of queries
-    var map = {
-      'timestamp': 't',
-      'level': 'l',
-      'message': 'm',
-      'stack': 's',
-      'meta': 'meta'
-    };
-
     // Iterate over the property keys to append each prop to the querstring
     each(props, function (key) {
-      self.querystring += 'l[' + self.index + '][' + map[key] + ']=' + log[key] + '&';
+      self.querystring += 'l[' + self.index + '][' + key + ']=' + log[key] + '&';
     });
 
     this.index++;
 
-    this.checkQueryString();
+    // Check lenght of querystring
+    if (this.querystring.length >= this.maxQueryStringLength) {
+      this.send();
+      
+      // reset querystring and logs storage
+      this.querystring = '?';
+      this.store.logs = [];
+    }
+
   },
 
-
-  checkQueryString: function () {
-    if (this.querystring.length >= this.maxQueryStringLength) {
-      // this.send();
-      this.querystring = '?';
-    }
+  send: function (success, error) {
+    jsonp({
+      url: this.api_endpoint,
+      data: this.store,
+      success: (success || function () {}),
+      error: (error || function () {})
+    });
   }
 
 };

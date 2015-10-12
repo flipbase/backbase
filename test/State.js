@@ -35,17 +35,17 @@ var state = {
     updated_at: null,
 
     last_recording: {
-      settings: {
-        width: null,
-        height: null,
-        resolution: 'VGA',
-        duration: 31,
-        keyframe_interval: 15,
-        fps: 24,
-        video_codec: 'Sorenson', // H264, On2, Sorenson
-        audio_codec: 'Speex', // Speex, Nellymoser, MP3
-        locale: 'en_us'
-      },
+      // settings: {
+      //   width: null,
+      //   height: null,
+      //   resolution: 'VGA',
+      //   duration: 31,
+      //   keyframe_interval: 15,
+      //   fps: 24,
+      //   video_codec: 'Sorenson', // H264, On2, Sorenson
+      //   audio_codec: 'Speex', // Speex, Nellymoser, MP3
+      //   locale: 'en_us'
+      // },
       metadata: {
         duration: 0,
         method: 'webcam',
@@ -61,33 +61,51 @@ var state = {
   // saved after every recording has finished when the data has been received from
   // flash
   recordings: {
+    sessionID: null, // krijgen we terug vd server
     videoId: null,
     clientUUID: null, // so we can query how often people retry-after page refresh
-
-    browser: {
-      user_agent: null,
-      xhr2_support: true,
-      pepper_flash: true, // naar log verplaatsen?
-      activex_filtering: true, // naar log?
-      device_orientation: 0,
-      flash_player: null,
-      external_interface: undefined, // naar log?
-      flash_embedded: true
-    },
 
     type: 'webcam',
 
     // Below props will only be included when recording method = webcam
     webcam: {
       duration: 12,
-      cam_status: 'muted',
-      mic_status: 'unmuted',
-      net_connection: 'connected',
-      net_stream: 'connected',
+      // cam_status: 'muted',
+      // mic_status: 'unmuted',
+      // net_connection: 'connected',
+      // net_stream: 'connected',
       quality_setting: 0, 
       bandwidth_setting: 0,
       avg_mic_activity: 0,
       avg_fps_ns: 22,
+      // hoe gaan we dit doen? na elke playback?
+      view_count: 0, // aantal keer op play geklikt per webcam opname
+      view_duration: 0, // totale duration van alle views bij elkaar
+    },
+
+
+    // na success of error
+    upload: {
+      file_selected: true,
+      // progress: 0, 
+      upload_duration: 0
+    },
+
+
+
+    /**
+     * Blueprint of the client side information we need to log
+     * @type {Object}
+     */
+    client: {
+      user_agent: null,
+      // xhr2_support: true, // naar log
+      // pepper_flash: true, // naar log verplaatsen?
+      // activex_filtering: true, // naar log?
+      device_orientation: 0,
+      flash_player: null,
+      // external_interface: undefined, // naar log?
+      // flash_embedded: true, // naar log
       camera: {
         name: undefined,
         width: 0,
@@ -95,19 +113,13 @@ var state = {
         fps: 0
       }
     },
-
-    upload: {
-      file_selected: true,
-      progress: 0,
-      upload_duration: 0
-    },
-
+    
     // dit is toch eigenlijk vooral om te debuggen en in te schatten hoe de implementatie is gedaan?
     settings: {
       width: null,
       height: null,
-      resolution: 'VGA',
       duration: 31,
+      resolution: 'VGA',
       keyframe_interval: 15,
       fps: 24,
       video_codec: 'Sorenson', // H264, On2, Sorenson
