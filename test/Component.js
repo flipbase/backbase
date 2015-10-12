@@ -1,5 +1,4 @@
 var Component = require('../src/Component');
-var inherits = require('../src/utils/utils').inherits;
 
 var App = Component.extend({
 

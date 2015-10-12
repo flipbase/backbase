@@ -22,13 +22,17 @@ describe('Logger', function () {
 
     it('should store each log file in an object', function() {
       logger.info('Hello world!');
+      expect(trans.store.logs.length).to.be.gte(1);
+      expect(trans.querystring.length).to.be.gte(1);
       expect(trans.store.logs[0]).to.be.a('object');
+      expect(trans.store.logs[0].m).to.equal('Hello world!');
+      expect(trans.store.logs[0].l).to.equal('info');
     });
 
-    it('should log error message', function() {
+    it('should log Error message using the "message" property', function() {
       logger.error(new Error('Hello bad error world!'));
       var i = trans.store.logs.length;
-      expect(trans.store.logs[i - 1].m).to.contain('bad error world');
+      expect(trans.store.logs[i - 1].m).to.equal('Hello bad error world!');
     });
     
     it('should send the logs to the server if the URI gets too long + reset the querystring', function () {

@@ -34,23 +34,35 @@ var state = {
     created_at: null,
     updated_at: null,
 
-    last_recording: {
-      // settings: {
-      //   width: null,
-      //   height: null,
-      //   resolution: 'VGA',
-      //   duration: 31,
-      //   keyframe_interval: 15,
-      //   fps: 24,
-      //   video_codec: 'Sorenson', // H264, On2, Sorenson
-      //   audio_codec: 'Speex', // Speex, Nellymoser, MP3
-      //   locale: 'en_us'
-      // },
-      metadata: {
-        duration: 0,
-        method: 'webcam',
-        user_agent: null,
+    // all data related to last recording!
+    client: {
+      user_agent: null,
+      xhr2_support: true,
+      pepper_flash: true,
+      activex_filtering: true,
+      device_orientation: 0,
+      flash_player: null,
+      camera: {
+        name: undefined,
+        width: 0,
+        height: 0,
+        fps: 0
       }
+    },
+    
+    method: 'webcam',
+
+    // dit is toch eigenlijk vooral om te debuggen en in te schatten hoe de implementatie is gedaan?
+    settings: {
+      width: null,
+      height: null,
+      duration: 31,
+      resolution: 'VGA',
+      keyframe_interval: 15,
+      fps: 24,
+      video_codec: 'Sorenson', // H264, On2, Sorenson
+      audio_codec: 'Speex', // Speex, Nellymoser, MP3
+      locale: 'en_us'
     }
   },
 
@@ -93,39 +105,7 @@ var state = {
 
 
 
-    /**
-     * Blueprint of the client side information we need to log
-     * @type {Object}
-     */
-    client: {
-      user_agent: null,
-      // xhr2_support: true, // naar log
-      // pepper_flash: true, // naar log verplaatsen?
-      // activex_filtering: true, // naar log?
-      device_orientation: 0,
-      flash_player: null,
-      // external_interface: undefined, // naar log?
-      // flash_embedded: true, // naar log
-      camera: {
-        name: undefined,
-        width: 0,
-        height: 0,
-        fps: 0
-      }
-    },
     
-    // dit is toch eigenlijk vooral om te debuggen en in te schatten hoe de implementatie is gedaan?
-    settings: {
-      width: null,
-      height: null,
-      duration: 31,
-      resolution: 'VGA',
-      keyframe_interval: 15,
-      fps: 24,
-      video_codec: 'Sorenson', // H264, On2, Sorenson
-      audio_codec: 'Speex', // Speex, Nellymoser, MP3
-      locale: 'en_us'
-    }
 
   }
 
