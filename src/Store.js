@@ -1,4 +1,4 @@
-import {each, keys} from './utils/utils';
+import {each, keys} from './modules/utils';
 
 function FlipbaseStore() {
   this._index = 1;

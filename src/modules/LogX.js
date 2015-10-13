@@ -1,5 +1,11 @@
 var each = require('./utils').each;
 
+/**
+ * @module      LogX
+ * @description Client-side mini logging library 
+ * @author      Ron Jansen <ron@flipbase.com>
+ */
+
 var logger = {
 
   transports: [],

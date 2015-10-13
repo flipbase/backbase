@@ -1,4 +1,5 @@
 var each = require('./utils').each;
+var is = require('./utils').is;
 
 /**
  * 
@@ -9,7 +10,7 @@ var each = require('./utils').each;
 
 var pubsub = {
 
-  topics: {},
+  _topics: {},
 
   /**
    * Subscribe a method to a certain topic (or 'event').
@@ -21,7 +22,9 @@ var pubsub = {
    * @return {Number}   index     index number of event listener in topics array
    */
   subscribe: function(topic, listener, context, store) {
-    store = store || pubsub.topics;
+    'use strict';
+
+    store = store || this._topics;
 
     // Create topic entry if non exists
     if (!store.hasOwnProperty(topic)) store[topic] = [];
@@ -40,14 +43,16 @@ var pubsub = {
    * @param  {Object} store   optional object store to trigger the event on
    */
   publish: function (topic, store) {
-    store = store || pubsub.topics;
+    'use strict';
+
+    store = store || this._topics;
     var evnts = store[topic] || [];
     // Store additional arguments so they can be provided to the listener method
     var args = Array.prototype.slice.call(arguments, 2);
 
     // Trigger all the listeners of the topic
     each(evnts, function (evnt) {
-      if (evnt.listener) 
+      if (evnt && evnt.listener) 
         evnt.listener.apply(evnt.context, args);
     });
   },
@@ -60,9 +65,10 @@ var pubsub = {
    * @param  {Object} store optional store with topics
    */
   unsubscribe: function (topic, index, store) {
-    store = store || pubsub.topics;
-    var events = store[topic] || [];
-    delete events[index];
+    'use strict';
+
+    store = store || this._topics;
+    delete store[topic][index];
   }
 
 };

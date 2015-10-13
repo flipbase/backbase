@@ -45,9 +45,9 @@ Transport.prototype = {
    * 
    * @param  {string}         level   can be set to info/error/warn/debug
    * @param  {string|object}  msg     a string, if new Error it's an object
-   * @param  {object}         meta
    */
-  transport: function (level, msg, meta) {
+  transport: function (level, msg) {
+    var self = this;
     var message = (msg instanceof Error && msg.message)? msg.message : msg;
 
     // We use very short key names so the URI doesn't get too long too fast
@@ -61,14 +61,15 @@ Transport.prototype = {
     // Only include the 'stack' property if there is stacktrace included
     if (msg instanceof Error && msg.stack) log.stack = msg.stack;
 
-    // Only include 'meta' prop if proviced
-    if (meta) log.meta = meta;
-
     this.appendMessageToQuerystring(log);
     this.store.logs.push(log);
 
     // Send logs to server when an error occurred
     if (msg instanceof Error) this.send();
+
+    // window.onerror = function (err) {
+      // self.send(err);
+    // };
   },
 
 

@@ -1,12 +1,12 @@
-var Flipbase = require('./utils/namespace');
-var pubsub = require('./utils/pubsub');
-var events = require('./utils/events');
-var each = require('./utils/utils').each;
-var bind = require('./utils/utils').bind;
-var keys = require('./utils/utils').keys;
-var createEl = require('./utils/DOM').createEl;
-var extend = require('./utils/utils').extend;
-var inherits = require('./utils/extend');
+var Flipbase = require('./modules/namespace');
+var pubsub = require('./modules/pubsub');
+var events = require('./modules/events');
+var each = require('./modules/utils').each;
+var bind = require('./modules/utils').bind;
+var keys = require('./modules/utils').keys;
+var createEl = require('./modules/DOM').createEl;
+var assign = require('./modules/utils').assign;
+var inherits = require('./modules/extendProto');
 
 /**
  * @example

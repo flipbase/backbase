@@ -1,5 +1,5 @@
-var logger = require('./../../src/utils/logx');
-var jsonp = require('./../../src/utils/logx-jsonp-transport');
+var logger = require('./../../src/modules/LogX');
+var jsonp = require('./../../src/modules/LogX-jsonp-transport');
 
 var trans = new jsonp({ api_endpoint: 'https://logs.flipbase.com/recorder' });
 logger.add(trans.transport, trans);

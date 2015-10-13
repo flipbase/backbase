@@ -1,10 +1,14 @@
-var pubsub = require('./utils/pubsub');
 var jsonp = require('browser-jsonp');
-var each = require('./utils/utils').each;
-var keys = require('./utils/utils').keys;
-var is = require('./utils/utils').is;
-var getIndex = require('./utils/utils').getIndex;
-var inherits = require('./utils/extend');
+
+var pubsub = require('./modules/PubSub');
+var each = require('./modules/utils').each;
+var keys = require('./modules/utils').keys;
+var is = require('./modules/utils').is;
+var getIndex = require('./modules/utils').getIndex;
+var extendProto = require('./modules/extendProto');
+var assign = require('./modules/utils').assign;
+var isArray = require('./modules/utils').isArray;
+var isObject = require('./modules/utils').isObject;
 
 /**
  * The Model class is inspired on the Backbone.Model class, with setters, 
@@ -27,34 +31,29 @@ var inherits = require('./utils/extend');
  */
 
 function Model (options) {
-
-  this.attributes = this.defaults;
-
   this.host = 'http://app.flipbase.com';
   this.path = '/log/play';
 
-  // Only assign whitelisted properties to the attributes
-  var whitelistedKeys = keys(this.defaults);
-  var optionsKeys = keys(options);
-  var _this = this;
-
-  each(optionsKeys, function(key) {
-    if (getIndex(whitelistedKeys, key) > -1)
-      _this.attributes[key] = options[key];
-  });
+  // Assign default properties to the attributes object
+  assign(this.attributes, this.defaults);
  
   // Add the mixins to the current object
   this._previousAttributes = {};
   this._changedAttributes;
+
+  this.initialize.call(this, options);
 }
 
 Model.prototype = {
 
   // Every instance will get an '_id' property
-  _id: null,
+  attributes: {
+    _id: null
+  },
 
-  attributes: {},
   _previousAttributes: {},
+
+  initialize: function(options) {},
 
   /** 
    * @return {Boolean} true if _id is null
@@ -125,25 +124,25 @@ Model.prototype = {
   },
 
   /**
-   * @param {string|object} attr key or object
-   * @param {mixed} val     value to set the attr to
+   * @param {String|Object} attr key or object
+   * @param {Object}        val  value to set the attr to
    */
   set: function (attr, val, options) {
     var error;
     options = options || {};
 
     // Copy all the attributes before applying the change
-    this._previousAttributes = this.attributes;
+    assign(this._previousAttributes, this.attributes);
 
     // Validate before change the setting
-    if (!options.silent && typeof attr === 'string') 
+    // if (!options.silent && typeof attr === 'string') 
       // error = this.validateAttr(attr, val) || null;
 
     // If no validation error is returned apply the change
     if (!error) {
-      if (typeof this.attributes[attr] === 'object' && this.attributes[attr] !== null) {
-        // assign(this.attributes[attr], val);
-      } else if (this.attributes[attr] instanceof Array) {
+      if (isObject(this.attributes[attr])) {
+        assign(this.attributes[attr], val);
+      } else if (isArray(this.attributes[attr])) {
         this.attributes[attr].push(val);
       } else {
         this.attributes[attr] = val;
@@ -152,6 +151,7 @@ Model.prototype = {
 
     // Broadcast events about the changed attribute
     if (typeof attr === 'string') {
+      console.log(attr);
       this.publish('change:' + attr, this, val);
     }
 
@@ -159,15 +159,19 @@ Model.prototype = {
     this.publish('change', this);
   },
 
+  // Create local pubsub store
+  _topics: {},
+
   publish: function (evnt) {
-    pubsub.publish(evnt);
+    pubsub.publish(evnt, this._topics);
   },
 
   subscribe: function(evnt, fn, context) {
+    var self = this;
     var evnts = evnt.split(', ') || [];
-    
+
     each(evnts, function (evt) {
-      pubsub.subscribe(evt, fn, context);
+      pubsub.subscribe(evt, fn, context, self._topics);
     });
   },
 
@@ -175,6 +179,6 @@ Model.prototype = {
 
 };
 
-Model.extend = inherits;
+Model.extend = extendProto;
 
 module.exports = Model;

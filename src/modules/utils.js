@@ -26,7 +26,7 @@ utils.bind = function(context, fn) {
 };
 
 utils.querystring = function(obj) {
-  var keys = keys(obj);
+  var keys = keys(obj) || [];
   var querystring = '';
 
   each(keys, function (key) {
@@ -101,7 +101,7 @@ utils.getIndex = function(arr, val, start) {
   return -1;
 };
 
-utils.extend = function (target, source) {
+utils.assign = function (target, source) {
   var keys = utils.keys(source);
 
   utils.each(keys, function (val, i, list) {
@@ -109,11 +109,14 @@ utils.extend = function (target, source) {
   });
 
   return target;
+};
 
+utils.eq = function(attr, val) {
+  return (attr === val);
 };
 
 utils.is = function(attr, val) {
-  return (attr === val);
+  return (typeof attr === val);
 };
 
 
@@ -125,7 +128,18 @@ utils.inherits = function(proto) {
   return new F();
 };
 
+utils.isObject = function (obj) {
+  var type = typeof obj;
+  return type === 'function' || type === 'object' && !!obj;
+};
 
+/**
+ * Copied from underscore.js
+ * @return {Boolean} true if obj is an array
+ */
+utils.isArray = function (obj) {
+  return toString.call(obj) === '[object Array]';
+};
 
 
 module.exports = utils;
