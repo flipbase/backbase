@@ -151,7 +151,6 @@ Model.prototype = {
 
     // Broadcast events about the changed attribute
     if (typeof attr === 'string') {
-      console.log(attr);
       this.publish('change:' + attr, this, val);
     }
 
