@@ -49,7 +49,6 @@ var pubsub = {
     var evnts = store[topic] || [];
     // Store additional arguments so they can be provided to the listener method
     var args = Array.prototype.slice.call(arguments, 2);
-
     // Trigger all the listeners of the topic
     each(evnts, function (evnt) {
       if (evnt && evnt.listener) 

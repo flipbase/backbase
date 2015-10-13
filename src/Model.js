@@ -31,8 +31,6 @@ var isObject = require('./modules/utils').isObject;
  */
 
 function Model (options) {
-  this.host = 'http://app.flipbase.com';
-  this.path = '/log/play';
 
   // Assign default properties to the attributes object
   assign(this.attributes, this.defaults);
@@ -45,6 +43,8 @@ function Model (options) {
 }
 
 Model.prototype = {
+
+  urlRoot: '',
 
   // Every instance will get an '_id' property
   attributes: {
@@ -62,8 +62,10 @@ Model.prototype = {
     return (this.attributes._id === null);
   },
 
-  isDirty: function () {
+  _dirty: false,
 
+  isDirty: function () {
+    return !!this._dirty;
   },
 
   fetch: function (options) {
@@ -75,7 +77,7 @@ Model.prototype = {
   save: function (options) {
     options = options || {};
     options.method = 'POST';
-    this.send(options);
+    this.send(options, true);
   },
 
   send: function (options, parse) {
@@ -85,13 +87,21 @@ Model.prototype = {
     var success = options.success || function (){};
     
     options.success = function (res, req) {
-      success(res, req); 
       // Use custom parse method if attributes needs to be parsed
+      // Parse the model before using the success handler, so the model
+      // is not dirty anymore when the callback is triggered
       if (parse) model.parse(model, res);
+      
+      // Reset model isDirty() return value
+      model._dirty = false;
+
+      success(res, req); 
     };
     
     options.data = this.attributes;
-    options.url = this.host + this.path;
+
+    // append url with _id if one exists
+    options.url = this.urlRoot + (!this.isNew) ? '/' + this.get('_id') : '/';
     jsonp(options);
   },
 
@@ -149,6 +159,11 @@ Model.prototype = {
       }
     }
 
+    // Set model to dirty if property has been changed
+    if (this.hasChanged(attr)) {
+      this._dirty = true;
+    }
+
     // Broadcast events about the changed attribute
     if (typeof attr === 'string') {
       this.publish('change:' + attr, this, val);
@@ -158,16 +173,20 @@ Model.prototype = {
     this.publish('change', this);
   },
 
+  hasChanged: function (attr, val) {
+    return (this._previousAttributes[attr] !== this.attributes[attr]);
+  },
+
   // Create local pubsub store
   _topics: {},
 
-  publish: function (evnt) {
-    pubsub.publish(evnt, this._topics);
+  publish: function (evnt, model, val) {
+    pubsub.publish(evnt, this._topics, model, val);
   },
 
   subscribe: function(evnt, fn, context) {
     var self = this;
-    var evnts = evnt.split(', ') || [];
+    var evnts = evnt.split(', ') || [evnt];
 
     each(evnts, function (evt) {
       pubsub.subscribe(evt, fn, context, self._topics);
