@@ -29,7 +29,7 @@ utils.querystring = function(obj) {
   var keys = utils.keys(obj) || [];
   var querystring = '';
 
-  each(keys, function (key) {
+  utils.each(keys, function (key) {
     var val = obj[key];
   
     if (querystring.length > 0) querystring += '&amp;';
