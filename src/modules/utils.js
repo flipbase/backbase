@@ -26,7 +26,7 @@ utils.bind = function(context, fn) {
 };
 
 utils.querystring = function(obj) {
-  var keys = keys(obj) || [];
+  var keys = utils.keys(obj) || [];
   var querystring = '';
 
   each(keys, function (key) {
