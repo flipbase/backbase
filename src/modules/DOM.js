@@ -56,7 +56,7 @@ DOM.createEl = function(tag, attrs) {
 DOM.setElAttributes = function(el, attrs) {
   var props = keys(attrs);
   // Iterareve over attrs object and assing attributes to element
-  each(props, function (attrName) {
+  utils.each(props, function (attrName) {
     var val = attrs[attrName];
     el.setAttribute(attrName, (val || ''));
   });
@@ -65,11 +65,10 @@ DOM.setElAttributes = function(el, attrs) {
 };
 
 DOM.insertAsFirstEl = function(el, parent) {
-  if (parent.firstChild) {
+  if (parent.firstChild)
     parent.insertBefore(el, parent.firstChild);
-  } else {
+  else
     parent.appendChild(el);
-  }
 
   return el;
 };
@@ -108,13 +107,13 @@ DOM.getStyle = function(el, prop) {
 };
 
 DOM.height = function(el) {
-  var pxs = getStyle(el, 'height');
+  var pxs = DOM.getStyle(el, 'height');
   // Remove 'px' from the string;
   return parseInt(pxs, 10);
 };
 
 DOM.width = function(el) {
-  var pxs = getStyle(el, 'width');
+  var pxs = DOM.getStyle(el, 'width');
   // Remove 'px' from the sring;
   return parseInt(pxs, 10);
 };
