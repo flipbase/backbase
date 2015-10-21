@@ -5,7 +5,8 @@
   "scripts": {
     "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md",
     "dist": "webpack -p",
-    "test": "karma run karma.config.js",
+    "test": "karma start karma.conf.js",
+    "test-ci": "karma start karma.conf.sauce.js",
     "release-patch": "git checkout master && npm version patch && git push origin master",
     "release-minor": "git checkout master && npm version minor && git push origin master",
     "release-major": "git checkout master && npm version major && git push origin master"
@@ -16,6 +17,7 @@
     "karma-html2js-preprocessor": "^0.1.0",
     "karma-mocha": "*",
     "karma-phantomjs-launcher": "*",
+    "karma-sauce-launcher": "^0.3.0",
     "karma-sinon": "*",
     "karma-spec-reporter": "0.0.20",
     "karma-webpack": "^1.7.0",

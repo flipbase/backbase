@@ -14,9 +14,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // include recorder dependencies
-      'dist/test.bundle.js',
-
       // HTML files only needs to be included for unit tests!
       'test/*.html',
 

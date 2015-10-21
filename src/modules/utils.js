@@ -4,8 +4,9 @@
  */
 var utils = {};
 
-utils.validUUID = function(id) {
-  return ((id.length > 31) && id.search(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/));
+utils.isUUID = function(uuid) {
+  var regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+  return regex.test(uuid);
 };
 
 utils.isNumber = function(n) {
@@ -13,7 +14,7 @@ utils.isNumber = function(n) {
 };
 
 utils.isEven = function(n) {
-  return isNumber(n) && (n % 2 === 0);
+  return utils.isNumber(n) && (n % 2 === 0);
 };
 
 utils.bind = function(context, fn) {
@@ -25,19 +26,18 @@ utils.bind = function(context, fn) {
   };
 };
 
-utils.querystring = function(obj) {
-  var keys = utils.keys(obj) || [];
-  var querystring = '';
-
-  utils.each(keys, function (key) {
-    var val = obj[key];
-  
-    if (querystring.length > 0) querystring += '&amp;';
-  
-     querystring += key + '=' + val; 
-  });
-
-  return querystring;
+utils.querystring = function(obj, prefix) {
+  var str = [];
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      var k = prefix ? prefix + "[" + key + "]" : key;
+      var val = obj[key];
+      str.push(utils.isObject(val) ?
+        utils.querystring(val, k) :
+        encodeURIComponent(k) + "=" + encodeURIComponent(val));
+    }
+  }
+  return str.join("&");
 };
 
 
