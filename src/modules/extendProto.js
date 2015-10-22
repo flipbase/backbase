@@ -7,6 +7,9 @@ var assign = require('./utils').assign;
  * to the parent prototype: `Parent.prototype.call(this, options)` and
  * extend the child prototype with the prototype of the parent.
  *
+ * @module extendProto
+ * @author  Ron Jansen <ron@flipbase.com>
+ * 
  * @todo  we need to extend the prototype also with staticproperties
  * 
  * @param  {Object} protoProps object with methods to extend current prototype

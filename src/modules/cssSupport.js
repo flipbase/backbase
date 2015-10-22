@@ -1,13 +1,13 @@
-import {hasClass, addClass} from './DOM';
+var hasClass = require('./DOM').hasClass;
+var addClass = require('./DOM').addClassl;
 
 /**
- * Module does not need to interact with other Flibpase modules; it only
- * needs to detect CSS classes added to the root element, to test if a browser
- * support certain feature and to add CSS class to the root el.
+ * Module to test if a browser support certain feature and to add CSS class 
+ * to the root element, similar like modernizr.
  *
- * @module
+ * @module lightweight alternative to modernizr
+ * @author Ron Jansen <ron@flipbase.com>
  */
-
 
 //Grab the root element of the document
 var rootEl = document.documentElement;
@@ -20,12 +20,13 @@ var testElem = document.createElement('flipbase');
  * for example to the rootElement, then skipp all tests. If it's not added to 
  * the rootElement yet, then test if the browser the provided CSS feature.
  * 
- * @param  {} prop CSS property name
- * @param  {} val CSS property value
- * @param  {} className className to add to the root element
- * @param  {boolean} skipValueTest true if we don't need to test the value of the provided property
+ * @param  {string}   prop          CSS property name
+ * @param  {string}   val           CSS property value
+ * @param  {string}   className     className to add to the root element
+ * @param  {boolean}  skipValueTest true if we don't need to test the value of 
+ *                                  the provided property
  */
-export function testProp(prop, val, className, skipValueTest) {
+function testProp(prop, val, className, skipValueTest) {
   className = className.toString() || '';
   skipValueTest = is(skipValueTest, 'undefined') ? false : skipValueTest;
 
@@ -95,3 +96,5 @@ function hasProperty(prop, value, skipValueTest) {
     }
   }
 }
+
+module.exports = testProp;
