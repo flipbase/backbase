@@ -2,43 +2,94 @@
  * 
  * @module
  */
-var utils = {};
+var utils = _ = {
+  
+  isUUID: function(uuid) {
+    var regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return regex.test(uuid);
+  },
 
-utils.isUUID = function(uuid) {
-  var regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-  return regex.test(uuid);
-};
+  isNumber: function(n) {
+    return n === parseFloat(n);
+  },
 
-utils.isNumber = function(n) {
-  return n === parseFloat(n);
-};
+  isEven: function(n) {
+    return _.isNumber(n) && (n % 2 === 0);
+  },
 
-utils.isEven = function(n) {
-  return utils.isNumber(n) && (n % 2 === 0);
-};
+  bind: function(context, fn) {
+    fn = fn;
+    context = context;
+    return function () {
+      var args = [].slice.call(arguments) || [];
+      fn.apply(context, args);
+    };
+  },
 
-utils.bind = function(context, fn) {
-  fn = fn;
-  context = context;
-  return function () {
-    var args = [].slice.call(arguments) || [];
-    fn.apply(context, args);
-  };
-};
-
-utils.querystring = function(obj, prefix) {
-  var str = [];
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      var k = prefix ? prefix + "[" + key + "]" : key;
-      var val = obj[key];
-      str.push(utils.isObject(val) ?
-        utils.querystring(val, k) :
-        encodeURIComponent(k) + "=" + encodeURIComponent(val));
+  querystring: function(obj, prefix) {
+    var str = [];
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        var k = prefix ? prefix + "[" + key + "]" : key;
+        var val = obj[key];
+        str.push(_.isObject(val) ?
+          _.querystring(val, k) :
+          encodeURIComponent(k) + "=" + encodeURIComponent(val));
+      }
     }
-  }
-  return str.join("&");
+    return str.join("&");
+  },
+  
+  /**
+   * Chrome ships with their own Flash Player embedded, named 'Pepper Flash'
+   * Performance with regards to Netstream methods is much lower compared to the
+   * official Adobe Flash Player. If both are installed and active, Chrome still prefers
+   * Pepper Flash.
+   * @return {boolean} true if Pepper Flash is present and actived
+   */
+  checkForPepper: function() {
+    if (navigator.mimeTypes &&
+      navigator.mimeTypes['application/x-shockwave-flash'] &&
+      'chrome' in window) {
+      var filename = navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin.filename;
+
+      if (filename === 'pepflashplayer.dll' ||
+        filename === 'libpepflashplayer.so' ||
+        filename === 'PepperFlashPlayer.plugin') {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  clone: function (obj) {
+    var target = {};
+    var keys = _.keys(obj);
+    _.each(keys, function (key) {
+      target[key] = obj[key];
+    });
+    return target;
+  },
+
+  assign: function (target, source) {
+    var keys = _.keys(source);
+
+    _.each(keys, function (key, i, list) {
+      var original = target[key];
+      var next = source[key];
+      if (original && next && typeof next == "object") {
+        _.assign(original, next);
+      } else {
+        target[key] = source[key];
+      }
+    });
+    return target;
+  },
+
+
 };
+
+
 
 
 utils.hasXHR2 = function() {
@@ -46,27 +97,6 @@ utils.hasXHR2 = function() {
     window.FileList && window.Blob) ? true : false;
 };
 
-/**
- * Chrome ships with their own Flash Player embedded, named 'Pepper Flash'
- * Performance with regards to Netstream methods is much lower compared to the
- * official Adobe Flash Player. If both are installed and active, Chrome still prefers
- * Pepper Flash.
- * @return {boolean} true if Pepper Flash is present and actived
- */
-utils.checkForPepper = function() {
-  if (navigator.mimeTypes &&
-    navigator.mimeTypes['application/x-shockwave-flash'] &&
-    'chrome' in window) {
-    var filename = navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin.filename;
-
-    if (filename === 'pepflashplayer.dll' ||
-      filename === 'libpepflashplayer.so' ||
-      filename === 'PepperFlashPlayer.plugin') {
-      return true;
-    }
-  }
-  return false;
-};
 
 utils.preventDefault = function(evt) {
   if (evt.preventDefault) {
@@ -101,15 +131,6 @@ utils.getIndex = function(arr, val, start) {
   return -1;
 };
 
-utils.assign = function (target, source) {
-  var keys = utils.keys(source);
-
-  utils.each(keys, function (val, i, list) {
-    target[val] = source[val];
-  });
-
-  return target;
-};
 
 utils.eq = function(attr, val) {
   return (attr === val);

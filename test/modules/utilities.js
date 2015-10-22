@@ -66,4 +66,15 @@ describe('Utilities', function () {
     });
   });
 
+  describe('assign', function () {
+    it('should merge 2 nested objects, without fully overwriting the nested object', function () {
+      var obj = {nested: {foo: 'baz', 'bar': 'foo'}};
+      _.assign(obj, {'hello': 'world', nested: { 'world': 'say hi', 'foo' : 'bar'}})
+      expect(obj.nested.foo).to.equal('bar');
+      expect(obj.nested.bar).to.equal('foo');
+      expect(obj.hello).to.equal('world');
+    });
+  });
+
+
 });

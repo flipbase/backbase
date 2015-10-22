@@ -7,7 +7,7 @@ describe('DOM', function () {
     this.el = document.getElementById('placeholder');
   });
 
-  describe.skip('width()', function () {
+  describe('width()', function () {
 
     it('should report proper width in pxs', function () {
       expect($.width(this.el)).to.be.a('number');
