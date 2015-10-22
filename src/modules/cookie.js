@@ -2,33 +2,52 @@
  * Small module to set, get and remove cookies and to verify if one already
  * exists.
  * 
- * @module
- * @class  Cookie
+ * @module very basic cookie management
+ * @author  Ron Jansen <ron@flipbase.com>
  */
-function Cookie(key, content) {
-  this.key = key;
-  this.content = content;
-}
 
-Cookie.prototype.has = function() {
-  return window.document.cookie.match(this.key + '=(.*?)(;|$)') ? true : false;
+var cookie = {
+
+  /**
+   * Search cookie based on name
+   * @param  {string}  key name of cookie to search for
+   * @return {Boolean}     
+   */
+  has: function(key) {
+    return window.document.cookie.match(key + '=(.*?)(;|$)') ? true : false;
+  },
+
+  /**
+   * Fetch the value of the cookie based on a name
+   * @param  {string} key 
+   * @return {string|null} returns cookie content if cookie exists
+   */
+  get: function(key) {
+    var re = new RegExp(key + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value !== null) ? unescape(value[1]) : null;
+  },
+
+  /**
+   * Create a new cookie
+   * @param {string} key 
+   * @param {string} content 
+   */
+  create: function(key, content) {
+    window.document.cookie = key + '=' + content + ';';
+  },
+
+  /**
+   * Remove cookie if it exists based on the name/key
+   * @param  {string} key 
+   */
+  remove: function(key) {
+    if (!this.has(key)) return;
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    window.document.cookie = key + '=; expires=' + exp.toGMTString();
+  }
+
 };
 
-Cookie.prototype.get = function() {
-  var re = new RegExp(this.key + "=([^;]+)");
-  var value = re.exec(document.cookie);
-  return (value !== null) ? unescape(value[1]) : null;
-};
-
-Cookie.prototype.set = function(content) {
-  this.content = content;
-  window.document.cookie = this.key + '=' + this.content + ';';
-};
-
-Cookie.prototype.remove = function() {
-  var exp = new Date();
-  exp.setTime(exp.getTime() - 1);
-  window.document.cookie = this.key + '=; expires=' + exp.toGMTString();
-};
-
-export default Cookie;
+module.exorts = cookie;

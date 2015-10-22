@@ -60,7 +60,7 @@ describe('Utilities', function () {
       expect(_.querystring({key: ''})).to.equal('key=');
     });
 
-    it('should return empty string when empty object is provided', function () {
+    it('should parse nested objects', function () {
       var obj = { key: 'bar', nested: { foo: 'baz' } };
       expect(_.querystring(obj)).to.equal('key=bar&nested%5Bfoo%5D=baz');
     });
