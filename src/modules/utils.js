@@ -67,7 +67,7 @@ var utils = _ = {
    * @param  {Object}   proto the prototype to inherit from
    * @return {Function}       the new created function with protoype       
    */
-  inherits = function(proto) {
+  inherits: function(proto) {
     function F() {}
     F.prototype = proto;
     return new F();
@@ -78,7 +78,7 @@ var utils = _ = {
    * @param  {object}  obj 
    * @return {Boolean}     
    */
-  isObject = function (obj) {
+  isObject: function (obj) {
     var type = typeof obj;
     return type === 'function' || type === 'object' && !!obj;
   },
@@ -87,7 +87,7 @@ var utils = _ = {
    * Copied from underscore.js
    * @return {Boolean} true if obj is an array
    */
-  isArray = function (obj) {
+  isArray: function (obj) {
     return toString.call(obj) === '[object Array]';
   },
 

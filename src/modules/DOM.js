@@ -16,9 +16,10 @@ var $ = DOM = {
    * @param  {string} id element id
    * @return {object}    selected document node
    */
-  getEl = function(id) {
+  getEl: function(id) {
     // indexOf string is supported in IE7
-    if (id.indexOf('#') === 0) id = id.slice(1);
+    if (id.indexOf('#') === 0) 
+      id = id.slice(1);
 
     return document.getElementById(id);
   },
