@@ -18,5 +18,8 @@
     "node_modules",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "jQuery": "~2.1.4"
+  }
 }
