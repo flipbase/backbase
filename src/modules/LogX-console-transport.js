@@ -13,7 +13,7 @@ var colors = {
 if (!window.console) window.console = {};
 if (!window.console.log) window.console.log = function () {};
 
-export function consoleTransport(level, msg, meta) {
+module.exports = function (level, msg, meta) {
   var color = colors[level] || '#000000';
   var style = 'color: ' + color + ';';
 

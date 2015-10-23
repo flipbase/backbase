@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>LogX.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="DOM.html">
+                DOM.js
+              </a>
+            
+              
+              <a class="source" href="LogX-console-transport.html">
+                LogX-console-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX-jsonp-transport.html">
+                LogX-jsonp-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX.html">
+                LogX.js
+              </a>
+            
+              
+              <a class="source" href="PubSub.html">
+                PubSub.js
+              </a>
+            
+              
+              <a class="source" href="base64.html">
+                base64.js
+              </a>
+            
+              
+              <a class="source" href="browser.html">
+                browser.js
+              </a>
+            
+              
+              <a class="source" href="cookie.html">
+                cookie.js
+              </a>
+            
+              
+              <a class="source" href="events.html">
+                events.js
+              </a>
+            
+              
+              <a class="source" href="extendProto.html">
+                extendProto.js
+              </a>
+            
+              
+              <a class="source" href="namespace.html">
+                namespace.js
+              </a>
+            
+              
+              <a class="source" href="utils.html">
+                utils.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>LogX.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> each = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils'</span>).each;
+
+<span class="hljs-comment">/**
+ * @module      LogX
+ * @description Client-side mini logging library 
+ * @author      Ron Jansen &lt;ron@flipbase.com&gt;
+ */</span>
+
+<span class="hljs-keyword">var</span> logger = {
+
+  transports: [],
+
+  log: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">level, msg, meta</span>) </span>{
+    each(logger.transports, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">transport</span>) </span>{
+      transport.fn.apply(transport.ctx, [level, msg, meta]);
+    });
+  },
+
+  error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, meta</span>) </span>{
+    logger.log(<span class="hljs-string">'error'</span>, msg, meta);
+  },
+
+  warn: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, meta</span>) </span>{
+    logger.log(<span class="hljs-string">'warn'</span>, msg, meta);
+  },
+
+  debug: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, meta</span>) </span>{
+    logger.log(<span class="hljs-string">'debug'</span>, msg, meta);
+  },
+
+  info: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, meta</span>) </span>{
+    logger.log(<span class="hljs-string">'info'</span>, msg, meta);
+  },
+
+  <span class="hljs-comment">/**
+   * Add apender to list, returns index in array so it can be removed.
+   * 
+   * @param {number} transport index
+   */</span>
+  add: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">transport, ctx</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> transport !== <span class="hljs-string">'function'</span>) 
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'transport should be function'</span>);
+    
+    <span class="hljs-keyword">return</span> logger.transports.push({fn: transport, ctx: (ctx || <span class="hljs-keyword">this</span>) }) -<span class="hljs-number">1</span>;
+  },
+
+  remove: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">index</span>) </span>{
+    <span class="hljs-keyword">return</span> logger.transports.splice(index, <span class="hljs-number">1</span>);
+  }
+
+};
+
+<span class="hljs-built_in">module</span>.exports = logger;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -32,14 +32,13 @@ module.exports = function(config) {
     preprocessors: {
         'test/**/*.js': ['webpack'],
         'test/*.js': ['webpack'],
-        // 'public/recorder/scripts/**/*.js': ['coverage'],
         'test/*.html': ['html2js']
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec'], //'coverage'
+    reporters: ['spec', 'coverage'],
 
     webpack: require('./webpack.config.js'),
 
@@ -60,8 +59,8 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
     coverageReporter: {
-        // specify a common output directory
-        // dir: 'test/coverage'
+      type : 'html',
+      dir : 'coverage/'
     },
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -77,6 +76,7 @@ module.exports = function(config) {
 
     plugins: [
       require('karma-webpack'), 
+      require('karma-coverage'), 
       require('karma-chai'), 
       require('karma-spec-reporter'),
       require('karma-sinon'),

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/modules/LogX-jsonp-transport.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">src/modules/</a> LogX-jsonp-transport.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">84.38% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>27/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>15/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.43% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.67% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/30</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var keys = require('./utils').keys;
+var each = require('./utils').each;
+// 2083 is the max URI length for IE; to be on the safe side we already
+// send URI's that are about 1900 characters long.
+var maxQueryStringLength = (2083 - 200);
+var jsonp = require('browser-jsonp');
+&nbsp;
+/**
+ * The JSONP transport is responsible for storing and sending logs to a server-side API endpoint. It's mainly for the recorder usage, since that's were debugging is most probably necessary.
+ *
+ * In the future we probably will go on the path of customizable recorders, to be able to debug these customized apps, we need to store 
+ *
+ * - Which component is initialized and/or rendered, and in which order
+ * - Potential Error stacktraces
+ * - Relevant browser/client information (user_agent, flash version etc)
+ *
+ * The transport will send the log files automatically to the server if:
+ * 
+ * 1. The querystring will get near the length of 2083 characters, this is the URI limit in IE.
+ * 2. If the log level is set to 'error'
+ * 3. If the message is an instanceof Error
+ */
+&nbsp;
+function Transport(config) {
+  this.startTime = new Date().getTime();
+  this.index = 0;
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!config.api_endpoint) 
+<span class="cstat-no" title="statement not covered" >    throw new Error('You should provide \'api_endpoint\' property');</span>
+&nbsp;
+  this.api_endpoint = config.api_endpoint;
+  // Correct the max URI lenght to not include the API endpoint
+  this.maxQueryStringLength = maxQueryStringLength - this.api_endpoint.length;
+}
+&nbsp;
+Transport.prototype = {
+  
+  store: {
+    logs: []
+  },
+&nbsp;
+  querystring: '?',
+&nbsp;
+  /**
+   * 
+   * @param  {string}         level   can be set to info/error/warn/debug
+   * @param  {string|object}  msg     a string, if new Error it's an object
+   */
+  transport: function (level, msg) {
+    var self = this;
+    var message = (msg instanceof Error &amp;&amp; msg.message)? msg.message : msg;
+&nbsp;
+    // We use very short key names so the URI doesn't get too long too fast
+    var log = {
+      // Store time since the library has been loaded or initialized?
+      t: (new Date().getTime() - this.startTime), // timestamp
+      l: level, // level
+      m: message // message
+    };
+&nbsp;
+    // Only include the 'stack' property if there is stacktrace included
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (msg instanceof Error &amp;&amp; msg.stack) <span class="cstat-no" title="statement not covered" >log.stack = msg.stack;</span>
+&nbsp;
+    this.appendMessageToQuerystring(log);
+    this.store.logs.push(log);
+&nbsp;
+    // Send logs to server when an error occurred
+    if (msg instanceof Error) this.send();
+&nbsp;
+    // window.onerror = function (err) {
+      // self.send(err);
+    // };
+  },
+&nbsp;
+&nbsp;
+  /**
+   * Add each log message to the querystring, so we can instantly determine
+   * if we should send the logs to the server and reset the logs.
+   * 
+   * @param  {object}  log
+   */
+  appendMessageToQuerystring: function (log) {
+    var props = keys(log);
+    var self = this;
+&nbsp;
+    // Iterate over the property keys to append each prop to the querstring
+    each(props, function (key) {
+      self.querystring += 'l[' + self.index + '][' + key + ']=' + log[key] + '&amp;';
+    });
+&nbsp;
+    this.index++;
+&nbsp;
+    // Check lenght of querystring
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.querystring.length &gt;= this.maxQueryStringLength) {
+<span class="cstat-no" title="statement not covered" >      this.send();</span>
+      
+      // reset querystring and logs storage
+<span class="cstat-no" title="statement not covered" >      this.querystring = '?';</span>
+<span class="cstat-no" title="statement not covered" >      this.store.logs = [];</span>
+    }
+&nbsp;
+  },
+&nbsp;
+  send: function (success, error) {
+    jsonp({
+      url: this.api_endpoint,
+      data: this.store,
+      success: (success || <span class="fstat-no" title="function not covered" >function () {</span>}),
+      error: (error || <span class="fstat-no" title="function not covered" >function () {</span>})
+    });
+  }
+&nbsp;
+};
+&nbsp;
+module.exports = Transport;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 23 2015 18:29:01 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

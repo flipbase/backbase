@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>DOM.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="DOM.html">
+                DOM.js
+              </a>
+            
+              
+              <a class="source" href="LogX-console-transport.html">
+                LogX-console-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX-jsonp-transport.html">
+                LogX-jsonp-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX.html">
+                LogX.js
+              </a>
+            
+              
+              <a class="source" href="PubSub.html">
+                PubSub.js
+              </a>
+            
+              
+              <a class="source" href="base64.html">
+                base64.js
+              </a>
+            
+              
+              <a class="source" href="browser.html">
+                browser.js
+              </a>
+            
+              
+              <a class="source" href="cookie.html">
+                cookie.js
+              </a>
+            
+              
+              <a class="source" href="events.html">
+                events.js
+              </a>
+            
+              
+              <a class="source" href="extendProto.html">
+                extendProto.js
+              </a>
+            
+              
+              <a class="source" href="namespace.html">
+                namespace.js
+              </a>
+            
+              
+              <a class="source" href="utils.html">
+                utils.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>DOM.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> each = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils'</span>).each;
+<span class="hljs-keyword">var</span> keys = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils'</span>).keys;
+<span class="hljs-keyword">var</span> is = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils'</span>).is;
+
+<span class="hljs-comment">/**
+ * Lightweight DOM selector utilty methods
+ * 
+ * @category helpers
+ * @module
+ */</span>
+<span class="hljs-keyword">var</span> $ = DOM = {
+
+  <span class="hljs-comment">/**
+   * Select element by id; only supports '#elementId' or 'elementId' as input;
+   *
+   * @method  getEl
+   * @param  {string} id element id
+   * @return {object}    selected document node
+   */</span>
+  getEl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>indexOf string is supported in IE7</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (id.indexOf(<span class="hljs-string">'#'</span>) === <span class="hljs-number">0</span>) 
+      id = id.slice(<span class="hljs-number">1</span>);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">document</span>.getElementById(id);
+  },
+
+  <span class="hljs-comment">/**
+   * Verify if an DOM element has a certain attribute
+   * 
+   * @method  elHasAttr
+   * @param  {object}   el
+   * @param  {string}   attr  name of attribute
+   * @return {boolean}
+   */</span>
+  elHasAttr: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, attr</span>) </span>{
+    <span class="hljs-keyword">return</span> el.getAttribute(attr) || <span class="hljs-literal">undefined</span>;
+  },
+
+  <span class="hljs-comment">/**
+   * Select elements by tag and attribute. Necessary when querying based on
+   * 'input' element with 'type=flipbase'.
+   * 
+   * @param  {string} tag  element tag
+   * @param  {string} attr element attribute to search for
+   * @param  {string} val  
+   * @return {array}       list with elements that match
+   */</span>
+  getElsByTagAndAttr: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tag, attr, val</span>) </span>{
+    <span class="hljs-keyword">var</span> nodes = <span class="hljs-built_in">document</span>.getElementsByTagName(tag);
+    <span class="hljs-keyword">var</span> elems = [];
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; nodes.length &gt; i; i++) {
+      <span class="hljs-keyword">if</span> (nodes[i].getAttribute(attr) === val) elems.push(nodes[i]);
+    }
+    <span class="hljs-keyword">return</span> elems;
+  },
+
+  <span class="hljs-comment">/**
+   * Create element with a tag name and attributes
+   *
+   * @example
+   * $.createEl('button', {
+   *   style: 'color: #FF0000'
+   * });
+   * 
+   * @param  {string} tag   div, button or any element
+   * @param  {object} attrs
+   * @return {object}       Element to insert
+   */</span>
+  createEl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tag, attrs</span>) </span>{
+    tag = tag || <span class="hljs-string">'div'</span>, attrs = attrs || {};
+    <span class="hljs-keyword">var</span> el = <span class="hljs-built_in">document</span>.createElement(tag);
+    <span class="hljs-keyword">return</span> $.setElAttributes(el, attrs);
+  },
+
+  <span class="hljs-comment">/**
+   * Assign attributes to a DOM element
+   * 
+   * @param {object}  el    DOM element
+   * @param {object}        attrs 
+   * @return {ojbect}       DOM el with attributes
+   */</span>
+  setElAttributes: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, attrs</span>) </span>{
+    <span class="hljs-keyword">var</span> props = keys(attrs);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Iterate over attrs object and assing attributes to element</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    each(props, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">attrName</span>) </span>{
+      <span class="hljs-keyword">var</span> val = attrs[attrName];
+      el.setAttribute(attrName, (val || <span class="hljs-string">''</span>));
+    });
+
+    <span class="hljs-keyword">return</span> el;
+  },
+
+  <span class="hljs-comment">/**
+   * Insert element as first child of the parent element, before all other 
+   * current child elements.
+   * 
+   * @param  {object} el     
+   * @param  {object} parent 
+   * @return {object}        DOM element
+   */</span>
+  insertAsFirstEl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, parent</span>) </span>{
+    <span class="hljs-keyword">if</span> (parent.firstChild)
+      parent.insertBefore(el, parent.firstChild);
+    <span class="hljs-keyword">else</span>
+      parent.appendChild(el);
+
+    <span class="hljs-keyword">return</span> el;
+  },
+
+  <span class="hljs-comment">/**
+   * Insert an element before another element
+   * 
+   * @param  {object} el     element to insert
+   * @param  {object} other  element to place 'el' just before
+   * @return {object}        element that has been inserted
+   */</span>
+  insertBeforeEl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, other</span>) </span>{
+    <span class="hljs-keyword">if</span> (other &amp;&amp; other.parentNode)
+      other.parentNode.insertBefore(el, other);
+    <span class="hljs-keyword">return</span> el;
+  },
+
+  <span class="hljs-comment">/**
+   * CSS related utilities
+   */</span>
+
+  <span class="hljs-comment">/**
+   * Verify if an element already has a certain class added to the class list
+   * String.prototype.idnexOf is supported from IE7+.
+   * 
+   * @param  {object}  el        DOM element
+   * @param  {string}  className CSS class to check
+   * @return {Boolean}           
+   */</span>
+  hasClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, className</span>) </span>{
+    <span class="hljs-keyword">return</span> ((<span class="hljs-string">' '</span> + el.className + <span class="hljs-string">' '</span>).indexOf(className) &gt; -<span class="hljs-number">1</span>);
+  },
+
+  <span class="hljs-comment">/**
+   * Add a CSS class to an DOM element
+   * 
+   * @param {object} el        DOM element
+   * @param {string} className CSS class to add
+   */</span>
+  addClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, CSSclass</span>) </span>{
+    <span class="hljs-keyword">if</span> (!$.hasClass(el, CSSclass)) {
+      <span class="hljs-keyword">if</span> (!el.className || !el.className.length)
+        el.className = CSSclass;
+      <span class="hljs-keyword">else</span>
+        el.className += <span class="hljs-string">' '</span> + CSSclass;
+    }
+
+    <span class="hljs-keyword">return</span> el;
+  },
+
+  <span class="hljs-comment">/**
+   * Remove a CSS class from an element
+   * 
+   * @param  {object} el        DOM element to remove the CSS class from
+   * @param  {string} className CSS class to remove
+   * @return {object}           DOM element
+   */</span>
+  removeClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, className</span>) </span>{
+    <span class="hljs-keyword">if</span> ($.hasClass(el, className))
+      el.className = el.className.replace(className, <span class="hljs-string">''</span>)
+
+    <span class="hljs-keyword">return</span> el;
+  },
+
+  <span class="hljs-comment">/**
+   * Get the CSS property from a DOM element.
+   * 
+   * @param  {object} el   DOM element to serach for the CSS property
+   * @param  {object} prop CSS property to retrieve the value from
+   * @return {object}      
+   */</span>
+  getStyle: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el, prop</span>) </span>{
+    <span class="hljs-keyword">var</span> getComputedStyl = (!!<span class="hljs-built_in">window</span>.getComputedStyle) ? <span class="hljs-built_in">window</span>.getComputedStyle : <span class="hljs-literal">undefined</span>;
+    <span class="hljs-keyword">if</span> (getComputedStyl) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>.getComputedStyle(el, <span class="hljs-literal">null</span>).getPropertyValue(prop);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> el.currentStyle[prop];
+    }
+  },
+
+  <span class="hljs-comment">/**
+   * Get the applied CSS style (using stylesheets) from a DOM element. So, this
+   * is not returning any 'height' attributes that are set inline to the DOM
+   * element.
+   * 
+   * @param  {object} el 
+   * @return {number} height in pixels
+   */</span>
+  height: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
+    <span class="hljs-keyword">var</span> pxs = $.getStyle(el, <span class="hljs-string">'height'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Remove ‘px’ from the string;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(pxs, <span class="hljs-number">10</span>);
+  },
+
+  <span class="hljs-comment">/**
+   * Get the applied CSS style (using stylesheets) from a DOM element. So, this
+   * is not returning any 'width' attributes that are set inline to the DOM
+   * element.
+   * 
+   * @param  {object} el 
+   * @return {number} width in pixels
+   */</span>
+  width: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
+    <span class="hljs-keyword">var</span> pxs = $.getStyle(el, <span class="hljs-string">'width'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Remove ‘px’ from the sring;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(pxs, <span class="hljs-number">10</span>);
+  },
+
+  <span class="hljs-comment">/**
+   * Test if CSS feature is supported. If CSS class is already added by Modernizr 
+   * for example to the rootElement, then skipp all tests. If it's not added to 
+   * the rootElement yet, then test if the browser the provided CSS feature.
+   * 
+   * @param  {string}   prop          CSS property name
+   * @param  {string}   val           CSS property value
+   * @param  {string}   className     className to add to the root element
+   * @param  {boolean}  skipValueTest true if we don't need to test the value of 
+   *                                  the provided property
+   */</span>
+  modernize: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prop, val, className, skipValueTest</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Grab the root element of the document</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> rootEl = <span class="hljs-built_in">document</span>.documentElement;
+    className = className.toString() || <span class="hljs-string">''</span>;
+    skipValueTest = is(skipValueTest, <span class="hljs-string">'undefined'</span>) ? <span class="hljs-literal">false</span> : skipValueTest;
+
+    <span class="hljs-keyword">if</span> (!$.hasClass(rootEl, className) &amp;&amp; $.hasCSSProperty(prop, val, skipValueTest)) {
+      $.addClass(rootEl, className);
+    }
+  },
+
+  <span class="hljs-comment">/**
+   * In testing support for a given CSS property, it's legit to test:
+   *   `elem.style[styleName] !== undefined`
+   * If the property is supported it will return an empty string,
+   * if unsupported it will return undefined.
+   *
+   * @param  {string}  prop          feature we need to detect
+   * @param  {Object}  value         optional value we can use in feature detection test
+   * @param  {boolean} skipValueTest arg to skip value test
+   * @return {boolean}               undefined if false, true if supported
+   */</span>
+  hasCSSProperty: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prop, value, skipValueTest</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Create element to test CSS features on</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> testElem = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'flipbase'</span>);
+    <span class="hljs-keyword">var</span> before = testElem.style[prop];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Try native detect first</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (prop &amp;&amp; value) {
+      <span class="hljs-keyword">if</span> (<span class="hljs-string">'CSS'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; <span class="hljs-string">'supports'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span>.CSS) {
+        <span class="hljs-keyword">return</span> !!(<span class="hljs-built_in">window</span>.CSS.supports(prop, value));
+      }
+    }
+
+    <span class="hljs-keyword">if</span> (testElem.style[prop] !== <span class="hljs-literal">undefined</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>If value to test has been passed in, do a set-and-check test.
+0 (integer) is a valid property value, so check that <code>value</code> isn’t
+undefined, rather than just checking it’s truthy.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!skipValueTest &amp;&amp; !is(value, <span class="hljs-string">'undefined'</span>)) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Needs a try catch block because of old IE. This is slow, but will
+be avoided in most cases because <code>skipValueTest</code> will be used.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">try</span> {
+          testElem.style[prop] = value;
+        } <span class="hljs-keyword">catch</span> (e) {
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>If the property value has changed, we assume the value used is
+supported. If <code>value</code> is empty string, it’ll fail here (because
+it hasn’t changed), which matches how browsers have implemented
+CSS.supports()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (testElem.style[prop] != before) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Clean the elements style</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">delete</span> testElem.style
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+
+};
+
+<span class="hljs-built_in">module</span>.exports = DOM;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

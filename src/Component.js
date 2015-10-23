@@ -1,5 +1,5 @@
 var Flipbase = require('./modules/namespace');
-var pubsub = require('./modules/pubsub');
+var pubsub = require('./modules/PubSub');
 var events = require('./modules/events');
 var each = require('./modules/utils').each;
 var bind = require('./modules/utils').bind;

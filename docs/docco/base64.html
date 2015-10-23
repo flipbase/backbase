@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>base64.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="DOM.html">
+                DOM.js
+              </a>
+            
+              
+              <a class="source" href="LogX-console-transport.html">
+                LogX-console-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX-jsonp-transport.html">
+                LogX-jsonp-transport.js
+              </a>
+            
+              
+              <a class="source" href="LogX.html">
+                LogX.js
+              </a>
+            
+              
+              <a class="source" href="PubSub.html">
+                PubSub.js
+              </a>
+            
+              
+              <a class="source" href="base64.html">
+                base64.js
+              </a>
+            
+              
+              <a class="source" href="browser.html">
+                browser.js
+              </a>
+            
+              
+              <a class="source" href="cookie.html">
+                cookie.js
+              </a>
+            
+              
+              <a class="source" href="events.html">
+                events.js
+              </a>
+            
+              
+              <a class="source" href="extendProto.html">
+                extendProto.js
+              </a>
+            
+              
+              <a class="source" href="namespace.html">
+                namespace.js
+              </a>
+            
+              
+              <a class="source" href="utils.html">
+                utils.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>base64.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+ * Base64 encryption, used for hashing the playerId
+ * 
+ * @category helpers
+ * @module
+ */</span>
+
+<span class="hljs-keyword">var</span> _keyStr = <span class="hljs-string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='</span>;
+<span class="hljs-keyword">var</span> base64 = {};
+
+base64.encode = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">input</span>) </span>{
+  <span class="hljs-keyword">var</span> output = <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">var</span> chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+
+  input = base64._utf8_encode(input);
+
+  <span class="hljs-keyword">while</span> (i &lt; input.length) {
+
+    chr1 = input.charCodeAt(i++);
+    chr2 = input.charCodeAt(i++);
+    chr3 = input.charCodeAt(i++);
+
+    enc1 = chr1 &gt;&gt; <span class="hljs-number">2</span>;
+    enc2 = ((chr1 &amp; <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-number">4</span>) | (chr2 &gt;&gt; <span class="hljs-number">4</span>);
+    enc3 = ((chr2 &amp; <span class="hljs-number">15</span>) &lt;&lt; <span class="hljs-number">2</span>) | (chr3 &gt;&gt; <span class="hljs-number">6</span>);
+    enc4 = chr3 &amp; <span class="hljs-number">63</span>;
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(chr2)) {
+      enc3 = enc4 = <span class="hljs-number">64</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(chr3)) {
+      enc4 = <span class="hljs-number">64</span>;
+    }
+
+    output = output +
+    _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+    _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+
+  }
+  <span class="hljs-keyword">return</span> output;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>private method for UTF-8 encoding</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>base64._utf8_encode = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">string</span>) </span>{
+  string = string.replace(<span class="hljs-regexp">/\r\n/g</span>, <span class="hljs-string">'\n'</span>);
+  <span class="hljs-keyword">var</span> utftext = <span class="hljs-string">''</span>;
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> n = <span class="hljs-number">0</span>; n &lt; string.length; n++) {
+    <span class="hljs-keyword">var</span> c = string.charCodeAt(n);
+
+    <span class="hljs-keyword">if</span> (c &lt; <span class="hljs-number">128</span>) {
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode(c);
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((c &gt; <span class="hljs-number">127</span>) &amp;&amp; (c &lt; <span class="hljs-number">2048</span>)) {
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode((c &gt;&gt; <span class="hljs-number">6</span>) | <span class="hljs-number">192</span>);
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode((c &amp; <span class="hljs-number">63</span>) | <span class="hljs-number">128</span>);
+    }
+    <span class="hljs-keyword">else</span> {
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode((c &gt;&gt; <span class="hljs-number">12</span>) | <span class="hljs-number">224</span>);
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode(((c &gt;&gt; <span class="hljs-number">6</span>) &amp; <span class="hljs-number">63</span>) | <span class="hljs-number">128</span>);
+      utftext += <span class="hljs-built_in">String</span>.fromCharCode((c &amp; <span class="hljs-number">63</span>) | <span class="hljs-number">128</span>);
+    }
+  }
+
+  <span class="hljs-keyword">return</span> utftext;
+};
+
+<span class="hljs-built_in">module</span>.exports = base64;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

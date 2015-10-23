@@ -4,13 +4,14 @@ var appDir = __dirname + '/src';
 
 module.exports = {
 
-  // entry: appDir + '/Component.js',
-
-
-  // bundle.js is used
-  output: {
-    path: __dirname + '/dist',
-    filename: 'test.bundle.js',
+  module: {
+    postLoaders: [
+      {
+        test: /\.js$/,
+        include: /src/,
+        loader: 'istanbul-instrumenter'
+      }
+    ]
   },
 
   // Let Webpack use bower components
