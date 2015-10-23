@@ -30,24 +30,87 @@ describe('DOM', function () {
 
   });
 
-  describe.skip('getElsByTagAndAttr', function () {
+  describe('getElsByTagAndAttr()', function () {
+    it('should return an array with matched elements', function () {
+      var els = $.getElsByTagAndAttr('input', 'type', 'flipbase');
+      expect(els[0].id).to.equal('flipbase');
+      expect(els.length).to.equal(1);
+    });
+
+    it('should return an empty array when no mached elements were found', function () {
+      var els = $.getElsByTagAndAttr('input', 'type', 'flopbase');
+      expect(els.length).to.equal(0);
+      expect(els).to.be.an('array');
+    });
+  });
+
+  describe('createEl()', function () {
+    it('should create an element without attributes when no provided', function () {
+      var button = $.createEl('button');
+      expect(button.outerHTML).to.equal('<button></button>');
+    });
+
+    it('should create an element with attributes', function () {
+      var button = $.createEl('button', {
+        style: 'color:#FFF;'
+      });
+      expect(button.outerHTML).to.equal('<button style="color:#FFF;"></button>');
+    });
+  });
+
+  describe('setElAttributes()', function () {
+    it('should set all object properties and values as attributes', function () {
+      var el = $.createEl('input');
+      $.setElAttributes(el, {
+        'data-flipbase': 'foo',
+        style: 'color:#FFF;',
+        bar: 'foo'
+      });
+      expect(el.getAttribute('data-flipbase')).to.equal('foo');
+      expect(el.getAttribute('style')).to.equal('color:#FFF;');
+      expect(el.getAttribute('bar')).to.equal('foo');
+    });
+  });
+
+  describe('insertAsFirstEl()', function () {
+    it('should add an element as its child if no children exist yet', function () {
+      var el = $.createEl('div', { id: 'foo-bar'});
+      var par = document.getElementById('testParent');
+      $.insertAsFirstEl(el, par);
+      expect(el.parentNode).to.equal(par);
+    });
+
+    it('should add an element as the first child of the parent', function () {
+      var el = $.createEl('div', { id: 'foo-bar'});
+      var el2 = $.createEl('div', { id: 'foo-bar2'});
+      var par = document.getElementById('testParent');
+      $.insertAsFirstEl(el, par);
+      $.insertAsFirstEl(el2, par);
+      expect(par.firstChild).to.equal(el2);
+    });
+  });
+
+  describe('insertBeforeEl()', function () {
+    it('should add an element before another child', function () {
+      var el = $.createEl('div', { id: 'foo-bar'});
+      var el2 = $.createEl('div', { id: 'foo-bar2'});
+      var el3 = $.createEl('div', { id: 'foo-bar3'});
+      var par = document.getElementById('testParent');
+      $.insertAsFirstEl(el, par);
+      $.insertAsFirstEl(el2, par);
+      $.insertBeforeEl(el3, el);
+      expect(par.childNodes[1]).to.equal(el3);
+    });
     
-  });
-
-  describe.skip('createEl()', function () {
-
-  });
-
-  describe.skip('insertAsFirstEl()', function () {
-
-  });
-
-  describe.skip('insertBeforeEl()', function () {
-
+    it('should add an element before another child, even if the body element is the parent', function () {
+      var el = $.createEl('div', { id: 'foo-bar'});
+      var ref = document.getElementById('testParent');
+      $.insertBeforeEl(el, ref);
+      expect(ref.previousSibling).to.equal(el);
+    });
   });
 
   describe('CSS', function () {
-
     beforeEach(function () {
       // reset className property for each test
       document.documentElement.className = '';
@@ -110,34 +173,65 @@ describe('DOM', function () {
         expect($.removeClass(el, 'bar').className).to.equal('  baz');
       });
     });
+
+    describe('hasCSSProperty()', function () {
+      it('should return true if the browser does not support the property', function () {
+        // phantomjs does not support CSS
+        window.CSS = {
+          supports: function(){}
+        };
+        sinon.stub(window.CSS, 'supports').returns(true);
+        expect($.hasCSSProperty('border-radius', '5px')).to.be.true;
+        window.CSS.supports.restore();
+      });
+
+      it('should return false if the browser does support the property', function () {
+        // phantomjs does not support CSS
+        window.CSS = {
+          supports: function(){}
+        };
+        sinon.stub(window.CSS, 'supports').returns(false);
+        expect($.hasCSSProperty('border-radius', '5px')).to.be.false;
+        window.CSS.supports.restore();
+      });
+
+      it.skip('should return false if when using fake element to test support and it is not present', function () {
+        expect($.hasCSSProperty('border-radius')).to.be.false;
+      });
+    });
+
+    describe('modernize', function () {
+      beforeEach(function () {
+        document.documentElement.className = '';
+      });
+
+      afterEach(function () {
+        $.hasClass.restore();
+        $.hasCSSProperty.restore();
+      })
+
+      it('should add a class to the root element when browser supports the feature', function () {
+        sinon.stub($, 'hasCSSProperty').returns(true);
+        sinon.stub($, 'hasClass').returns(false);      
+        $.modernize('border-radius', '50%', 'test-css-class');
+        expect(document.documentElement.className).to.equal('test-css-class');
+      });
+
+      it('should not add a class to the root el when browser feature is not supported', function () {
+        sinon.stub($, 'hasCSSProperty').returns(false);
+        sinon.stub($, 'hasClass').returns(false);
+        $.modernize('border-radius', '50%', 'test-css-class');
+        expect($.hasClass(document.documentElement, 'test-css-class')).to.be.false;
+      });
+
+      it('should not a add the same class twice', function () {
+        sinon.stub($, 'hasCSSProperty').returns(true);
+        sinon.stub($, 'hasClass').returns(true);
+        document.documentElement.className = 'test-css-class';
+        $.modernize('border-radius', '50%', 'test-css-class');
+        expect(document.documentElement.className).to.equal('test-css-class');
+      });
+    });
   });
   
-  describe('hasCSSProperty()', function () {
-    before
-    it('should return false if the browser does not support the property, using the native CSS.supports method', function () {
-      // phantomjs does not support CSS
-      window.CSS = {
-        supports: function(){}
-      };
-      sinon.stub(window.CSS, 'supports').returns(true);
-      expect($.hasCSSProperty('color', '#FFF')).to.be.true;
-      expect($.hasCSSProperty('border', '1px solid #FFF')).to.be.true;
-      expect($.hasCSSProperty('border-radius', '5px')).to.be.true;
-      window.CSS.supports.restore();
-    });
-
-    it('should return true if the browser does support the property, using the fake element created');
-  });
-
-  describe('modernize', function () {
-    beforeEach(function () {
-      $.modernize('border-radius', '50%', 'test-css-class');
-    });
-
-    it('should verify if the browser supports a CSS feature', function () {
-      expect($.hasClass(document.documentElement, 'test-css-class')).to.be.true;
-    });
-  });
-
-
 });

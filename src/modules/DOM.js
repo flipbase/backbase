@@ -69,11 +69,9 @@ var $ = DOM = {
    * @return {object}       Element to insert
    */
   createEl: function(tag, attrs) {
-    if (!tag) tag = 'div';
-    if (!attrs) attrs = {};
+    tag = tag || 'div', attrs = attrs || {};
     var el = document.createElement(tag);
-    el = $.setElAttributes(el, attrs);
-    return el;
+    return $.setElAttributes(el, attrs);
   },
 
   /**
@@ -271,7 +269,9 @@ var $ = DOM = {
         // be avoided in most cases because `skipValueTest` will be used.
         try {
           testElem.style[prop] = value;
-        } catch (e) {}
+        } catch (e) {
+          return false;
+        }
 
         // If the property value has changed, we assume the value used is
         // supported. If `value` is empty string, it'll fail here (because
@@ -284,6 +284,7 @@ var $ = DOM = {
         }
       }
     }
+    return false;
   }
 
 };
