@@ -5,6 +5,8 @@ describe('DOM', function () {
   before(function () {
     document.body.innerHTML = window.__html__['test/template.html'];
     this.el = document.getElementById('placeholder');
+    this.el2 = document.getElementById('placeholder2');
+    this.el3 = document.getElementById('placeholder3');
   });
 
   describe('width()', function () {
@@ -13,21 +15,24 @@ describe('DOM', function () {
       expect($.width(this.el)).to.be.gt(0);
     });
 
-    it('should report the pixels set on the attribute', function () {
-      expect($.width(this.el)).to.equal(this.el.getAttribute('width'));
-    });
-
-    it('should report the pixels set on the attribute even when css class tries to overrides width', function () {
-      expect($.width(this.el)).to.equal(this.el.getAttribute('width'));
+    it('should report the width based on inline style or CSS class applied', function () {
+      expect($.width(this.el)).to.equal(100);
+      expect($.width(this.el2)).to.equal(250);
+      expect($.width(this.el3)).to.equal(100);
     });
   });
 
   describe.skip('height()', function () {
+    it('should report proper width in pxs', function () {
+      expect($.height(this.el)).to.be.a('number');
+      expect($.height(this.el)).to.be.gt(0);
+    });
 
-  });
-
-  describe.skip('getEl()', function () {
-
+    it('should report the height based on inline style or CSS class applied', function () {
+      expect($.height(this.el)).to.equal(100);
+      expect($.height(this.el2)).to.equal(250);
+      expect($.height(this.el3)).to.equal(100);
+    });
   });
 
   describe('getElsByTagAndAttr()', function () {
@@ -101,7 +106,7 @@ describe('DOM', function () {
       $.insertBeforeEl(el3, el);
       expect(par.childNodes[1]).to.equal(el3);
     });
-    
+
     it('should add an element before another child, even if the body element is the parent', function () {
       var el = $.createEl('div', { id: 'foo-bar'});
       var ref = document.getElementById('testParent');
