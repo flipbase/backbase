@@ -50,4 +50,4 @@ var cookie = {
 
 };
 
-module.exorts = cookie;
+module.exports = cookie;

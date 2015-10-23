@@ -1,3 +1,0 @@
-describe('CSS Support', function () {
-
-});

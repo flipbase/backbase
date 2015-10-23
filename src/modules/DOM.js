@@ -1,5 +1,6 @@
 var each = require('./utils').each;
 var keys = require('./utils').keys;
+var is = require('./utils').is;
 
 /**
  * Lightweight DOM selector utilty methods
@@ -124,7 +125,12 @@ var $ = DOM = {
   },
 
   /**
+   * CSS related utilities
+   */
+
+  /**
    * Verify if an element already has a certain class added to the class list
+   * String.prototype.idnexOf is supported from IE7+.
    * 
    * @param  {object}  el        DOM element
    * @param  {string}  className CSS class to check
@@ -140,9 +146,13 @@ var $ = DOM = {
    * @param {object} el        DOM element
    * @param {string} className CSS class to add
    */
-  addClass: function(el, className) {
-    if (!hasClass(el, className))
-      el.className = el.className === '' ? className : el.className += ' ' + className;
+  addClass: function(el, CSSclass) {
+    if (!$.hasClass(el, CSSclass)) {
+      if (!el.className || !el.className.length)
+        el.className = CSSclass;
+      else
+        el.className += ' ' + CSSclass;
+    }
 
     return el;
   },
@@ -155,8 +165,8 @@ var $ = DOM = {
    * @return {object}           DOM element
    */
   removeClass: function(el, className) {
-    if (hasClass(el, className))
-      el.className.replace(' ' + className, '');
+    if ($.hasClass(el, className))
+      el.className = el.className.replace(className, '')
 
     return el;
   },
@@ -203,6 +213,77 @@ var $ = DOM = {
     var pxs = $.getStyle(el, 'width');
     // Remove 'px' from the sring;
     return parseInt(pxs, 10);
+  },
+
+  /**
+   * Test if CSS feature is supported. If CSS class is already added by Modernizr 
+   * for example to the rootElement, then skipp all tests. If it's not added to 
+   * the rootElement yet, then test if the browser the provided CSS feature.
+   * 
+   * @param  {string}   prop          CSS property name
+   * @param  {string}   val           CSS property value
+   * @param  {string}   className     className to add to the root element
+   * @param  {boolean}  skipValueTest true if we don't need to test the value of 
+   *                                  the provided property
+   */
+  modernize: function(prop, val, className, skipValueTest) {
+    // Grab the root element of the document
+    var rootEl = document.documentElement;
+    className = className.toString() || '';
+    skipValueTest = is(skipValueTest, 'undefined') ? false : skipValueTest;
+
+    if (!$.hasClass(rootEl, className) && $.hasCSSProperty(prop, val, skipValueTest)) {
+      $.addClass(rootEl, className);
+    }
+  },
+
+  /**
+   * In testing support for a given CSS property, it's legit to test:
+   *   `elem.style[styleName] !== undefined`
+   * If the property is supported it will return an empty string,
+   * if unsupported it will return undefined.
+   *
+   * @param  {string}  prop          feature we need to detect
+   * @param  {Object}  value         optional value we can use in feature detection test
+   * @param  {boolean} skipValueTest arg to skip value test
+   * @return {boolean}               undefined if false, true if supported
+   */
+  hasCSSProperty: function(prop, value, skipValueTest) {
+    // Create element to test CSS features on
+    var testElem = document.createElement('flipbase');
+    var before = testElem.style[prop];
+
+    // Try native detect first
+    if (prop && value) {
+      if ('CSS' in window && 'supports' in window.CSS) {
+        return !!(window.CSS.supports(prop, value));
+      }
+    }
+
+    if (testElem.style[prop] !== undefined) {
+
+      // If value to test has been passed in, do a set-and-check test.
+      // 0 (integer) is a valid property value, so check that `value` isn't
+      // undefined, rather than just checking it's truthy.
+      if (!skipValueTest && !is(value, 'undefined')) {
+
+        // Needs a try catch block because of old IE. This is slow, but will
+        // be avoided in most cases because `skipValueTest` will be used.
+        try {
+          testElem.style[prop] = value;
+        } catch (e) {}
+
+        // If the property value has changed, we assume the value used is
+        // supported. If `value` is empty string, it'll fail here (because
+        // it hasn't changed), which matches how browsers have implemented
+        // CSS.supports()
+        if (testElem.style[prop] != before) {
+          // Clean the elements style
+          delete testElem.style
+          return true;
+        }
+      }
+    }
   }
 
 };
