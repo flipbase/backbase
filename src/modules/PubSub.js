@@ -2,10 +2,12 @@ var each = require('./utils').each;
 var is = require('./utils').is;
 
 /**
+ * PubSub pattern with subscribe, publish and unsubcribe funcationality. Plus
+ * you can pass in your own store to save the topics; this comes in handy
+ * when you don't want to publish a global event, but a local one.
  * 
  * @module
- * @author  Ron Jansen
- * 
+ * @author  Ron Jansen <ron@flipbase.com>
  */
 
 var pubsub = {
@@ -14,7 +16,8 @@ var pubsub = {
 
   /**
    * Subscribe a method to a certain topic (or 'event').
-   * 
+   *
+   * @method subscribe
    * @param  {String}   topic     name of the event to listen to
    * @param  {Function} listener  method to trigger when event is fired
    * @param  {Context}  context   reference to 'this' scope
@@ -38,7 +41,8 @@ var pubsub = {
 
   /**
    * Publish an event. 
-   * 
+   *
+   * @method publish
    * @param  {String} topic   event to trigger
    * @param  {Object} store   optional object store to trigger the event on
    */
@@ -58,7 +62,8 @@ var pubsub = {
 
   /**
    * Remove a listener from the topic store.
-   * 
+   *
+   * @method unsubscribe
    * @param  {String} topic reference to event array with listeners
    * @param  {Number} index index of listener in topics array
    * @param  {Object} store optional store with topics
@@ -71,6 +76,5 @@ var pubsub = {
   }
 
 };
-
 
 module.exports = pubsub;

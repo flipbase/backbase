@@ -3,7 +3,6 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "docs": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md",
     "dist": "webpack -p",
     "test": "karma start karma.conf.js",
     "test-ci": "karma start karma.conf.sauce.js --no-auto-watch --single-run",
@@ -11,7 +10,8 @@
     "release-minor": "git checkout master && npm version minor && git push origin master",
     "release-major": "git checkout master && npm version major && git push origin master",
     "docco": "./node_modules/.bin/docco src/**/*.js --layout classic --output docs/docco",
-    "jsdoc": "./node_modules/.bin/jsdoc --readme README.md src -r --destination docs/jsdoc --configure .jsdoc.json"
+    "jsdoc": "./node_modules/.bin/jsdoc --readme README.md src -r --destination docs/jsdoc --configure .jsdoc.json",
+    "jsdoc2md": "jsdoc2md 'src/*.js' > docs/framework.md && jsdoc2md 'src/utils/*.js' > docs/utilities.md"
   },
   "devDependencies": {
     "chai": "^3.3.0",
