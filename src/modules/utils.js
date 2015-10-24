@@ -14,7 +14,8 @@ var utils = _ = {
   
   /**
    * Parse and object to UTF-8 string format so it can be used in URL's
-   * @memberof utils
+   * 
+   * @method querystring
    * @param  {object} obj    object to parse
    * @param  {object} prefix name of the prefix, based on the val
    * @return {string}
@@ -37,6 +38,8 @@ var utils = _ = {
 
   /**
    * Create a new object based on the input object
+   *
+   * @method clone
    * @param  {object} obj
    * @return {object} 
    */
@@ -47,10 +50,11 @@ var utils = _ = {
   /**
    * Equivalent method to underscore's _.extend method; but this method actually
    * also deep merges nested objects!
-   * 
-   * @param  {object} target object to copy all (sub)props to
-   * @param  {object} source object to copy all props from
-   * @return {object}        target with all props from source
+   *
+   * @method assign
+   * @param  {object} target  object to copy all (sub)props to
+   * @param  {object} source  object to copy all props from
+   * @return {object}         target with all props from source
    */
   assign: function (target, source) {
     var keys = _.keys(source);
@@ -69,8 +73,10 @@ var utils = _ = {
 
   /**
    * Prototypal inheritance based on http://javascript.crockford.com/prototypal.html
-   * @param  {Object}   proto the prototype to inherit from
-   * @return {Function}       the new created function with protoype       
+   *
+   * @method inherits
+   * @param  {Object}   proto   the prototype to inherit from
+   * @return {Function}         the new created function with protoype       
    */
   inherits: function(proto) {
     function F() {}
@@ -80,7 +86,9 @@ var utils = _ = {
 
   /**
    * Verify if object is really an object.
-   * @param  {object}  obj 
+   *
+   * @method isObject
+   * @param  {object}  obj  object to check wheter or not its an object 
    * @return {Boolean}     
    */
   isObject: function (obj) {
@@ -89,8 +97,11 @@ var utils = _ = {
   },
 
   /**
-   * Copied from underscore.js
-   * @return {Boolean} true if obj is an array
+   * Verify if an object is really an array. Copied from underscore.js.
+   *
+   * @method isArray
+   * @param  {Object}   obj   object to check whether or not its an array
+   * @return {Boolean}
    */
   isArray: function (obj) {
     return toString.call(obj) === '[object Array]';
@@ -98,6 +109,8 @@ var utils = _ = {
 
   /**
    * Bind 'this' to a method
+   *
+   * @method bind
    * @param  {Object}   context "this"
    * @param  {Function} fn      method to bind 'this' to
    * @return {Function}         newly created method with 'this' as context
@@ -110,8 +123,11 @@ var utils = _ = {
       fn.apply(context, args);
     };
   },
+
   /**
    * Utility to prevet default actions when listening to DOM events.
+   *
+   * @method preventDefault
    * @param  {Object} evt event object from DOM
    */
   preventDefault: function(evt) {
@@ -124,8 +140,11 @@ var utils = _ = {
   },
 
   /**
-   * This code does not work in IE9 and lower!
+   * Get all the keys from an object literal. 
    * 
+   * @fix This code does not work in IE9 and lower!
+   *
+   * @method keys
    * @param  {object} obj object to parse
    * @return {array}      array with all keys
    */
@@ -137,7 +156,9 @@ var utils = _ = {
   },
 
   /**
-   * Iterate over array and execute callback on each index
+   * Iterate over array and execute callback on each index.
+   *
+   * @method each
    * @param  {array}    arr 
    * @param  {Function} cb 
    */
@@ -146,8 +167,10 @@ var utils = _ = {
   },
   
   /**
-   * Verify if string is a valid UUID (v1 or v4)
-   * @param  {string}  uuid 
+   * Verify if string is a valid UUID (v1 or v4).
+   *
+   * @method isUUID
+   * @param  {string}  uuid   string to check whether or not its an valid UUID 
    * @return {Boolean}
    */
   isUUID: function(uuid) {
@@ -156,7 +179,9 @@ var utils = _ = {
   },
 
   /**
-   * Verify if input is a number
+   * Verify if input is a number.
+   *
+   * @method isNumber
    * @param  {number}  n number
    * @return {Boolean}
    */
@@ -165,7 +190,9 @@ var utils = _ = {
   },
 
   /**
-   * Verify if a number is even or uneven
+   * Verify if a number is even or uneven.
+   *
+   * @method isEven
    * @param  {number}  n number
    * @return {Boolean}   true if n=2, n=4, etc
    */
@@ -174,7 +201,9 @@ var utils = _ = {
   },
 
   /**
-   * Returns the index of a certain value in an array
+   * Returns the index of a certain value in an array.
+   *
+   * @method getIndex
    * @param  {array}  arr   
    * @param  {object} val   
    * @param  {number} start index to start the search
@@ -189,6 +218,8 @@ var utils = _ = {
 
   /**
    * Shorthand to verify if value|objects are equal.
+   *
+   * @method eq
    * @param  {object} val1
    * @param  {object} val2 
    * @return {boolean}     
@@ -198,7 +229,9 @@ var utils = _ = {
   },
 
   /**
-   * Shorthand utility to check the type of an attribute
+   * Shorthand utility to check the type of an attribute.
+   *
+   * @method is
    * @param  {string}  attr 
    * @param  {string}  type  
    * @return {Boolean}
@@ -212,6 +245,8 @@ var utils = _ = {
    * Performance with regards to Netstream methods is much lower compared to the
    * official Adobe Flash Player. If both are installed and active, Chrome still prefers
    * Pepper Flash.
+   *
+   * @method checkForPepper
    * @return {boolean} true if Pepper Flash is present and actived
    */
   checkForPepper: function() {
@@ -231,6 +266,8 @@ var utils = _ = {
 
   /**
    * Check if video's can be uploaded, if XHR2 is supported
+   *
+   * @method hasXHR2
    * @return {Boolean}
    */
   hasXHR2: function() {
