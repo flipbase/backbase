@@ -5,8 +5,8 @@ var is = require('./utils').is;
 /**
  * Lightweight DOM selector utilty methods
  * 
- * @category helpers
  * @module
+ * @requires modules/utils
  */
 var $ = DOM = {
 

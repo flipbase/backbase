@@ -1,13 +1,16 @@
 /**
- * Base64 encryption, used for hashing the playerId
+ * Base64 encryption, used for hashing the playerId and recorderId
  * 
- * @category helpers
  * @module
  */
-
 var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 var base64 = {};
 
+/**
+ * @method encode
+ * @param  {string} input string to encode
+ * @return {string}       base64 encoded output
+ */
 base64.encode = function(input) {
   var output = '';
   var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
@@ -40,7 +43,11 @@ base64.encode = function(input) {
   return output;
 };
 
-// private method for UTF-8 encoding
+/**
+ * @method _utf8_encode
+ * @param  {string} input string to encode
+ * @return {string}       utf8 encoded output
+ */
 base64._utf8_encode = function(string) {
   string = string.replace(/\r\n/g, '\n');
   var utftext = '';

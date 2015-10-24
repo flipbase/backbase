@@ -1,15 +1,12 @@
 /**
+ * All basic functionality for backbase, including _.assign,
+ * _.querystring, _.bind, _.keys, _.inherits, etc. This module is 
+ * heavily inspired on underscore, together with some basic utils. 
  * 
  * @module
- * @author Ron Jansen <ron@flipbase.com>
- * @description all basic functionality for backbase, including _.assign,
- *              _.querystring, _.bind, _.keys, _.inherits, etc. This module is 
- *              heavily inspired on underscore, together with some basic utils. 
+ * @author    Ron Jansen <ron@flipbase.com>
+ * @copyright Flipbase, 2015
  */
-
- /**
-  * @namespace utils
-  */
 var utils = _ = {
   
   /**
