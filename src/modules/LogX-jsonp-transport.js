@@ -19,8 +19,9 @@ var jsonp = require('browser-jsonp');
  * 1. The querystring will get near the length of 2083 characters, this is the URI limit in IE.
  * 2. If the log level is set to 'error'
  * 3. If the message is an instanceof Error
+ *
+ * @module
  */
-
 function Transport(config) {
   this.startTime = new Date().getTime();
   this.index = 0;

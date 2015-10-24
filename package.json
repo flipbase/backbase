@@ -11,7 +11,7 @@
     "release-minor": "git checkout master && npm version minor && git push origin master",
     "release-major": "git checkout master && npm version major && git push origin master",
     "docco": "./node_modules/.bin/docco src/**/*.js --layout classic --output docs/docco",
-    "jsdoc": "./node_modules/.bin/jsdoc src/**/*.js --destination docs/jsdoc --config .jsdoc.json"
+    "jsdoc": "./node_modules/.bin/jsdoc --readme README.md src -r --destination docs/jsdoc --configure .jsdoc.json"
   },
   "devDependencies": {
     "chai": "^3.3.0",

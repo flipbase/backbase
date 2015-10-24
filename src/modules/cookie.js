@@ -2,7 +2,7 @@
  * Small module to set, get and remove cookies and to verify if one already
  * exists.
  * 
- * @module very basic cookie management
+ * @module
  * @author  Ron Jansen <ron@flipbase.com>
  */
 

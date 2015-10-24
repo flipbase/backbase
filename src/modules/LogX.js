@@ -1,7 +1,7 @@
 var each = require('./utils').each;
 
 /**
- * @module      LogX
+ * @module
  * @description Client-side mini logging library 
  * @author      Ron Jansen <ron@flipbase.com>
  */

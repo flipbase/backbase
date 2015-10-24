@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * 
+ * @module
+ * @author Ron Jansen &lt;ron@flipbase.com>
+ * @description all basic functionality for backbase, including _.assign,
+ *              _.querystring, _.bind, _.keys, _.inherits, etc. This module is 
+ *              heavily inspired on underscore, together with some basic utils. 
+ */
+
+ /**
+  * @namespace utils
+  */
+var utils = _ = {
+  
+  /**
+   * Parse and object to UTF-8 string format so it can be used in URL's
+   * @memberof utils
+   * @param  {object} obj    object to parse
+   * @param  {object} prefix name of the prefix, based on the val
+   * @return {string}
+   */
+  querystring: function(obj, prefix) {
+    var str = [];
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        var k = prefix ? prefix + "[" + key + "]" : key;
+        var val = obj[key];
+        
+        str.push(_.isObject(val) ?
+          _.querystring(val, k) :
+          encodeURIComponent(k) + "=" + encodeURIComponent(val));
+      }
+    }
+    return str.join("&amp;");
+  },
+  
+
+  /**
+   * Create a new object based on the input object
+   * @param  {object} obj
+   * @return {object} 
+   */
+  clone: function (obj) {
+    return _.assign({}, obj);
+  },
+
+  /**
+   * Equivalent method to underscore's _.extend method; but this method actually
+   * also deep merges nested objects!
+   * 
+   * @param  {object} target object to copy all (sub)props to
+   * @param  {object} source object to copy all props from
+   * @return {object}        target with all props from source
+   */
+  assign: function (target, source) {
+    var keys = _.keys(source);
+
+    _.each(keys, function (key, i, list) {
+      var original = target[key];
+      var next = source[key];
+      if (original &amp;&amp; next &amp;&amp; typeof next == "object") {
+        _.assign(original, next);
+      } else {
+        target[key] = source[key];
+      }
+    });
+    return target;
+  },
+
+  /**
+   * Prototypal inheritance based on http://javascript.crockford.com/prototypal.html
+   * @param  {Object}   proto the prototype to inherit from
+   * @return {Function}       the new created function with protoype       
+   */
+  inherits: function(proto) {
+    function F() {}
+    F.prototype = proto;
+    return new F();
+  },
+
+  /**
+   * Verify if object is really an object.
+   * @param  {object}  obj 
+   * @return {Boolean}     
+   */
+  isObject: function (obj) {
+    var type = typeof obj;
+    return type === 'function' || type === 'object' &amp;&amp; !!obj;
+  },
+
+  /**
+   * Copied from underscore.js
+   * @return {Boolean} true if obj is an array
+   */
+  isArray: function (obj) {
+    return toString.call(obj) === '[object Array]';
+  },
+
+  /**
+   * Bind 'this' to a method
+   * @param  {Object}   context "this"
+   * @param  {Function} fn      method to bind 'this' to
+   * @return {Function}         newly created method with 'this' as context
+   */
+  bind: function(context, fn) {
+    fn = fn;
+    context = context;
+    return function () {
+      var args = [].slice.call(arguments) || [];
+      fn.apply(context, args);
+    };
+  },
+  /**
+   * Utility to prevet default actions when listening to DOM events.
+   * @param  {Object} evt event object from DOM
+   */
+  preventDefault: function(evt) {
+    if (evt.preventDefault) {
+      evt.preventDefault();
+    } else if (evt.returnValue) {
+      // IE8&lt;
+      evt.returnValue = false;
+    }
+  },
+
+  /**
+   * This code does not work in IE9 and lower!
+   * 
+   * @param  {object} obj object to parse
+   * @return {array}      array with all keys
+   */
+  keys: function(obj) {
+    var props = [];
+    for (var key in obj) props.push(key);
+
+    return props;
+  },
+
+  /**
+   * Iterate over array and execute callback on each index
+   * @param  {array}    arr 
+   * @param  {Function} cb 
+   */
+  each: function(arr, cb) {
+    for (var i = 0; arr.length > i; i++) cb(arr[i], i, arr);
+  },
+  
+  /**
+   * Verify if string is a valid UUID (v1 or v4)
+   * @param  {string}  uuid 
+   * @return {Boolean}
+   */
+  isUUID: function(uuid) {
+    var regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return regex.test(uuid);
+  },
+
+  /**
+   * Verify if input is a number
+   * @param  {number}  n number
+   * @return {Boolean}
+   */
+  isNumber: function(n) {
+    return n === parseFloat(n);
+  },
+
+  /**
+   * Verify if a number is even or uneven
+   * @param  {number}  n number
+   * @return {Boolean}   true if n=2, n=4, etc
+   */
+  isEven: function(n) {
+    return _.isNumber(n) &amp;&amp; (n % 2 === 0);
+  },
+
+  /**
+   * Returns the index of a certain value in an array
+   * @param  {array}  arr   
+   * @param  {object} val   
+   * @param  {number} start index to start the search
+   * @return {number} index of value if found; if not -1 is returned
+   */
+  getIndex: function(arr, val, start) {
+    for (var i = (start || 0); i &lt; arr.length; i++) {
+      if (arr[i] === val) return i;
+    }
+    return -1;
+  },
+
+  /**
+   * Shorthand to verify if value|objects are equal.
+   * @param  {object} val1
+   * @param  {object} val2 
+   * @return {boolean}     
+   */
+  eq: function(val1, val2) {
+    return (val1 === val2);
+  },
+
+  /**
+   * Shorthand utility to check the type of an attribute
+   * @param  {string}  attr 
+   * @param  {string}  type  
+   * @return {Boolean}
+   */
+  is: function(attr, type) {
+    return (typeof attr === type);
+  },
+
+  /**
+   * Chrome ships with their own Flash Player embedded, named 'Pepper Flash'
+   * Performance with regards to Netstream methods is much lower compared to the
+   * official Adobe Flash Player. If both are installed and active, Chrome still prefers
+   * Pepper Flash.
+   * @return {boolean} true if Pepper Flash is present and actived
+   */
+  checkForPepper: function() {
+    if (navigator.mimeTypes &amp;&amp;
+      navigator.mimeTypes['application/x-shockwave-flash'] &amp;&amp;
+      'chrome' in window) {
+      var filename = navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin.filename;
+
+      if (filename === 'pepflashplayer.dll' ||
+        filename === 'libpepflashplayer.so' ||
+        filename === 'PepperFlashPlayer.plugin') {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * Check if video's can be uploaded, if XHR2 is supported
+   * @return {Boolean}
+   */
+  hasXHR2: function() {
+    return (window.FormData !== undefined &amp;&amp; window.FileReader &amp;&amp;
+      window.FileList &amp;&amp; window.Blob) ? true : false;
+  }
+
+};
+
+module.exports = utils;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-modules_base64.html">modules/base64</a></li><li><a href="module-modules_browser.html">modules/browser</a></li><li><a href="module-modules_cookie.html">modules/cookie</a></li><li><a href="module-modules_DOM.html">modules/DOM</a></li><li><a href="module-modules_events.html">modules/events</a></li><li><a href="module-modules_LogX.html">modules/LogX</a></li><li><a href="module-modules_LogX-console-transport.html">modules/LogX-console-transport</a></li><li><a href="module-modules_LogX-jsonp-transport.html">modules/LogX-jsonp-transport</a></li><li><a href="module-modules_PubSub.html">modules/PubSub</a></li><li><a href="module-modules_utils.html">modules/utils</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li><li><a href="Model.html">Model</a></li></ul><h3>Namespaces</h3><ul><li><a href="global.html#Flipbase">Flipbase</a></li><li><a href="module-modules_utils-utils.html">utils</a></li></ul><h3>Mixins</h3><ul><li><a href="extendProto.html">extendProto</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">getting-started</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sat Oct 24 2015 11:46:54 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

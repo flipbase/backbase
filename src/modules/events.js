@@ -1,7 +1,7 @@
 /**
  * Lightweight DOM event listeners module
  * 
- * @module  DOM event subscriber & unsubcriber utility
+ * @module 
  * @author  Ron Jansen <ron@flipbase.com>
  */
 

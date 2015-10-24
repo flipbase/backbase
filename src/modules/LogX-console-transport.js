@@ -2,6 +2,7 @@
  * Console transport color settings
  * 
  * @type {Object}
+ * @private
  */
 var colors = {
   error: '#e11e1e', // red
@@ -13,6 +14,13 @@ var colors = {
 if (!window.console) window.console = {};
 if (!window.console.log) window.console.log = function () {};
 
+/**
+ * @module
+ * 
+ * @param  {string} level [description]
+ * @param  {string} msg   [description]
+ * @param  {object} meta  [description]
+ */
 module.exports = function (level, msg, meta) {
   var color = colors[level] || '#000000';
   var style = 'color: ' + color + ';';

@@ -4,8 +4,10 @@
  * @module 
  */
 
+// Get browser user agent
 var USER_AGENT = window.navigator.userAgent;
 
+// Setup globals
 var browser = {
   IS_IPHONE: (/iPhone/i).test(USER_AGENT),
   IS_IPAD: (/iPad/i).test(USER_AGENT),

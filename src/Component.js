@@ -7,6 +7,25 @@ var keys = require('./modules/utils').keys;
 var createEl = require('./modules/DOM').createEl;
 var assign = require('./modules/utils').assign;
 var inherits = require('./modules/extendProto');
+ /**
+  * - Ieder UI component moet dus een HTML string terug geven of niets.
+- We kunnen toch in iedere component definieren wanneer de render functie getriggered moet worden?
+    -> Enige nadeel is dan wel dat de hele template opnieuw gerendered wordt. 
+
+
+- In dat geval moet de parent gerendered worden, als in het child een event gebeurd of state verandert.
+  -> Kunnen we niet alleen de parent updaten via een trigger? 
+    -> Hoe gaan we dat doen als er een component meerdere parents heeft?
+
+  -> Stel we renderen de parent, met de nieuwe state, dan wordt de child bijvoorbeeld niet meer gerendered.
+     Dat betekend dat wel wel de instances netjes moeten verwijderen anders leaken die in memory. 
+     -> En dat betekend weer dat we moeten diffen om de DOM om de components netjes weg te halen -> VIRTUAL DOM!
+
+Uitzoeken
+- Kan ik niet gewoon standaard de volledig app opnieuw renderen? Zo heel veel divs heb ik niet, wellicht is het niet eens erg voor performance!
+- Of ik zorg dat "rerendering" niets anders is dan dingen 'hidden' en dan weer tonen. -> cameratag method
+- Ik kan zorgen dan components zichzelf kunnen updaten?
+  */
 
 /**
  * @example
@@ -24,9 +43,12 @@ var inherits = require('./modules/extendProto');
  * });
  *
  * el.remove();
+ *
+ *  
  * 
+ * @class
+ * @constructor
  */
-
 function Component(options) {
   this._children = {};
   this._events = {};

@@ -1,18 +1,23 @@
 /**
  * 
- * @module utilities
+ * @module
  * @author Ron Jansen <ron@flipbase.com>
  * @description all basic functionality for backbase, including _.assign,
  *              _.querystring, _.bind, _.keys, _.inherits, etc. This module is 
- *              heavily inspired on underscore, together with some basic utils.
+ *              heavily inspired on underscore, together with some basic utils. 
  */
+
+ /**
+  * @namespace utils
+  */
 var utils = _ = {
   
   /**
    * Parse and object to UTF-8 string format so it can be used in URL's
+   * @memberof utils
    * @param  {object} obj    object to parse
    * @param  {object} prefix name of the prefix, based on the val
-   * @return {string}        
+   * @return {string}
    */
   querystring: function(obj, prefix) {
     var str = [];
