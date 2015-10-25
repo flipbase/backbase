@@ -10,6 +10,8 @@
   "disallowSpacesInAnonymousFunctionExpression": null,
   "disallowSpacesInFunctionDeclaration": null,
 
+  "requireVarDeclFirst": true,
+
   "safeContextKeyword": "_this",
   
   "validateCommentPosition": { 
