@@ -1,49 +1,29 @@
 {
-  "preset": "airbnb",
-
-  "plugins": [
-    "./node_modules/jscs-jsdoc"
-  ],
-
+  "preset": "google",
+  
   "disallowSpacesInNamedFunctionExpression": null,
   "disallowSpacesInFunctionExpression": null,
   "disallowSpacesInAnonymousFunctionExpression": null,
   "disallowSpacesInFunctionDeclaration": null,
-
-  "requireVarDeclFirst": true,
-
-  "safeContextKeyword": "_this",
-  
-  "validateCommentPosition": { 
-    "position": "above", 
-    "allExcept": []
-  },
-  "requireCapitalizedComments": true,
-  "disallowTrailingComma": true,
+  "requireCurlyBraces": null,
 
   "requireSpacesInFunction": {
     "beforeOpeningRoundBrace": true,
     "beforeOpeningCurlyBrace": true
   },
+  
+  "requireSpaceAfterLineComment": true,
+  "requireCapitalizedComments": true,
+  "disallowTrailingComma": true,
+  "safeContextKeyword": "_this",
 
-  "maximumLineLength": {
-    "value": 80,
-    "tabSize": 2,
-    "allExcept": [
-      "comments",
-      "functionSignature",
-      "regex"
-    ]
-  },
+  "plugins": [
+    "./node_modules/jscs-jsdoc"
+  ],
 
   "jsDoc": {
     "checkAnnotations": "jsdoc3",
-    "checkParamNames": true,
-    "requireParamTypes": true,
-    "checkReturnTypes": true,
-    "requireReturnTypes": true,
     "requireNewlineAfterDescription": true,
-    "checkRedundantParams": true,
     "requireDescriptionCompleteSentence": true
   },
 

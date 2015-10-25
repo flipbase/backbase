@@ -187,14 +187,14 @@ var $ = DOM = {
    * @return {string} value of CSS property applied to the element
    */
   getStyle: function (el, prop) {
-    var getComputedStyl = (!!window.getComputedStyle)
-      ? window.getComputedStyle
-      : undefined;
-    if (getComputedStyl) {
+    var getComputedStyl = (!!window.getComputedStyle) ?
+      window.getComputedStyle :
+      undefined;
+
+    if (getComputedStyl)
       return window.getComputedStyle(el, null).getPropertyValue(prop);
-    } else {
+    else
       return el.currentStyle[prop];
-    }
   },
 
   /**
@@ -206,7 +206,7 @@ var $ = DOM = {
    * @param  {Object} el
    * @return {number} height in pixels
    */
-  height: function(el) {
+  height: function (el) {
     var pxs = $.getStyle(el, 'height');
     // Remove 'px' from the string;
     return parseInt(pxs, 10);
@@ -221,7 +221,7 @@ var $ = DOM = {
    * @param  {Object} el
    * @return {number} width in pixels
    */
-  width: function(el) {
+  width: function (el) {
     var pxs = $.getStyle(el, 'width');
     // Remove 'px' from the sring;
     return parseInt(pxs, 10);
@@ -245,9 +245,9 @@ var $ = DOM = {
     className = className.toString() || '';
     skipValueTest = is(skipValueTest, 'undefined') ? false : skipValueTest;
 
-    if (!$.hasClass(rootEl, className) && $.hasCSSProperty(prop, val, skipValueTest)) {
-      $.addClass(rootEl, className);
-    }
+    if (!$.hasClass(rootEl, className) &&
+      $.hasCSSProperty(prop, val, skipValueTest))
+        $.addClass(rootEl, className);
   },
 
   /**
@@ -262,7 +262,7 @@ var $ = DOM = {
    * @param  {boolean} skipValueTest arg to skip value test
    * @return {boolean}               undefined if false, true if supported
    */
-  hasCSSProperty: function(prop, value, skipValueTest) {
+  hasCSSProperty: function (prop, value, skipValueTest) {
     // Create element to test CSS features on
     var testElem = document.createElement('flipbase');
     var before = testElem.style[prop];

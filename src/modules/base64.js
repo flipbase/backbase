@@ -1,6 +1,6 @@
 /**
  * Base64 encryption, used for hashing the playerId and recorderId
- * 
+ *
  * @module
  */
 var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -11,9 +11,15 @@ var base64 = {};
  * @param  {string} input string to encode
  * @return {string}       base64 encoded output
  */
-base64.encode = function(input) {
+base64.encode = function (input) {
   var output = '';
-  var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+  var chr1;
+  var chr2;
+  var chr3;
+  var enc1;
+  var enc2;
+  var enc3;
+  var enc4;
   var i = 0;
 
   input = base64._utf8_encode(input);
@@ -48,7 +54,7 @@ base64.encode = function(input) {
  * @param  {string} input string to encode
  * @return {string}       utf8 encoded output
  */
-base64._utf8_encode = function(string) {
+base64._utf8_encode = function (string) {
   string = string.replace(/\r\n/g, '\n');
   var utftext = '';
 
@@ -57,12 +63,10 @@ base64._utf8_encode = function(string) {
 
     if (c < 128) {
       utftext += String.fromCharCode(c);
-    }
-    else if ((c > 127) && (c < 2048)) {
+    } else if ((c > 127) && (c < 2048)) {
       utftext += String.fromCharCode((c >> 6) | 192);
       utftext += String.fromCharCode((c & 63) | 128);
-    }
-    else {
+    } else {
       utftext += String.fromCharCode((c >> 12) | 224);
       utftext += String.fromCharCode(((c >> 6) & 63) | 128);
       utftext += String.fromCharCode((c & 63) | 128);
