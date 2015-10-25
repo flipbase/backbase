@@ -1,17 +1,17 @@
 /**
  * Lightweight DOM event listeners module
- * 
- * @module 
+ *
+ * @module
  * @author  Ron Jansen <ron@flipbase.com>
  */
 
 var events = {
   /**
    * For IE9 and addEventListener you need an HTML5 <!DOCTYPE html>
-   * Below code is proposed by John Resig (source: 
+   * Below code is proposed by John Resig (source:
    * http://ejohn.org/projects/flexible-javascript-events/).
    *
-   * @memberOf  events
+   * @memberof  events
    * @method  on
    * @param  {object} el stored reference to the element
    * @param  {string} evt
@@ -22,7 +22,7 @@ var events = {
       // This creates the method is a child of the element, instead of the
       // document as a whole. 'this' now refers to the element properly.
       el['e' + evnt + fn] = fn;
-      el[evnt + fn] = function(){ el['e' + evnt + fn](window.event); };
+      el[evnt + fn] = function () { el['e' + evnt + fn](window.event); };
       el.attachEvent('on' + evnt, el[evnt + fn]);
     } else {
       el.addEventListener(evnt, fn, false);
@@ -30,8 +30,8 @@ var events = {
   },
 
   /**
-   * Remove eventslisteners. 
-   * 
+   * Remove eventslisteners.
+   *
    * @param  {object}   el   reference to the element
    * @param  {string}   evnt
    * @param  {function} fn

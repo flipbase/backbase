@@ -122,7 +122,7 @@ var $ = DOM = {
    * @param  {Object} other  element to place 'el' just before
    * @return {Object}        element that has been inserted
    */
-  insertBeforeEl: function(el, other) {
+  insertBeforeEl: function (el, other) {
     if (other && other.parentNode)
       other.parentNode.insertBefore(el, other);
     return el;
@@ -141,7 +141,7 @@ var $ = DOM = {
    * @param  {string}  className CSS class to check
    * @return {boolean}
    */
-  hasClass: function(el, className) {
+  hasClass: function (el, className) {
     return ((' ' + el.className + ' ').indexOf(className) > -1);
   },
 
@@ -152,7 +152,7 @@ var $ = DOM = {
    * @param {Object} el        DOM element
    * @param {string} className CSS class to add
    */
-  addClass: function(el, CSSclass) {
+  addClass: function (el, CSSclass) {
     if (!$.hasClass(el, CSSclass)) {
       if (!el.className || !el.className.length)
         el.className = CSSclass;
@@ -171,7 +171,7 @@ var $ = DOM = {
    * @param  {string} className CSS class to remove
    * @return {Object}           DOM element
    */
-  removeClass: function(el, className) {
+  removeClass: function (el, className) {
     if ($.hasClass(el, className))
       el.className = el.className.replace(className, '')
 

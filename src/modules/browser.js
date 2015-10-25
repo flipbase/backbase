@@ -1,7 +1,7 @@
 /**
  * Constats with browser related info
- * 
- * @module 
+ *
+ * @module
  */
 
 // Get browser user agent

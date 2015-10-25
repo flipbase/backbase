@@ -7,9 +7,9 @@
 
 var config = {
   webcam: {
-    flash_config: {},
+    'flash_config': {},
     flashvars: {},
-    params: {},
+    params: {}
   }
 };
 
@@ -49,7 +49,7 @@ var state = {
         fps: 0
       }
     },
-    
+
     method: 'webcam',
 
     // dit is toch eigenlijk vooral om te debuggen en in te schatten hoe de implementatie is gedaan?
@@ -65,7 +65,6 @@ var state = {
       locale: 'en_us'
     }
   },
-
 
   // We seperate the recordings and the uploads so the amount of data will be
   // too much to send over the wire using JSONP
@@ -86,7 +85,7 @@ var state = {
       // mic_status: 'unmuted',
       // net_connection: 'connected',
       // net_stream: 'connected',
-      quality_setting: 0, 
+      quality_setting: 0,
       bandwidth_setting: 0,
       avg_mic_activity: 0,
       avg_fps_ns: 22,
@@ -95,18 +94,12 @@ var state = {
       view_duration: 0, // totale duration van alle views bij elkaar
     },
 
-
     // na success of error
     upload: {
       file_selected: true,
-      // progress: 0, 
+      // progress: 0,
       upload_duration: 0
-    },
-
-
-
-    
-
+    }
   }
 
 };

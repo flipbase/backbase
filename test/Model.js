@@ -2,11 +2,12 @@ var Model = require('../src/Model');
 
 var RecordingsModel = Model.extend({
   defaults: {
-    user_agent: window.navigator.userAgent.toLowerCase()
+    'user_agent': window.navigator.userAgent.toLowerCase()
   },
   initialize: function (options) {}
 });
-var _model = new RecordingsModel({ _id: '123' });
+
+var _model = new RecordingsModel({_id: '123'});
 
 // Setup event listener
 var spy = sinon.spy();
@@ -107,8 +108,6 @@ describe('Model', function () {
       expect(_model.isNew()).to.be.false;
     });
 
-
   });
-
 
 });

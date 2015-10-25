@@ -3,10 +3,10 @@
  * @author  Ron Jansen <ron@flipbase.com>
  *
  */
- 
+
 /**
  * Transport to log message to the console, with CSS styling if supported
- * 
+ *
  * @method consoleTransport
  * @param  {string} level log level to use
  * @param  {string} msg   message to log to the console
@@ -16,10 +16,10 @@ function consoleTransport (level, msg, meta) {
   var color = colors[level] || '#000000';
   var style = 'color: ' + color + ';';
 
-  if (meta && JSON) 
+  if (meta && JSON)
     msg += ', meta: ' + JSON.stringify(meta);
 
-  if (hasConsoleStyling()) 
+  if (hasConsoleStyling())
     return console.log('%c ' + msg, style);
 
   console.log(msg);
@@ -44,7 +44,7 @@ if (!window.console.log) window.console.log = function () {};
  * @private
  * @return {Boolean}
  */
-function hasConsoleStyling() {
+function hasConsoleStyling () {
   return !!('WebkitAppearance' in document.documentElement.style);
 }
 
