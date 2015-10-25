@@ -1,44 +1,43 @@
 /**
  * All basic functionality for backbase, including _.assign,
- * _.querystring, _.bind, _.keys, _.inherits, etc. This module is 
- * heavily inspired on underscore, together with some basic utils. 
- * 
+ * _.querystring, _.bind, _.keys, _.inherits, etc. This module is
+ * heavily inspired on underscore, together with some basic utils.
+ *
  * @module
  * @author    Ron Jansen <ron@flipbase.com>
  * @copyright Flipbase, 2015
  */
 var utils = _ = {
-  
+
   /**
    * Parse and object to UTF-8 string format so it can be used in URL's
-   * 
+   *
    * @method querystring
    * @param  {object} obj    object to parse
    * @param  {object} prefix name of the prefix, based on the val
    * @return {string}
    */
-  querystring: function(obj, prefix) {
+  querystring: function (obj, prefix) {
     var str = [];
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        var k = prefix ? prefix + "[" + key + "]" : key;
+        var k = prefix ? prefix + '[' + key + ']' : key;
         var val = obj[key];
-        
+
         str.push(_.isObject(val) ?
           _.querystring(val, k) :
-          encodeURIComponent(k) + "=" + encodeURIComponent(val));
+          encodeURIComponent(k) + '=' + encodeURIComponent(val));
       }
     }
-    return str.join("&");
+    return str.join('&');
   },
-  
 
   /**
    * Create a new object based on the input object
    *
    * @method clone
    * @param  {object} obj
-   * @return {object} 
+   * @return {object}
    */
   clone: function (obj) {
     return _.assign({}, obj);
@@ -59,7 +58,7 @@ var utils = _ = {
     _.each(keys, function (key, i, list) {
       var original = target[key];
       var next = source[key];
-      if (original && next && typeof next == "object") {
+      if (original && next && typeof next == 'object') {
         _.assign(original, next);
       } else {
         target[key] = source[key];
@@ -69,14 +68,15 @@ var utils = _ = {
   },
 
   /**
-   * Prototypal inheritance based on http://javascript.crockford.com/prototypal.html
+   * Prototypal inheritance based on
+   * http://javascript.crockford.com/prototypal.html
    *
    * @method inherits
    * @param  {Object}   proto   the prototype to inherit from
-   * @return {Function}         the new created function with protoype       
+   * @return {Function}         the new created function with protoype
    */
-  inherits: function(proto) {
-    function F() {}
+  inherits: function (proto) {
+    function F () {}
     F.prototype = proto;
     return new F();
   },
@@ -85,8 +85,8 @@ var utils = _ = {
    * Verify if object is really an object.
    *
    * @method isObject
-   * @param  {object}  obj  object to check wheter or not its an object 
-   * @return {Boolean}     
+   * @param  {object}  obj  object to check wheter or not its an object
+   * @return {Boolean}
    */
   isObject: function (obj) {
     var type = typeof obj;
@@ -112,7 +112,7 @@ var utils = _ = {
    * @param  {Function} fn      method to bind 'this' to
    * @return {Function}         newly created method with 'this' as context
    */
-  bind: function(context, fn) {
+  bind: function (context, fn) {
     fn = fn;
     context = context;
     return function () {
@@ -127,7 +127,7 @@ var utils = _ = {
    * @method preventDefault
    * @param  {Object} evt event object from DOM
    */
-  preventDefault: function(evt) {
+  preventDefault: function (evt) {
     if (evt.preventDefault) {
       evt.preventDefault();
     } else if (evt.returnValue) {
@@ -137,15 +137,15 @@ var utils = _ = {
   },
 
   /**
-   * Get all the keys from an object literal. 
-   * 
-   * @fix This code does not work in IE9 and lower!
+   * Get all the keys from an object literal.
+   *
+   * @FIXME This code does not work in IE9 and lower!
    *
    * @method keys
    * @param  {object} obj object to parse
    * @return {array}      array with all keys
    */
-  keys: function(obj) {
+  keys: function (obj) {
     var props = [];
     for (var key in obj) props.push(key);
 
@@ -156,21 +156,21 @@ var utils = _ = {
    * Iterate over array and execute callback on each index.
    *
    * @method each
-   * @param  {array}    arr 
-   * @param  {Function} cb 
+   * @param  {array}    arr
+   * @param  {Function} cb
    */
-  each: function(arr, cb) {
+  each: function (arr, cb) {
     for (var i = 0; arr.length > i; i++) cb(arr[i], i, arr);
   },
-  
+
   /**
    * Verify if string is a valid UUID (v1 or v4).
    *
    * @method isUUID
-   * @param  {string}  uuid   string to check whether or not its an valid UUID 
+   * @param  {string}  uuid   string to check whether or not its an valid UUID
    * @return {Boolean}
    */
-  isUUID: function(uuid) {
+  isUUID: function (uuid) {
     var regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return regex.test(uuid);
   },
@@ -182,7 +182,7 @@ var utils = _ = {
    * @param  {number}  n number
    * @return {Boolean}
    */
-  isNumber: function(n) {
+  isNumber: function (n) {
     return n === parseFloat(n);
   },
 
@@ -193,7 +193,7 @@ var utils = _ = {
    * @param  {number}  n number
    * @return {Boolean}   true if n=2, n=4, etc
    */
-  isEven: function(n) {
+  isEven: function (n) {
     return _.isNumber(n) && (n % 2 === 0);
   },
 
@@ -201,12 +201,12 @@ var utils = _ = {
    * Returns the index of a certain value in an array.
    *
    * @method getIndex
-   * @param  {array}  arr   
-   * @param  {object} val   
+   * @param  {array}  arr
+   * @param  {object} val
    * @param  {number} start index to start the search
    * @return {number} index of value if found; if not -1 is returned
    */
-  getIndex: function(arr, val, start) {
+  getIndex: function (arr, val, start) {
     for (var i = (start || 0); i < arr.length; i++) {
       if (arr[i] === val) return i;
     }
@@ -218,10 +218,10 @@ var utils = _ = {
    *
    * @method eq
    * @param  {object} val1
-   * @param  {object} val2 
-   * @return {boolean}     
+   * @param  {object} val2
+   * @return {boolean}
    */
-  eq: function(val1, val2) {
+  eq: function (val1, val2) {
     return (val1 === val2);
   },
 
@@ -229,11 +229,11 @@ var utils = _ = {
    * Shorthand utility to check the type of an attribute.
    *
    * @method is
-   * @param  {string}  attr 
-   * @param  {string}  type  
+   * @param  {string}  attr
+   * @param  {string}  type
    * @return {Boolean}
    */
-  is: function(attr, type) {
+  is: function (attr, type) {
     return (typeof attr === type);
   },
 
@@ -246,7 +246,7 @@ var utils = _ = {
    * @method checkForPepper
    * @return {boolean} true if Pepper Flash is present and actived
    */
-  checkForPepper: function() {
+  checkForPepper: function () {
     if (navigator.mimeTypes &&
       navigator.mimeTypes['application/x-shockwave-flash'] &&
       'chrome' in window) {
@@ -267,7 +267,7 @@ var utils = _ = {
    * @method hasXHR2
    * @return {Boolean}
    */
-  hasXHR2: function() {
+  hasXHR2: function () {
     return (window.FormData !== undefined && window.FileReader &&
       window.FileList && window.Blob) ? true : false;
   }
