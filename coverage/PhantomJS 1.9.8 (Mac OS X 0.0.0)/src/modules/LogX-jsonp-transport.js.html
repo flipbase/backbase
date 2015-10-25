@@ -158,12 +158,31 @@
 113
 114
 115
-116</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -207,25 +226,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13×</span>
-<span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,6 +285,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,6 +305,7 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var keys = require('./utils').keys;
 var each = require('./utils').each;
+&nbsp;
 // 2083 is the max URI length for IE; to be on the safe side we already
 // send URI's that are about 1900 characters long.
 var maxQueryStringLength = (2083 - 200);
@@ -282,21 +313,24 @@ var jsonp = require('browser-jsonp');
 &nbsp;
 /**
  * The JSONP transport is responsible for storing and sending logs to a server-side API endpoint. It's mainly for the recorder usage, since that's were debugging is most probably necessary.
- *
- * In the future we probably will go on the path of customizable recorders, to be able to debug these customized apps, we need to store 
- *
- * - Which component is initialized and/or rendered, and in which order
- * - Potential Error stacktraces
- * - Relevant browser/client information (user_agent, flash version etc)
- *
+ * In the future we probably will go on the path of customizable recorders, to be able to debug these customized apps, we need to store 1) which component is initialized and/or rendered, and in which order; 2) potential Error stacktraces; 3) relevant browser/client information (user_agent, flash version etc).
  * The transport will send the log files automatically to the server if:
  * 
  * 1. The querystring will get near the length of 2083 characters, this is the URI limit in IE.
  * 2. If the log level is set to 'error'
  * 3. If the message is an instanceof Error
+ *
+ * @module
+ * @author  Ron Jansen &lt;ron@flipbase.com&gt;
  */
 &nbsp;
-function Transport(config) {
+/**
+ * Transport to send logs using JSONP to server.
+ * 
+ * @method  JSONPTransport
+ * @param {string} config.api_endpoint url to publish the logs to
+ */
+function JSONPTransport(config) {
   this.startTime = new Date().getTime();
   this.index = 0;
 &nbsp;
@@ -308,7 +342,7 @@ function Transport(config) {
   this.maxQueryStringLength = maxQueryStringLength - this.api_endpoint.length;
 }
 &nbsp;
-Transport.prototype = {
+JSONPTransport.prototype = {
   
   store: {
     logs: []
@@ -317,7 +351,10 @@ Transport.prototype = {
   querystring: '?',
 &nbsp;
   /**
+   * Add the logs to the store and send them if 1) the string is too lang for JSONP
+   * or 2) the message is an error message.
    * 
+   * @method  transport
    * @param  {string}         level   can be set to info/error/warn/debug
    * @param  {string|object}  msg     a string, if new Error it's an object
    */
@@ -351,7 +388,8 @@ Transport.prototype = {
   /**
    * Add each log message to the querystring, so we can instantly determine
    * if we should send the logs to the server and reset the logs.
-   * 
+   *
+   * @method  appendMessageToQuerystring
    * @param  {object}  log
    */
   appendMessageToQuerystring: function (log) {
@@ -376,6 +414,13 @@ Transport.prototype = {
 &nbsp;
   },
 &nbsp;
+  /**
+   * Send the log files to the server
+   *
+   * @method send
+   * @param {function} success  optional success hanlder
+   * @param {function} error    optional error handler
+   */
   send: function (success, error) {
     jsonp({
       url: this.api_endpoint,
@@ -387,14 +432,14 @@ Transport.prototype = {
 &nbsp;
 };
 &nbsp;
-module.exports = Transport;
+module.exports = JSONPTransport;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 23 2015 18:29:01 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Oct 24 2015 16:18:25 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

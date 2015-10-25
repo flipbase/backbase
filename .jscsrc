@@ -1,0 +1,59 @@
+{
+  "preset": "airbnb",
+
+  "plugins": [
+    "./node_modules/jscs-jsdoc"
+  ],
+
+  "disallowSpacesInNamedFunctionExpression": null,
+  "disallowSpacesInFunctionExpression": null,
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "disallowSpacesInFunctionDeclaration": null,
+
+  "safeContextKeyword": "_this",
+  
+  "validateCommentPosition": { 
+    "position": "above", 
+    "allExcept": []
+  },
+  "requireCapitalizedComments": true,
+  "disallowTrailingComma": true,
+
+  "requireSpacesInFunction": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+
+  "maximumLineLength": {
+    "value": 80,
+    "tabSize": 2,
+    "allExcept": [
+      "comments",
+      "functionSignature",
+      "regex"
+    ]
+  },
+
+  "jsDoc": {
+    "checkAnnotations": "jsdoc3",
+    "checkParamNames": true,
+    "requireParamTypes": true,
+    "checkReturnTypes": true,
+    "requireReturnTypes": true,
+    "requireNewlineAfterDescription": true,
+    "checkRedundantParams": true,
+    "requireDescriptionCompleteSentence": true
+  },
+
+  "fileExtensions": [
+    ".js", 
+    ".jsx"
+  ],
+
+  "excludeFiles": [
+    "bower_components",
+    "node_modules",
+    "docs",
+    "coverage"
+  ]
+}

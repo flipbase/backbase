@@ -10,15 +10,14 @@ var inherits = require('./modules/extendProto');
  /**
   * - Ieder UI component moet dus een HTML string terug geven of niets.
 - We kunnen toch in iedere component definieren wanneer de render functie getriggered moet worden?
-    -> Enige nadeel is dan wel dat de hele template opnieuw gerendered wordt. 
-
+    -> Enige nadeel is dan wel dat de hele template opnieuw gerendered wordt.
 
 - In dat geval moet de parent gerendered worden, als in het child een event gebeurd of state verandert.
-  -> Kunnen we niet alleen de parent updaten via een trigger? 
+  -> Kunnen we niet alleen de parent updaten via een trigger?
     -> Hoe gaan we dat doen als er een component meerdere parents heeft?
 
   -> Stel we renderen de parent, met de nieuwe state, dan wordt de child bijvoorbeeld niet meer gerendered.
-     Dat betekend dat wel wel de instances netjes moeten verwijderen anders leaken die in memory. 
+     Dat betekend dat wel wel de instances netjes moeten verwijderen anders leaken die in memory.
      -> En dat betekend weer dat we moeten diffen om de DOM om de components netjes weg te halen -> VIRTUAL DOM!
 
 Uitzoeken
@@ -29,7 +28,7 @@ Uitzoeken
 
 /**
  * @example
- * 
+ *
  * var $el = new Component('flipbase-recorder-intro', {
  *   tag: 'button',
  *   attrs: {
@@ -44,10 +43,16 @@ Uitzoeken
  *
  * el.remove();
  *
- *  
- * 
+ *
+ *
  * @class
  * @constructor
+ */
+
+/**
+ * @constructor
+ * @class
+ * @param {Object} options
  */
 function Component(options) {
   this._children = {};
@@ -92,22 +97,22 @@ function Component(options) {
 Component.prototype = {
 
   // Needs to be overwritten by instance
-  init: function () {},
+  init: function() {},
 
   /**
    * Internal method that triggers `willRender`, `render` and `didRender` methods
    * synchronously.
    */
-  _render: function () {
+  _render: function() {
     this.willRender.apply(this, arguments);
     this.render.apply(this, arguments);
     this.didRender.apply(this, arguments);
   },
 
   // Methods needs to be overwritten by the instance
-  willRender: function () {},
-  render: function () {},
-  didRender: function () {}
+  willRender: function() {},
+  render: function() {},
+  didRender: function() {}
 
 };
 
@@ -174,7 +179,7 @@ Component.prototype.getChild = function(compName) {
 };
 
 // FIXME: models hoeven niet ingepast te worden als args, omdat dit via
-// het event system afgehandeld moet worden. 
+// het event system afgehandeld moet worden.
 // We create register a instanceId on each child so we can distribute events
 // to an external (globally namespaced) event dispatcher.
 Component.prototype.addChildren = function() {
@@ -195,7 +200,7 @@ Component.prototype.addChildren = function() {
 Component.prototype.addChild = function(compName, options) {
   var Comp = this.getComponent(compName);
   options.parent = this;
-  
+
   if (!this._children[compName] && Comp)
     this._children[compName] = new Comp(options);
 
@@ -204,13 +209,13 @@ Component.prototype.addChild = function(compName, options) {
 
 Component.prototype.removeChild = function(child) {
   child = this._children[child];
-  
+
   if (child) {
     child.destroy();
     delete this._children[child];
   }
 };
-  
+
 Component.prototype.remove = function() {
   // If the current component has a parentNode use it
   if (this.$el.parentNode) {
@@ -235,7 +240,6 @@ Component.prototype.destroy = function() {
 
   this.$el = null;
 };
-
 
 Component.getComponent = function(name) {
   if (Component._components[name])

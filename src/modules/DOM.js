@@ -4,36 +4,36 @@ var is = require('./utils').is;
 
 /**
  * Lightweight DOM selector utilty methods
- * 
+ *
  * @module
  * @requires modules/utils
  */
 var $ = DOM = {
 
   /**
-   * Select element by id; only supports '#elementId' or 'elementId' as input;
+   * Select element by id, only supports '#elementId' or 'elementId' as input.
    *
-   * @method  getEl
+   * @method getEl
    * @param  {string} id element id
-   * @return {object}    selected document node
+   * @return {Object} Selected document element node.
    */
-  getEl: function(id) {
+  getEl: function (id) {
     // indexOf string is supported in IE7
-    if (id.indexOf('#') === 0) 
+    if (id.indexOf('#') === 0)
       id = id.slice(1);
 
     return document.getElementById(id);
   },
 
   /**
-   * Verify if an DOM element has a certain attribute
-   * 
-   * @method  elHasAttr
-   * @param  {object}   el
+   * Verify if an DOM element has a certain attribute.
+   *
+   * @method elHasAttr
+   * @param  {Object}   el
    * @param  {string}   attr  name of attribute
    * @return {boolean}
    */
-  elHasAttr: function(el, attr) {
+  elHasAttr: function (el, attr) {
     return el.getAttribute(attr) || undefined;
   },
 
@@ -45,10 +45,10 @@ var $ = DOM = {
    * @param  {string} tag  element tag
    * @param  {string} attr element attribute to search for
    * @param  {string} val  attribute value
-   * @return {array}       list with elements that matches the tags, attributes
+   * @return {Array}       list with elements that matches the tags, attributes
    *                       and values.
    */
-  getElsByTagAndAttr: function(tag, attr, val) {
+  getElsByTagAndAttr: function (tag, attr, val) {
     var nodes = document.getElementsByTagName(tag);
     var elems = [];
 
@@ -66,12 +66,12 @@ var $ = DOM = {
    *   style: 'color: #FF0000'
    * });
    *
-   * @method  createEl
+   * @method createEl
    * @param  {string} tag   div, button or any element
-   * @param  {object} attrs
-   * @return {object}       Element to insert
+   * @param  {Object} attrs
+   * @return {Object}       Element to insert
    */
-  createEl: function(tag, attrs) {
+  createEl: function (tag, attrs) {
     tag = tag || 'div', attrs = attrs || {};
     var el = document.createElement(tag);
     return $.setElAttributes(el, attrs);
@@ -81,11 +81,11 @@ var $ = DOM = {
    * Assign attributes to a DOM element
    *
    * @method  setElAttributes
-   * @param {object}  el    DOM element
-   * @param {object}        attrs 
+   * @param {Object}  el    DOM element
+   * @param {Object}        attrs
    * @return {ojbect}       DOM el with attributes
    */
-  setElAttributes: function(el, attrs) {
+  setElAttributes: function (el, attrs) {
     var props = keys(attrs);
     // Iterate over attrs object and assing attributes to element
     each(props, function (attrName) {
@@ -97,15 +97,15 @@ var $ = DOM = {
   },
 
   /**
-   * Insert element as first child of the parent element, before all other 
+   * Insert element as first child of the parent element, before all other
    * current child elements.
    *
    * @method insertAsFirstEl
-   * @param  {object} el     
-   * @param  {object} parent 
-   * @return {object}        DOM element
+   * @param  {Object} el
+   * @param  {Object} parent
+   * @return {Object}        DOM element
    */
-  insertAsFirstEl: function(el, parent) {
+  insertAsFirstEl: function (el, parent) {
     if (parent.firstChild)
       parent.insertBefore(el, parent.firstChild);
     else
@@ -118,9 +118,9 @@ var $ = DOM = {
    * Insert an element before another element
    *
    * @method insertBeforeEl
-   * @param  {object} el     element to insert
-   * @param  {object} other  element to place 'el' just before
-   * @return {object}        element that has been inserted
+   * @param  {Object} el     element to insert
+   * @param  {Object} other  element to place 'el' just before
+   * @return {Object}        element that has been inserted
    */
   insertBeforeEl: function(el, other) {
     if (other && other.parentNode)
@@ -137,9 +137,9 @@ var $ = DOM = {
    * String.prototype.idnexOf is supported from IE7+.
    *
    * @method hasClass
-   * @param  {object}  el        DOM element
+   * @param  {Object}  el        DOM element
    * @param  {string}  className CSS class to check
-   * @return {Boolean}           
+   * @return {boolean}
    */
   hasClass: function(el, className) {
     return ((' ' + el.className + ' ').indexOf(className) > -1);
@@ -149,7 +149,7 @@ var $ = DOM = {
    * Add a CSS class to an DOM element
    *
    * @method addClass
-   * @param {object} el        DOM element
+   * @param {Object} el        DOM element
    * @param {string} className CSS class to add
    */
   addClass: function(el, CSSclass) {
@@ -167,9 +167,9 @@ var $ = DOM = {
    * Remove a CSS class from an element
    *
    * @method removeClass
-   * @param  {object} el        DOM element to remove the CSS class from
+   * @param  {Object} el        DOM element to remove the CSS class from
    * @param  {string} className CSS class to remove
-   * @return {object}           DOM element
+   * @return {Object}           DOM element
    */
   removeClass: function(el, className) {
     if ($.hasClass(el, className))
@@ -182,12 +182,14 @@ var $ = DOM = {
    * Get the CSS property applied to a DOM element.
    *
    * @method getStyle
-   * @param  {object} el   DOM element to serach for the CSS property
-   * @param  {object} prop CSS property to retrieve the value from
-   * @return {string} value of CSS property applied to the element  
+   * @param  {Object} el   DOM element to serach for the CSS property
+   * @param  {Object} prop CSS property to retrieve the value from
+   * @return {string} value of CSS property applied to the element
    */
-  getStyle: function(el, prop) {
-    var getComputedStyl = (!!window.getComputedStyle) ? window.getComputedStyle : undefined;
+  getStyle: function (el, prop) {
+    var getComputedStyl = (!!window.getComputedStyle)
+      ? window.getComputedStyle
+      : undefined;
     if (getComputedStyl) {
       return window.getComputedStyle(el, null).getPropertyValue(prop);
     } else {
@@ -201,7 +203,7 @@ var $ = DOM = {
    * element.
    *
    * @method height
-   * @param  {object} el 
+   * @param  {Object} el
    * @return {number} height in pixels
    */
   height: function(el) {
@@ -216,7 +218,7 @@ var $ = DOM = {
    * element.
    *
    * @method width
-   * @param  {object} el 
+   * @param  {Object} el
    * @return {number} width in pixels
    */
   width: function(el) {
@@ -226,18 +228,18 @@ var $ = DOM = {
   },
 
   /**
-   * Test if CSS feature is supported. If CSS class is already added by Modernizr 
-   * for example to the rootElement, then skipp all tests. If it's not added to 
+   * Test if CSS feature is supported. If CSS class is already added by Modernizr
+   * for example to the rootElement, then skipp all tests. If it's not added to
    * the rootElement yet, then test if the browser the provided CSS feature.
    *
    * @method modernize
    * @param  {string}   prop          CSS property name
    * @param  {string}   val           CSS property value
    * @param  {string}   className     className to add to the root element
-   * @param  {boolean}  skipValueTest true if we don't need to test the value of 
+   * @param  {boolean}  skipValueTest true if we don't need to test the value of
    *                                  the provided property
    */
-  modernize: function(prop, val, className, skipValueTest) {
+  modernize: function (prop, val, className, skipValueTest) {
     // Grab the root element of the document
     var rootEl = document.documentElement;
     className = className.toString() || '';

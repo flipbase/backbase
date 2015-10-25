@@ -96,7 +96,55 @@
 51
 52
 53
-54</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,8 +157,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,11 +182,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,10 +220,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,41 +246,81 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var each = require('./utils').each;
 &nbsp;
 /**
- * @module      LogX
- * @description Client-side mini logging library 
- * @author      Ron Jansen &lt;ron@flipbase.com&gt;
+ * Lightweight client-side mini logging library, which can add multiple transports
+ * (like the console or a jsonp logger)
+ * 
+ * @module
+ * @author Ron Jansen &lt;ron@flipbase.com&gt;
  */
-&nbsp;
 var logger = {
 &nbsp;
   transports: [],
 &nbsp;
+  /**
+   * 
+   * 
+   * @method log
+   * @param  {string} level log level, e.g. 'info', 'debug' or something else
+   * @param  {string} msg   message to log
+   * @param  {object} meta  any additional (JSON) meta object to send to transport
+   */
   log: function (level, msg, meta) {
     each(logger.transports, function(transport) {
       transport.fn.apply(transport.ctx, [level, msg, meta]);
     });
   },
 &nbsp;
+  /**
+   * Shorthand for to log error messages.
+   *
+   * @method error
+   * @param  {string} msg  message to log
+   * @param  {object} meta any additional JSON metadata 
+   */
   error: function (msg, meta) {
     logger.log('error', msg, meta);
   },
 &nbsp;
+  /**
+   * Shorthand for to log warn messages.
+   *
+   * @method warn
+   * @param  {string} msg  message to log
+   * @param  {object} meta any additional JSON metadata 
+   */
   warn: <span class="fstat-no" title="function not covered" >function (msg, meta) {</span>
 <span class="cstat-no" title="statement not covered" >    logger.log('warn', msg, meta);</span>
   },
 &nbsp;
+  /**
+   * Shorthand for to log debug messages.
+   *
+   * @method debug
+   * @param  {string} msg  message to log
+   * @param  {object} meta any additional JSON metadata 
+   */
   debug: <span class="fstat-no" title="function not covered" >function (msg, meta) {</span>
 <span class="cstat-no" title="statement not covered" >    logger.log('debug', msg, meta);</span>
   },
 &nbsp;
+  /**
+   * Shorthand for to log info messages.
+   *
+   * @method info
+   * @param  {string} msg  message to log
+   * @param  {object} meta any additional JSON metadata 
+   */
   info: function (msg, meta) {
     logger.log('info', msg, meta);
   },
 &nbsp;
   /**
-   * Add apender to list, returns index in array so it can be removed.
-   * 
-   * @param {number} transport index
+   * Add transport to list, returns index in array so it can be removed.
+   *
+   * @method
+   * @param {function} transport  logger transport function to add
+   * @param {object}   ctx        reference to 'this'
+   * @return {number}  index of transport in transports array
    */
   add: function (transport, ctx) {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof transport !== 'function') 
@@ -195,6 +329,13 @@ var logger = {
     return logger.transports.push({fn: transport, ctx: (ctx || <span class="branch-1 cbranch-no" title="branch not covered" >this)</span> }) -1;
   },
 &nbsp;
+  /**
+   * Remove transport from logger
+   * 
+   * @method remove
+   * @param  {number} index [description]
+   * @return {array}  array with the removed transport
+   */
   remove: <span class="fstat-no" title="function not covered" >function (index) {</span>
 <span class="cstat-no" title="statement not covered" >    return logger.transports.splice(index, 1);</span>
   }
@@ -208,7 +349,7 @@ module.exports = logger;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 23 2015 18:29:01 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Oct 24 2015 16:18:25 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

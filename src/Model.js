@@ -11,7 +11,7 @@ var isArray = require('./modules/utils').isArray;
 var isObject = require('./modules/utils').isObject;
 
 /**
- * The Model class is inspired on the Backbone.Model class, with setters, 
+ * The Model class is inspired on the Backbone.Model class, with setters,
  * getters, pubsub and a very basic AJAX layer (JSONP).
  *
  * @example
@@ -23,14 +23,15 @@ var isObject = require('./modules/utils').isObject;
  *
  * model.set('net_connection', 'success');
  * model.get('duration') // 30
- * 
+ *
  * @author  Ron Jansen [ron@flipbase.com]
  * @copyright Flipbase 2015
  * @class Model
  * @classdesc This is a class description
+ * @param {Object} options
+ * @return {} [description]
  */
-
-function Model (options) {
+function Model(options) {
 
   // Assign default properties to the attributes object
   assign(this.attributes, this.defaults);
