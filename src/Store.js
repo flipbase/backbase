@@ -1,84 +1,44 @@
-var each = require('./modules/utils').each;
-var keys = require('./modules/utils').each;
+module.exports = {
+  Recorders: {
+    _recorders: [],
 
-function FlipbaseStore () {
-  this._index = 1;
-  this._recoders = {};
-  this._players = {};
-}
+    add: function (obj) {
+      return this._recoders.push(obj);
+    },
 
-FlipbaseStore.prototype.getIndex = function () {
-  return this._index;
-};
+    get: function (index) {
+      return this._recoders[index] || undefined;
+    },
 
-FlipbaseStore.prototype.addRecorder = function (id, obj) {
-  this._index++;
-  this._recoders[id] = obj;
-  return obj;
-};
+    remove: function (index) {
+      // Teardown all stores & components
+      this._recoders[index].remove();
+      // Delete the instance
+      delete this._recoders[index];
+      // Clean up the array
+      this._recoders.splice(index);
+    }
+  },
 
-FlipbaseStore.prototype.getRecorder = function (id) {
-  return this._recoders[id];
-};
+  Players: {
+    _players: [],
 
-FlipbaseStore.prototype.removeRecorder = function (id) {
-  this._recoders[id].remove();
-  delete this._recoders[id];
-};
+    add: function (obj) {
+      return this._players.push(obj);
+    },
 
-FlipbaseStore.prototype.destroyAllRecoders = function () {
-  var _keys = keys(this._recoders);
+    get: function (index) {
+      return this._players[index] || undefined;
+    },
 
-  each(_keys, function (inst) {
-    // Teardown the recorder instance
-    inst.destroy();
-    // Remove instance from store
-    delete _this._recoders[inst];
-  });
-};
-
-FlipbaseStore.prototype.addPlayer = function (id, obj) {
-  this._index++;
-  this._players[id] = obj;
-  return obj;
-};
-
-FlipbaseStore.prototype.getPlayer = function (id) {
-  return this._players[id];
-};
-
-FlipbaseStore.prototype.removePlayer = function (id) {
-  this._players[id].remove();
-  delete this._players[id];
-};
-
-FlipbaseStore.prototype.destroyAllPlayers = function () {
-  var _keys = keys(this._players);
-
-  each(_keys, function (inst) {
-    // Teardown the recorder instance
-    inst.destroy();
-    // Remove instance from store
-    delete _this._players[inst];
-  });
-};
-
-var StoreSingelton = (function () {
-  var inst;
-
-  function createInstance () {
-    return new FlipbaseStore();
+    remove: function (index) {
+      // Teardown all stores & components
+      this._players[index].remove();
+      // Delete the instance
+      delete this._players[index];
+      // Clean up the array
+      this._players.splice(index);
+    }
   }
 
-  return {
-    getInstance: function () {
-      if (!inst)
-        inst = createInstance();
-
-      return inst;
-    }
-  };
-
-})();
-
-module.exports = StoreSingelton;
+};
