@@ -100,14 +100,19 @@ function Component (options) {
 
   assign(this, options);
 
-  this.$el = document.getElementById(this.id);
+  if (this.id) {
+    this.$el = document.getElementById(this.id);
+  } else {
+    this.$el = createEl((options.tag || 'div'), {
+      'class': options['class'] || '',
+      'id': options['id'] || ''
+    });
+  }
 
   this.initialize.apply(this, arguments);
 }
 
 Component.prototype = {
-
-  $el: null,
 
   html: function () {
     return this.$el.outerHTML;
