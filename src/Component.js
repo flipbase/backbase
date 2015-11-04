@@ -28,6 +28,22 @@ Uitzoeken
   */
 
 /**
+ * What is a component? Is a small (group or 1) element(s) with some added
+ * functionality.
+ *
+ * Components can contain a whole template or just 1 element, but they always
+ * have at least 1 DOM element. Components manage the interactivity related
+ * to their children. Components are responsible for updating their own DOM
+ * elements or removing themselves.
+ *
+ * Components do not have any knowledge with regards to other Components. The usual problem
+ * however is that Components at some point need to hold other components.
+ *
+ * FlightJS for example solves this issue, by binding an Component to an existing
+ * DOM elements.
+ *
+ * Who are components added to the DOM?
+ *
  * @example
  *
  * var $el = new Component('flipbase-recorder-intro', {
@@ -53,10 +69,13 @@ Uitzoeken
 /**
  * @example
  * var FlashButton = Component.extend({
- *   attributes: {},
+ *   tag: 'button',
+ *   id: 'button-id-1234',
+ *   class: 'flipbase-button'
  *   events: {
- *     'elementId eventName': this.handlerFn
- *   }
+ *     'button-id-1234 click': this.handleClick
+ *   },
+ *
  * });
  *
  * FlashButton.render() // outputs HTML
@@ -64,30 +83,35 @@ Uitzoeken
  * FlashButton.remove() // removes HTML from DOM
  *
  *
+ * var Container = Component.extend({
+ *
+ *  template: template,
+ *
+ *  
+ *
+ * });
+ *
  * @constructor
  * @class
  * @param {Object} options
  */
 function Component (options) {
+  options = options || {};
 
   assign(this, options);
 
-  this.initialize.apply(this, arguments);
+  this.$el = document.getElementById(this.id);
 
+  this.initialize.apply(this, arguments);
 }
 
 Component.prototype = {
 
   $el: null,
 
-  // Needs to be overwritten in the instance
-  initialize: function () {},
-
-  /**
-   * Internal method that triggers `willRender`, `render` and `didRender` methods
-   * synchronously.
-   */
-  render: function () {},
+  html: function () {
+    return this.$el.outerHTML;
+  },
 
   show: function () {
     this.$el.style.display = 'block';
@@ -168,50 +192,6 @@ Component.prototype = {
         events.on($(el), evt, handler);
       });
     }
-  },
-
-  partials: {},
-
-  /**
-   * Since we do not have a virtual DOM, we need to manually register
-   * each partial that will be used by the template used in this component.
-   * If we do so, we can render these subcomponents as partials. This
-   * functionality provides us with a visual overview hierarchie of the DOM.
-   *
-   * @param  {[type]} name      [description]
-   * @param  {[type]} Component [description]
-   * @param  {[type]} options   [description]
-   * @return {[type]}           [description]
-   */
-  registerPartial: function (name, Component, options) {
-    this.partials[name] = new Component(options);
-  },
-
-  getPartial: function (name) {
-    return this.partials[name];
-  },
-
-  renderPartials: function () {
-    var partials = keys(this.partials);
-    var output = {};
-    var _this = this;
-
-    each(partials, function (partial) {
-      output[partial] = _this.getComponent(partial).render()
-    });
-
-    return output;
-  },
-
-  removePartial: function (name) {
-    this.partials[name].remove();
-  },
-
-  removeAllPartials: function () {
-    var partials = keys(this.partials);
-    each(partials, function (name) {
-      _this.removePartial(name)
-    });
   }
 
 };
