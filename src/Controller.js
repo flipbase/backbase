@@ -1,3 +1,5 @@
+var each = require('./modules/utils').each;
+
 function Controller () {
 }
 
