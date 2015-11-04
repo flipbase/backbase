@@ -97,22 +97,26 @@ Uitzoeken
  */
 function Component (options) {
   options = options || {};
-
   assign(this, options);
 
-  if (this.id) {
-    this.$el = document.getElementById(this.id);
-  } else {
+  // All partials will not have an ID on creation, so for all these components
+  // we need to create an element, so we can render it as soon as possible.
+  if (!this.id) {
     this.$el = createEl((options.tag || 'div'), {
-      'class': options['class'] || '',
-      'id': options['id'] || ''
-    });
+        'class': options['class'] || '',
+        'id': options['id'] || ''
+      });
   }
-
-  this.initialize.apply(this, arguments);
 }
 
 Component.prototype = {
+
+  initialize: function () {},
+
+  getElement: function () {
+    if (this.id)
+      this.$el = document.getElementById(this.id);
+  },
 
   html: function () {
     return this.$el.outerHTML;
