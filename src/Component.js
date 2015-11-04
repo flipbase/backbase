@@ -72,34 +72,22 @@ function Component (options) {
 
   assign(this, options);
 
+  this.initialize.apply(this, arguments);
+
 }
 
 Component.prototype = {
 
   $el: null,
 
+  // Needs to be overwritten in the instance
+  initialize: function () {},
+
   /**
    * Internal method that triggers `willRender`, `render` and `didRender` methods
    * synchronously.
    */
-  render: function () {
-    this.willMount.apply(this, arguments);
-    this.mount.apply(this, arguments);
-    this.didMount.apply(this, arguments);
-  },
-
-  // Methods needs to be overwritten by the instance
-  // willRender: function() {},
-  // render: function() {},
-  // didRender: function() {},
-
-  willMount: function () {},
-  mount: function () {},
-  didMount: function () {},
-
-  willUnmount: function () {},
-  unmount: function () {},
-  didUnmount: function () {},
+  render: function () {},
 
   show: function () {
     this.$el.style.display = 'block';
@@ -132,6 +120,34 @@ Component.prototype = {
   },
 
   /**
+   * Because we support multiple recorder instances on 1 pages, we cannot
+   * use a global cached stored. We need to have an instance of this store.
+   * To get access to a store we require to use the 'cid'.
+   */
+  getStore: function (key) {
+    var inst = Flipbase.Store.Recorders.get(this.cid);
+    if (key) return inst.stores[key];
+
+    return inst.stores;
+  },
+
+  /**
+   * Since stores are instances, we can filter in the store based on 'cid'.
+   * In views we can trigger actions with 'cid' as well. Therefore we can use
+   * globally available actions. However, for the sake of consistency, we
+   * access the action instances as well using the 'cid'.
+   *
+   * @param  {[type]} key [description]
+   * @return {[type]}     [description]
+   */
+  getActions: function (key) {
+    var inst = Flipbase.Store.Recorders.get(this.cid);
+    if (key) return inst.actions[key];
+
+    return inst.actions;
+  },
+
+  /**
    * Execpts only ids in the form of 'flipbaseWebcamButton click'; where 'click'
    * is the event and 'flipbaseWebcamButton' the element id.
    *
@@ -154,11 +170,49 @@ Component.prototype = {
     }
   },
 
-  // _components: {},
+  partials: {},
 
-  // registerComponent: function (name, component) {
-  //   this._components[name] = new component();
-  // }
+  /**
+   * Since we do not have a virtual DOM, we need to manually register
+   * each partial that will be used by the template used in this component.
+   * If we do so, we can render these subcomponents as partials. This
+   * functionality provides us with a visual overview hierarchie of the DOM.
+   *
+   * @param  {[type]} name      [description]
+   * @param  {[type]} Component [description]
+   * @param  {[type]} options   [description]
+   * @return {[type]}           [description]
+   */
+  registerPartial: function (name, Component, options) {
+    this.partials[name] = new Component(options);
+  },
+
+  getPartial: function (name) {
+    return this.partials[name];
+  },
+
+  renderPartials: function () {
+    var partials = keys(this.partials);
+    var output = {};
+    var _this = this;
+
+    each(partials, function (partial) {
+      output[partial] = _this.getComponent(partial).render()
+    });
+
+    return output;
+  },
+
+  removePartial: function (name) {
+    this.partials[name].remove();
+  },
+
+  removeAllPartials: function () {
+    var partials = keys(this.partials);
+    each(partials, function (name) {
+      _this.removePartial(name)
+    });
+  }
 
 };
 
