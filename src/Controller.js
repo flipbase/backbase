@@ -2,9 +2,12 @@ var each = require('./modules/utils').each;
 var extendProto = require('./modules/extendProto');
 
 function Controller () {
+  this.initialize.apply(this, arguments);
 }
 
 Controller.prototype = {
+
+  initialize: function () {},
 
   _components: {},
   _partials: [],
