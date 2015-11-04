@@ -1,4 +1,5 @@
 var each = require('./modules/utils').each;
+var extendProto = require('./modules/extendProto');
 
 function Controller () {
 }
@@ -41,5 +42,7 @@ Controller.prototype = {
     this.removeAllPartials();
   }
 }
+
+Controller.extend = extendProto;
 
 module.exports = Controller;
