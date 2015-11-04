@@ -1,22 +1,32 @@
+/**
+ * @module
+ * @author  Ron Jansen <ron@flipbase.com>
+ */
+
+/**
+ * Since webpack modules will be cached, it doesn't make a lot of sense
+ * to implement a Singleton pattern for this store.
+ */
+
 module.exports = {
   Recorders: {
     _recorders: [],
 
     add: function (obj) {
-      return this._recoders.push(obj);
+      return this._recorders.push(obj);
     },
 
     get: function (index) {
-      return this._recoders[index] || undefined;
+      return this._recorders[index] || undefined;
     },
 
     remove: function (index) {
       // Teardown all stores & components
-      this._recoders[index].remove();
+      this._recorders[index].remove();
       // Delete the instance
-      delete this._recoders[index];
+      delete this._recorders[index];
       // Clean up the array
-      this._recoders.splice(index);
+      this._recorders.splice(index);
     }
   },
 
