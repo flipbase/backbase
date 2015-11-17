@@ -13,7 +13,10 @@
  * @param  {object} meta  meta data object (JSON) to add to the message
  */
 function consoleTransport (level, msg, meta, options) {
-  if (this.options.level.indexOf(level) === -1)
+  options = options || {};
+  options.level = options.level || '';
+
+  if (options.level.indexOf(level) === -1)
     return;
 
   if (meta && JSON)
