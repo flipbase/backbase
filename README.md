@@ -54,7 +54,9 @@ Can contain multiple stores. Models are responsible for server side communicatio
 
 ### Actions
 
-Actions are predefined methods that dispatch events on the Dispatcher. Actions methods are used in Models and in Views.
+Actions are predefined methods that dispatch events on the Dispatcher. Actions methods are used in Models and in Views. Potentially we can only list an array of actions names. In the stores we can then use these action names to create onActionName like methods. 
+
+1 limitation thought: ACTIONS CANNOT BE GLOBAL EVENTS, since we will support multiple instances of the recorder and we need to make sure events do not polute others.
 
 ### Views
 
@@ -68,11 +70,6 @@ Provide 2 methods: register callbacks and trigger callbacks. We use the Dispatch
 
 Are only responsible for creating the proper markup, updating themselves, binding events to the element and dispatching actions. Only have knowledge of actions. Do not have any knowledge with regards to other components. Components do not have children components or whatsover. Anything that will be re-rendered with other/new data needs to be captured in a component, so we can attach handlers what/when to be updated and re-render. If you only need to attach an click handler to a button, then you can use static rendering method and just hide/show the outer interface if necessary. 
 
-### Interfaces
-
-Interfaces contain static HTML that does NOT need to be re-rendered ever; just hiding/showing parts of the interface should be sufficient to manage the elements within an interface. 
-
-Interfaces have knowledge have components, and are responsible rendering these components once (preferably using the template). Components will be inited once, but can be renendered as much as you like. Views will listen to stores. On every change the view needs to check if one of the components should be re-rendered, plus it needs to check.
 
 
 
