@@ -153,9 +153,12 @@ var $ = DOM = {
    * @param {string} className CSS class to add
    */
   addClass: function (el, CSSclass) {
+    var lastCharacterIsSpace = !!(el.className[el.className.length -1] === ' ');
     if (!$.hasClass(el, CSSclass)) {
       if (!el.className || !el.className.length)
         el.className = CSSclass;
+      else if (lastCharacterIsSpace)
+        el.className += CSSclass;
       else
         el.className += ' ' + CSSclass;
     }
