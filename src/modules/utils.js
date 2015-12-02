@@ -49,21 +49,24 @@ var utils = _ = {
    *
    * @method assign
    * @param  {object} target  object to copy all (sub)props to
-   * @param  {object} source  object to copy all props from
    * @return {object}         target with all props from source
    */
-  assign: function (target, source) {
-    var keys = _.keys(source);
+  assign: function (target) {
+    var sources = Array.prototype.slice.call(arguments, 1) || [];
+    for (var i = 0; sources.length > i; i++) {
+      var source = sources[i];
+      var keys = _.keys(source);
 
-    _.each(keys, function (key, i, list) {
-      var original = target[key];
-      var next = source[key];
-      if (original && next && typeof next == 'object') {
-        _.assign(original, next);
-      } else {
-        target[key] = source[key];
-      }
-    });
+      _.each(keys, function (key, i, list) {
+        var original = target[key];
+        var next = source[key];
+        if (original && next && typeof next == 'object') {
+          _.assign(original, next);
+        } else {
+          target[key] = source[key];
+        }
+      });
+    }
     return target;
   },
 
