@@ -33,6 +33,8 @@ function consoleTransport (level, msg, meta, options) {
 
   if (level === 'error' && console.error)
     return console.error(msg);
+
+  console.log(level + ': ' + msg);
 }
 
 // If console.log is not available, create a fake logger method, so that
