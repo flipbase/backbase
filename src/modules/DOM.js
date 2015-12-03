@@ -214,6 +214,11 @@ var $ = DOM = {
    */
   height: function (el) {
     var pxs = $.getStyle(el, 'height');
+
+    // In IE8 properly will return "NaN"
+    if (isNaN(pxs))
+      pxs = el.getBoundingClientRect().bottom - el.getBoundingClientRect().top;
+
     // Remove 'px' from the string;
     return parseInt(pxs, 10);
   },
@@ -229,6 +234,11 @@ var $ = DOM = {
    */
   width: function (el) {
     var pxs = $.getStyle(el, 'width');
+
+    // In IE8 properly will return "NaN"
+    if (isNaN(pxs))
+      pxs = el.getBoundingClientRect().right - el.getBoundingClientRect().left;
+
     // Remove 'px' from the sring;
     return parseInt(pxs, 10);
   },
