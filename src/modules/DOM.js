@@ -242,7 +242,6 @@ var $ = DOM = {
     if (isNaN(pxs))
       pxs = el.getBoundingClientRect().right - el.getBoundingClientRect().left;
 
-    // Remove 'px' from the sring;
     return pxs;
   },
 
