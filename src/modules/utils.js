@@ -60,7 +60,9 @@ var u = {
       u.each(keys, function (key, i, list) {
         var original = target[key];
         var next = source[key];
-        if (original && next && typeof next == 'object') {
+        var isDOMObject = u.isDOMObject(next);
+        // If the element is an HTML element object, do not include iterate on it! Otherwise we will end up in a loop!
+        if (original && next && (typeof next == 'object' && !isDOMObject)) {
           u.assign(original, next);
         } else {
           target[key] = source[key];
@@ -68,6 +70,24 @@ var u = {
       });
     }
     return target;
+  },
+
+  /**
+   * Utility method to get the difference between an (typeof obj === 'object') and an HTML DOM Object!
+   * @param  {Object}  obj object to check if it's a HTML DOM element object
+   * @return {Boolean}     true if DOM node
+   */
+  isDOMObject: function (obj) {
+    // DOM, Level2
+    if ('HTMLElement' in window) {
+      return (obj && obj instanceof HTMLElement);
+    }
+    // Older browsers
+    return !!(
+      obj && typeof obj === 'object' &&
+      obj.nodeType === 1 &&
+      obj.nodeName
+    );
   },
 
   /**
