@@ -1,13 +1,13 @@
 /**
- * All basic functionality for backbase, including _.assign,
- * _.querystring, _.bind, _.keys, _.inherits, etc. This module is
+ * All basic functionality for backbase, including u.assign,
+ * u.querystring, u.bind, u.keys, u.inherits, etc. This module is
  * heavily inspired on underscore, together with some basic utils.
  *
  * @module
  * @author    Ron Jansen <ron@flipbase.com>
  * @copyright Flipbase, 2015
  */
-var utils = _ = {
+var u = {
 
   /**
    * Parse and object to UTF-8 string format so it can be used in URL's
@@ -24,8 +24,8 @@ var utils = _ = {
         var k = prefix ? prefix + '[' + key + ']' : key;
         var val = obj[key];
 
-        str.push(_.isObject(val) ?
-          _.querystring(val, k) :
+        str.push(u.isObject(val) ?
+          u.querystring(val, k) :
           encodeURIComponent(k) + '=' + encodeURIComponent(val));
       }
     }
@@ -40,11 +40,11 @@ var utils = _ = {
    * @return {object}
    */
   clone: function (obj) {
-    return _.assign({}, obj);
+    return u.assign({}, obj);
   },
 
   /**
-   * Equivalent method to underscore's _.extend method; but this method actually
+   * Equivalent method to underscore's u.extend method; but this method actually
    * also deep merges nested objects!
    *
    * @method assign
@@ -55,13 +55,13 @@ var utils = _ = {
     var sources = Array.prototype.slice.call(arguments, 1) || [];
     for (var i = 0; sources.length > i; i++) {
       var source = sources[i];
-      var keys = _.keys(source);
+      var keys = u.keys(source);
 
-      _.each(keys, function (key, i, list) {
+      u.each(keys, function (key, i, list) {
         var original = target[key];
         var next = source[key];
         if (original && next && typeof next == 'object') {
-          _.assign(original, next);
+          u.assign(original, next);
         } else {
           target[key] = source[key];
         }
@@ -197,7 +197,7 @@ var utils = _ = {
    * @return {Boolean}   true if n=2, n=4, etc
    */
   isEven: function (n) {
-    return _.isNumber(n) && (n % 2 === 0);
+    return u.isNumber(n) && (n % 2 === 0);
   },
 
   /**
@@ -277,4 +277,4 @@ var utils = _ = {
 
 };
 
-module.exports = utils;
+module.exports = u;
