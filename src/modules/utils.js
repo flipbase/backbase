@@ -40,12 +40,16 @@ var u = {
    * @return {object}
    */
   clone: function (obj) {
-    return u.assign({}, obj);
+    if (!obj || typeof obj !== 'object')
+      return obj;
+
+    var copy = {};
+    copy = u.assign(copy, obj);
+    return copy;
   },
 
   /**
-   * Equivalent method to underscore's u.extend method; but this method actually
-   * also deep merges nested objects!
+   * Shallow merge objects
    *
    * @method assign
    * @param  {object} target  object to copy all (sub)props to
@@ -57,27 +61,11 @@ var u = {
     // Iterate over the all the sources
     for (var i = 0; sources.length > i; i++) {
       var source = sources[i];
-      var keys = u.keys(source);
 
-      // Iterate over all the properties of a source
-      u.each(keys, function (key, i, list) {
-        if (source.hasOwnProperty(key)) {
-          var original = target[key];
-          var next = source[key];
-
-          // If the element is an HTML element object, do not include iterate on it! Otherwise we will end up in a loop!
-          var isDOMObject = u.isDOMObject(next);
-          // We also need to neglect prototype objects!
-          var isProto = (key === 'prototype');
-          var isObject = (typeof next == 'object');
-
-          if (original && next && (isObject && !isDOMObject && !isProto)) {
-            u.assign(original, next);
-          } else {
-            target[key] = source[key];
-          }
-        }
-      });
+      for (var attr in source) {
+        if (source.hasOwnProperty(attr))
+          target[attr] = source[attr];
+      }
     }
     return target;
   },
