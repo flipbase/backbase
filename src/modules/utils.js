@@ -53,19 +53,29 @@ var u = {
    */
   assign: function (target) {
     var sources = Array.prototype.slice.call(arguments, 1) || [];
+
+    // Iterate over the all the sources
     for (var i = 0; sources.length > i; i++) {
       var source = sources[i];
       var keys = u.keys(source);
 
+      // Iterate over all the properties of a source
       u.each(keys, function (key, i, list) {
-        var original = target[key];
-        var next = source[key];
-        var isDOMObject = u.isDOMObject(next);
-        // If the element is an HTML element object, do not include iterate on it! Otherwise we will end up in a loop!
-        if (original && next && (typeof next == 'object' && !isDOMObject)) {
-          u.assign(original, next);
-        } else {
-          target[key] = source[key];
+        if (source.hasOwnProperty(key)) {
+          var original = target[key];
+          var next = source[key];
+
+          // If the element is an HTML element object, do not include iterate on it! Otherwise we will end up in a loop!
+          var isDOMObject = u.isDOMObject(next);
+          // We also need to neglect prototype objects!
+          var isProto = (key === 'prototype');
+          var isObject = (typeof next == 'object');
+
+          if (original && next && (isObject && !isDOMObject && !isProto)) {
+            u.assign(original, next);
+          } else {
+            target[key] = source[key];
+          }
         }
       });
     }
