@@ -18,6 +18,8 @@ var events = {
    * @param  {function} handler
    */
   on: function (el, evnt, fn) {
+    if (!el || !evnt) return;
+
     if (el.attachEvent) {
       // This creates the method is a child of the element, instead of the
       // document as a whole. 'this' now refers to the element properly.
@@ -37,6 +39,8 @@ var events = {
    * @param  {function} fn
    */
   off: function (el, evnt, fn) {
+    if (!el || !evnt) return;
+
     if (el.detachEvent) {
       el.detachEvent('on' + evnt, el[evnt + fn]);
       el[evnt + fn] = null;
