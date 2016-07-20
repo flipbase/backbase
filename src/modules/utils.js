@@ -76,7 +76,7 @@ var u = {
       copy = [];
       for(i = 0, l = src.length; i < l; ++i){
         if(i in src){
-          copy.push(clone(src[i]));
+          copy.push(u.clone(src[i]));
         }
       }
       // we don't clone functions for performance reasons
