@@ -33,7 +33,7 @@ var u = {
   },
 
   /**
-   * Create a new object based on the input object
+   * Create a new object based on the input object.
    *
    * @method clone
    * @param  {object} obj
