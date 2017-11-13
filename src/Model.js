@@ -1,5 +1,5 @@
 import pubsub from './utils/pubsub';
-import jsonp from 'expose?jsonp!./components/browser-jsonp';
+import jsonp from 'expose-loader?jsonp!./components/browser-jsonp';
 import {each, keys, getIndex} from './utils/utils';
 
 /**
