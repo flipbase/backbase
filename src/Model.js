@@ -3,7 +3,7 @@ import jsonp from 'expose-loader?jsonp!./components/browser-jsonp';
 import {each, keys, getIndex} from './utils/utils';
 
 /**
- * The Model class is inspired on the Backbone.Model class, with setters, 
+ * The Model class is inspired on the Backbone.Model class, with setters,
  * getters, pubsub and a very basic AJAX layer (JSONP).
  *
  * @example
@@ -15,7 +15,7 @@ import {each, keys, getIndex} from './utils/utils';
  *
  * model.set('net_connection', 'success');
  * model.get('duration') // 30
- * 
+ *
  * @author  Ron Jansen [ron@flipbase.com]
  * @copyright Flipbase 2015
  * @class Model
@@ -27,7 +27,7 @@ function Model (options) {
   this.attributes = this.defaults;
 
   this.host = 'http://app.flipbase.com';
-  this.path = '/log/play';
+  this.path = '/api/log/play';
 
   // Only assign whitelisted properties to the attributes
   var whitelistedKeys = keys(this.defaults);
@@ -38,7 +38,7 @@ function Model (options) {
     if (getIndex(whitelistedKeys, key) > -1)
       _this.attributes[key] = options[key];
   });
- 
+
   // Add the mixins to the current object
   this._previousAttributes = {};
   this._changedAttributes;
@@ -47,7 +47,7 @@ function Model (options) {
   //FIXME: no unsubscribe yet implemented
 Model.prototype.listenTo = function(evnt, fn, context) {
   evnt = evnt.split(', ') || [];
-  
+
   each(evnt, function (evt) {
     pubsub.subscribe(evt, fn, context);
   });
@@ -61,7 +61,7 @@ Model.prototype.trigger = function(evnt) {
 //   return _.clone(this.attributes);
 // };
 
-  /** 
+  /**
    * @return {Boolean} True if _id is null
    */
 Model.prototype.isNew = function() {
@@ -88,7 +88,7 @@ Model.prototype.set = function(attr, val, options) {
   this._previousAttributes = this.attributes;
 
   // Validate before change the setting
-  if (!options.silent && typeof attr === 'string') 
+  if (!options.silent && typeof attr === 'string')
     // error = this.validateAttr(attr, val) || null;
 
   // If no validation error is returned apply the change
@@ -107,7 +107,7 @@ Model.prototype.set = function(attr, val, options) {
     this.trigger('change:' + attr, this, val);
   }
 
-  // Broadcast global event 
+  // Broadcast global event
   this.trigger('change', this);
 };
 
@@ -117,7 +117,7 @@ Model.prototype.is = function(attr, val) {
 
   /**
    * Get previous value from a certain attribute.
-   * 
+   *
    * @param  {string} attr key to fetch attribute
    * @returns {object}     attribute value
    */
@@ -149,24 +149,24 @@ Model.prototype.is = function(attr, value) {
 };
 
   /**
-   * @param  {Boolean} parse If true, then the instance needs have 
+   * @param  {Boolean} parse If true, then the instance needs have
    * parse method.
    */
 Model.prototype.request = function(options, parse) {
   if (!parse) parse = true;
   var model = this;
   var success = options.success || function (){};
-  
+
   options.success = function (res, req) {
     success(res, req);
-    
+
     // Use custom parse method if attributes needs to be parsed
     if (parse)
       model.parse(model, res);
 
     // model.set(attrs);
   };
-  
+
   options.data = this.attributes;
   options.url = this.host + this.path;
   jsonp(options);
@@ -174,7 +174,7 @@ Model.prototype.request = function(options, parse) {
 
 Model.prototype.parse = function(model, res) {
   each(keys(res), function(key) {
-    if (model.attributes.hasOwnProperty(key)) 
+    if (model.attributes.hasOwnProperty(key))
       model.set(key, res[key]);
   });
 };
